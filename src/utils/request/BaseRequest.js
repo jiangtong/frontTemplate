@@ -1,6 +1,9 @@
 import axios from 'axios';
 import qs from 'qs';
+import createHistory from 'history/createHashHistory';
+// import {removeSession} from 'Utilies/sessionUtilies';
 
+const history = createHistory();
 class BaseRequest {
     constructor(options) {
         this.dataMethodDefaults = {
@@ -42,9 +45,11 @@ class BaseRequest {
             return new Promise(resolve => {
                 const useResponse = response.data;
                 if (parseInt(useResponse.errorCode) === 401) {
+                    resolve(useResponse);
+
                     // 这里先注释了吧
-                    removeSession('auth');
-                    history.push('/login');
+                    // removeSession('auth');
+                    // history.push('/login');
                 } else {
                     resolve(useResponse);
                 }

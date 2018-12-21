@@ -11,13 +11,13 @@ module.exports = {
     //根的js
     appIndexJs: resolveApp('src/index.js'),
     //根html
-    appHtml: resolveApp('src/index.html'),
+    appHtml: resolveApp('public/index.html'),
     //打包文件夹
     appbuild: resolveApp('dist'),
     //项目主目录
     appSrc: resolveApp('src'),
     //静态文件比如百度地图js，d3等
-    appStatic: resolveApp('static'),
+    appPublic: resolveApp('public'),
     appPulicPath: resolveApp('/'),
     // 后台接口地址
     requestUrl: 'http://119.3.74.110:9099',

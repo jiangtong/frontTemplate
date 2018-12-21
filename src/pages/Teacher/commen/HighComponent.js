@@ -24,23 +24,31 @@ const highComponentFuc = (url) => (WrappComponent) => {
         }
 
         async componentDidMount() {
-            const res = await request[url]();
+            let res = await request[url]();
 
-            if (res) {
+            res = [{
+                name: '测试',
+                value: '111'
+            }, {
+                name: '测试1',
+                value: '22'
+            }, {
+                name: '测试2',
+                value: '33'
+            }, {
+                name: '测试3',
+                value: '12'
+            }];
+
+            this.setState({
+                loading: false,
+                noData: res.length > 0 ? false : true
+            });
+
+            if (res.length > 0) {
                 this.setState({
-                    loading: false
+                    data: res
                 });
-
-                if (res.obj.left.length > 0) {
-                    this.setState({
-                        data: res.obj.left,
-                        noData: false
-                    });
-                } else {
-                    this.setState({
-                        noData: true
-                    });
-                }
             }
         }
 

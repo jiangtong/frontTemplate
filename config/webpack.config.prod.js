@@ -26,7 +26,7 @@ const publicConfig = {
         path: config.appbuild,
         filename: 'app/js/[name].[chunkhash:8].js',
         chunkFilename: 'app/js/[name].[chunkhash:8].bundle.js',
-        publicPath: '/'
+        publicPath: ''
     },
 
     // devtool: 'source-map',
@@ -82,7 +82,7 @@ const publicConfig = {
         }),
 
         // root是必须要写的
-        new CleanWebpackPlugin([`${config.appbuild}/app`], {
+        new CleanWebpackPlugin([`${config.appbuild}/app`, `${config.appbuild}/public`], {
             root: config.appPulicPath,
             verbose: true,
             dry: false

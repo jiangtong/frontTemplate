@@ -32,17 +32,18 @@ const commonConfig = {
             ' (:elapsed seconds)'
         }),
 
+        //需要从本地文件拷贝到打包的dist文件下的
         new CopyWebpackPlugin([
             {
-                from: `${config.appStatic}`,
-                to: `${config.appbuild}/static`
+                from: `${config.appPublic}/js`,
+                to: `${config.appbuild}/public/js`
             }]
         ),
 
+        // 要动态引入到html上面的js
         new HtmlWebpackIncludeAssetsPlugin({
             assets: [
-                'dist/static/js/d3.v5.min.js',
-                'dist/static/js/viz.v1.1.0.min.js'
+                './public/js/d3.v5.min.js'
             ],
             append: false
         })

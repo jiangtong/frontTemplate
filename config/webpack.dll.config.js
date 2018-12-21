@@ -28,8 +28,8 @@ module.exports = {
         //  copy 在dev模式下不好使
         new CopyWebpackPlugin([
             {
-                from: `${config.appStatic}`,
-                to: `${config.appbuild}/static`
+                from: `${config.appPublic}/js`,
+                to: `${config.appbuild}/public/js`
             }]
         ),
 

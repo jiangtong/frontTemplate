@@ -52,14 +52,11 @@ const devConfig = {
         // 到这里
     ],
 
-
     output: {
-        /* 这里本来应该是[chunkhash]的，但是由于[chunkhash]和react-hot-loader不兼容。只能妥协*/
-        // filename: '[name].[hash].js'
         path: config.appbuild,
         filename: 'app/[name].[hash].bundle.js',
         chunkFilename: 'app/[name].[hash].bundle.js',
-        publicPath: '/'
+        publicPath: ''
     },
 
     module: {
