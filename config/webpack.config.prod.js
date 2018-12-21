@@ -76,6 +76,15 @@ const publicConfig = {
                 }
             }
         }),
+
+        //需要从本地文件拷贝到打包的dist文件下的
+        new CopyWebpackPlugin([
+            {
+                from: `${config.appPublic}/js`,
+                to: `${config.appbuild}/public/js`
+            }]
+        ),
+
         new webpack.ProvidePlugin({
             $: 'jquery',
             jQuery: 'jquery',
