@@ -6,6 +6,7 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const commonConfig = require('./webpack.common.config.js');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const config = require('./config');
 const seen = new Set();
 const nameLength = 4;

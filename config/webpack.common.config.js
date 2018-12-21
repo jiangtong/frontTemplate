@@ -7,7 +7,6 @@ const WebpackBar = require('webpackbar');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const chalk = require('chalk');
 const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const commonConfig = {
     performance: {
