@@ -42,6 +42,7 @@ const commonConfig = {
     ],
 
     resolve: {
+        // 目录开头为 @ 符号，文件开头为 $ 符号
         alias: {
             '@reducers': `${config.appSrc}/redux/reducers`,
             '@actions': `${config.appSrc}/redux/actions`,
@@ -51,7 +52,8 @@ const commonConfig = {
             '@pages': `${config.appSrc}/pages`,
             '@public': `${config.appSrc}/public`,
             '@components': `${config.appSrc}/components`,
-            '@utils': `${config.appSrc}/utils`
+            '@utils': `${config.appSrc}/utils`,
+            $utils: `${config.appSrc}/utils/utils`,
         }
     },
 
