@@ -1,8 +1,6 @@
 export const SUCCESS = 'menuWarnList/success';
 export const FAIL = 'menuWarnList/fail';
-import BaseSubFormRequest from "@utils/request/BaseSubFormRequest";
-
-const request = new BaseSubFormRequest();
+import {request} from "@utils/request/BaseSubFormRequest";
 
 export function getListSuccess(data) {
     return {

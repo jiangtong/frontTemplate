@@ -1,10 +1,10 @@
 import React, {Component, Fragment} from 'react';
 import hoistNonReactStatics from 'hoist-non-react-statics';
-import Request from '@pages/Teacher/commen/request';
+import {request} from '@pages/Teacher/commen/request';
 import Load from '@components/beijing/Loading';
 import NoDataComponent from '@components/beijing/NoData';
 
-const request = new Request();
+// const request = new Request();
 
 const getDisplayName = (component) => {
     return component.displayName || component.name || 'Component';
@@ -24,7 +24,7 @@ const highComponentFuc = (url) => (WrappComponent) => {
         }
 
         async componentDidMount() {
-            let res = await request[url]();
+            let res = await request.teacherType4College();
 
             res = [{
                 name: '测试',

@@ -2,10 +2,9 @@ import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
 import {Col, message} from 'antd';
 import '@pages/Login/commen/assets/styles/login.less';
-import Request from '@pages/Login/commen/request';
+import request from '@pages/Login/commen/request';
 import {setSession} from '@utils/utils';
 
-const request = new Request();
 import md5 from 'md5';
 
 

@@ -38,4 +38,10 @@ class BaseSubJsonRequest {
     }
 }
 
+let request = new BaseSubJsonRequest;
+
+export {
+    request
+};
+
 export default BaseSubJsonRequest;

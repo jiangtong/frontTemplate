@@ -29,4 +29,10 @@ class BaseSubFormRequest {
     }
 }
 
+let request = new BaseSubFormRequest;
+
+export {
+    request
+};
+
 export default BaseSubFormRequest;

@@ -10,4 +10,8 @@ class Request extends BaseSubFormRequest {
     }
 }
 
-export default Request;
+const request = new Request();
+
+export {
+    request
+};
