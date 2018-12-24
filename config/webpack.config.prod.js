@@ -10,6 +10,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const config = require('./config');
 const seen = new Set();
 const nameLength = 4;
+const path = require('path');
 
 
 const publicConfig = {
@@ -81,8 +82,8 @@ const publicConfig = {
         //需要从本地文件拷贝到打包的dist文件下的
         new CopyWebpackPlugin([
             {
-                from: `${config.appPublic}/js`,
-                to: `${config.appbuild}/public/js`
+                from: path.resolve(config.appPublic, 'js'),
+                to: path.resolve(config.appbuild, 'public/js')
             }]
         ),
 
@@ -92,7 +93,7 @@ const publicConfig = {
         }),
 
         // root是必须要写的
-        new CleanWebpackPlugin([`${config.appbuild}/app`, `${config.appbuild}/public`], {
+        new CleanWebpackPlugin([path.resolve(config.appbuild, 'app'), path.resolve(config.appbuild, 'public')], {
             root: config.appPulicPath,
             verbose: true,
             dry: false
@@ -166,6 +167,9 @@ const publicConfig = {
                     }
                 },
                 {
+                    loader: 'postcss-loader'
+                },
+                {
                     loader: 'less-loader',
                     options: {
                         // 使用less默认运行时替换配置的@color样式
@@ -184,6 +188,9 @@ const publicConfig = {
                     options: {
                         minimize: true // css压缩
                     }
+                },
+                {
+                    loader: 'postcss-loader'
                 },
                 {
                     loader: 'sass-loader',

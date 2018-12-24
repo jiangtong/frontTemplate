@@ -7,6 +7,8 @@ const WebpackBar = require('webpackbar');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const chalk = require('chalk');
 const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
+const path = require('path');
+const webpack = require('webpack');
 
 const commonConfig = {
     performance: {
@@ -19,6 +21,12 @@ const commonConfig = {
             filename: 'index.html',
             template: config.appHtml,
             chunksSortMode: 'none'
+        }),
+
+        new webpack.DefinePlugin({
+            'process.env': {
+                NODE_ENV: JSON.stringify(process.env.NODE_ENV)
+            }
         }),
 
         new WebpackBar(),
@@ -43,16 +51,16 @@ const commonConfig = {
     resolve: {
         // 目录开头为 @ 符号，文件开头为 $ 符号
         alias: {
-            '@reducers': `${config.appSrc}/redux/reducers`,
-            '@actions': `${config.appSrc}/redux/actions`,
-            '@useRedux': `${config.appSrc}/redux`,
-            '@layout': `${config.appSrc}/layout`,
-            '@router': `${config.appSrc}/router`,
-            '@pages': `${config.appSrc}/pages`,
-            '@public': `${config.appSrc}/public`,
-            '@components': `${config.appSrc}/components`,
-            '@utils': `${config.appSrc}/utils`,
-            $utils: `${config.appSrc}/utils/utils`,
+            '@reducers': path.resolve(config.appSrc, 'redux/reducers'),
+            '@actions': path.resolve(config.appSrc, 'redux/actions'),
+            '@useRedux': path.resolve(config.appSrc, 'redux'),
+            '@layout': path.resolve(config.appSrc, 'layout'),
+            '@router': path.resolve(config.appSrc, 'router'),
+            '@pages': path.resolve(config.appSrc, 'pages'),
+            '@public': path.resolve(config.appSrc, 'public'),
+            '@components': path.resolve(config.appSrc, 'components'),
+            '@utils': path.resolve(config.appSrc, 'utils'),
+            '$utils': path.resolve(config.appSrc, 'utils/utils')
         }
     },
 

@@ -10,7 +10,19 @@ const getDisplayName = (component) => {
     return component.displayName || component.name || 'Component';
 };
 
+/**
+ * @url 接口地址
+ * @WrappComponent 组件名称
+ */
 const highComponentFuc = (url) => (WrappComponent) => {
+    if (!url) {
+        throw new Error('请填写要请求的接口名称');
+    }
+
+    if (!WrappComponent) {
+        throw new Error('请填写组件名称');
+    }
+
     class EnhanceComponent extends Component {
         static displayName = `highComponentFuc(${getDisplayName(WrappComponent)})`;
 

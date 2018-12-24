@@ -8,6 +8,10 @@ class Request extends BaseSubFormRequest {
     teacherType4College(params) {
         return this.post('/teacher/baseInfo/teacherType4College', params);
     }
+
+    majorList(params) {
+        return this.post('/major/admin/baseInfo/majorList', params);
+    }
 }
 
 const request = new Request();

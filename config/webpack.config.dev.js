@@ -3,10 +3,10 @@
 const merge = require('webpack-merge');
 const commonConfig = require('./webpack.common.config.js');
 const config = require('./config');
+const path = require('path');
 const openBrowserWebpackPlugin = require('open-browser-webpack-plugin');
 const webpack = require('webpack');
 const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
-
 
 const devConfig = {
     devtool: 'eval-source-map',
@@ -28,17 +28,17 @@ const devConfig = {
         // 选用dll模式可以打开如下代码
         // new webpack.DllReferencePlugin({
         //     context: config.appbuild,
-        //     manifest: require(`${config.appbuild}/dll/reactLib-manifest.json`)
+        //     manifest: require(path.resolve(config.appbuild, 'dll/reactLib-manifest.json'))
         // }),
         //
         // new webpack.DllReferencePlugin({
         //     context: config.appbuild,
-        //     manifest: require(`${config.appbuild}/dll/viewLib-manifest.json`)
+        //     manifest: require(path.resolve(config.appbuild, 'dll/viewLib-manifest.json'))
         // }),
         //
         // new webpack.DllReferencePlugin({
         //     context: config.appbuild,
-        //     manifest: require(`${config.appbuild}/dll/utiliesLib-manifest.json`)
+        //     manifest: require(path.resolve(config.appbuild, 'dll/utiliesLib-manifest.json'))
         // }),
         //
         // new HtmlWebpackIncludeAssetsPlugin({

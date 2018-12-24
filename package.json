@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dll": "webpack --progress --config config/webpack.dll.config --progress --colors",
-    "start": "webpack-dev-server --config config/webpack.config.dev.js  --inline --color --progress --hot",
-    "build": "webpack --config config/webpack.config.prod.js  --progress --colors"
+    "start": "NODE_ENV=development webpack-dev-server --config config/webpack.config.dev.js  --inline --color --progress --hot",
+    "build": "NODE_ENV=production webpack --config config/webpack.config.prod.js  --progress --colors"
   },
   "author": "",
   "dependencies": {
@@ -31,7 +31,6 @@
     "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
-    "autoprefixer": "^9.1.5",
     "@babel/polyfill": "^7.0.0",
     "@babel/runtime": "^7.1.5",
     "@babel/cli": "^7.1.5",
@@ -65,6 +64,7 @@
     "html-webpack-include-assets-plugin": "^1.0.6",
     "copy-webpack-plugin": "^4.6.0",
     "css-loader": "^0.28.7",
+    "postcss-preset-env": "^6.5.0",
     "eslint": "^4.18.1",
     "eslint-friendly-formatter": "^3.0.0",
     "eslint-loader": "^1.9.0",

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
 import {Col, message} from 'antd';
 import '@pages/Login/commen/assets/styles/login.less';
-import request from '@pages/Login/commen/request';
+import {request} from '@pages/Login/commen/request';
 import {setSession} from '@utils/utils';
 
 import md5 from 'md5';
@@ -134,8 +134,8 @@ class LoginComponent extends Component {
             password: md5(this.state.pwd)
         };
 
-        // const res = await request.login(params);
-        let res = await this.simulatedLoad();
+        const res = await request.login(params);
+        // let res = await this.simulatedLoad();
 
         if (res.success) {
             setSession('auth', res.obj);

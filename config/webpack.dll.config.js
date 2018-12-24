@@ -4,6 +4,7 @@ const config = require('./config');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const path = require('path');
 
 module.exports = {
     entry: {
@@ -20,7 +21,7 @@ module.exports = {
 
     output: {
         filename: '[name].dll.js',
-        path: `${config.appbuild}/dll`,
+        path: path.resolve(config.appbuild, 'dll'),
         library: '[name]_[hash]'
     },
 
@@ -28,19 +29,19 @@ module.exports = {
         //  copy 在dev模式下不好使
         new CopyWebpackPlugin([
             {
-                from: `${config.appPublic}/js`,
-                to: `${config.appbuild}/public/js`
+                from: path.resolve(config.appPublic, 'js'),
+                to: path.resolve(config.appbuild, 'public/js')
             }]
         ),
 
-        new CleanWebpackPlugin([`${config.appbuild}/dll/*`], {
+        new CleanWebpackPlugin([path.resolve(config.appbuild, 'dll/*')], {
             root: config.appPulicPath,
             verbose: true,
             dry: false
         }),
 
         new webpack.DllPlugin({
-            path: `${config.appbuild}/dll/[name]-manifest.json`,
+            path: path.resolve(config.appbuild, 'dll/[name]-manifest.json'),
             name: '[name]_[hash]',
             //manifest 文件中请求的上下文(context)(默认值为 webpack 的上下文(context))
             context: config.appbuild
