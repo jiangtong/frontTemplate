@@ -49,7 +49,7 @@ class BaseRequest {
 
                     // 这里先注释了吧
                     // removeSession('auth');
-                    // history.push('/login');
+                    // history.replace('/login');
                 } else {
                     resolve(useResponse);
                 }

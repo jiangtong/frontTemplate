@@ -144,9 +144,9 @@ class LoginComponent extends Component {
                 if (menuList.length > 0) {
                     let menuItem = menuList[0];
                     if (menuItem.menuList.length > 0) {
-                        this.props.history.push(menuItem.menuList[0].menuUrl);
+                        this.props.history.replace(menuItem.menuList[0].menuUrl);
                     } else {
-                        this.props.history.push(menuItem.menuUrl);
+                        this.props.history.replace(menuItem.menuUrl);
                     }
                 }
             }
