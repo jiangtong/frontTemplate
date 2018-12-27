@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dll": "webpack --progress --config config/webpack.dll.config --progress --colors",
-    "start": "NODE_ENV=development webpack-dev-server --config config/webpack.config.dev.js  --inline --color --progress --hot",
-    "build": "NODE_ENV=production webpack --config config/webpack.config.prod.js  --progress --colors"
+    "start": "cross-env NODE_ENV=development webpack-dev-server --config config/webpack.config.dev.js  --inline --color --progress --hot",
+    "build": "cross-env NODE_ENV=production webpack --config config/webpack.config.prod.js  --progress --colors"
   },
   "author": "",
   "dependencies": {
@@ -58,6 +58,7 @@
     "babel-loader": "^8.0.4",
     "babel-plugin-import": "^1.11.0",
     "bundle-loader": "^0.5.5",
+    "cross-env": "^5.2.0",
     "chalk": "^2.4.1",
     "clean-webpack-plugin": "^0.1.17",
     "css-hot-loader": "^1.3.9",
