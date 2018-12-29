@@ -26,29 +26,29 @@ const devConfig = {
         // }),
 
         // 选用dll模式可以打开如下代码
-        // new webpack.DllReferencePlugin({
-        //     context: config.appbuild,
-        //     manifest: require(path.resolve(config.appbuild, 'dll/reactLib-manifest.json'))
-        // }),
-        //
-        // new webpack.DllReferencePlugin({
-        //     context: config.appbuild,
-        //     manifest: require(path.resolve(config.appbuild, 'dll/viewLib-manifest.json'))
-        // }),
-        //
-        // new webpack.DllReferencePlugin({
-        //     context: config.appbuild,
-        //     manifest: require(path.resolve(config.appbuild, 'dll/utiliesLib-manifest.json'))
-        // }),
-        //
-        // new HtmlWebpackIncludeAssetsPlugin({
-        //     assets: [
-        //         'dist/dll/reactLib.dll.js',
-        //         'dist/dll/viewLib.dll.js',
-        //         'dist/dll/utiliesLib.dll.js'
-        //     ],
-        //     append: false
-        // })
+        new webpack.DllReferencePlugin({
+            context: config.appbuild,
+            manifest: require(path.resolve(config.appbuild, 'dll/reactLib-manifest.json'))
+        }),
+
+        new webpack.DllReferencePlugin({
+            context: config.appbuild,
+            manifest: require(path.resolve(config.appbuild, 'dll/viewLib-manifest.json'))
+        }),
+
+        new webpack.DllReferencePlugin({
+            context: config.appbuild,
+            manifest: require(path.resolve(config.appbuild, 'dll/utiliesLib-manifest.json'))
+        }),
+
+        new HtmlWebpackIncludeAssetsPlugin({
+            assets: [
+                'dist/dll/reactLib.dll.js',
+                'dist/dll/viewLib.dll.js',
+                'dist/dll/utiliesLib.dll.js'
+            ],
+            append: false
+        })
         // 到这里
     ],
 
@@ -56,7 +56,7 @@ const devConfig = {
         path: config.appbuild,
         filename: 'app/[name].[hash].bundle.js',
         chunkFilename: 'app/[name].[hash].bundle.js',
-        publicPath: ''
+        publicPath: '/'
     },
 
     module: {
