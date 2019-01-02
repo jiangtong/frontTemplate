@@ -83,7 +83,7 @@ const commonConfig = {
                 loader: 'url-loader',
                 options: {
                     limit: 8192,
-                    name: 'app/images/[name].[ext]'
+                    name: '/app/images/[name]_[hash:7].[ext]'
                 }
             }]
         }, {
@@ -93,7 +93,7 @@ const commonConfig = {
                     loader: 'file-loader',
                     options: {
                         limit: 6000,
-                        name: 'app/media/[name].[ext]'
+                        name: '/app/media/[name]_[hash:7].[ext]'
                     }
                 }
             ]
@@ -103,7 +103,7 @@ const commonConfig = {
                 loader: 'file-loader',
                 options: {
                     limit: 6000,
-                    name: 'app/font/[name].[hash:7].[ext]'
+                    name: '/app/font/[name]_[hash:7].[ext]'
                 }
             }
         }]

@@ -163,6 +163,7 @@ const publicConfig = {
                 {
                     loader: 'css-loader?importLoaders=1',
                     options: {
+                        publicPath: config.staticPublicPath,
                         minimize: true
                     }
                 },
@@ -186,6 +187,7 @@ const publicConfig = {
                 {
                     loader: 'css-loader?importLoaders=1',
                     options: {
+                        publicPath: config.staticPublicPath,
                         minimize: true // css压缩
                     }
                 },
