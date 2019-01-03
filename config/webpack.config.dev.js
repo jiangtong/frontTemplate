@@ -56,7 +56,7 @@ const devConfig = {
         path: config.appbuild,
         filename: 'app/[name].[hash].bundle.js',
         chunkFilename: 'app/[name].[hash].bundle.js',
-        publicPath: '/'
+        publicPath: ''
     },
 
     module: {

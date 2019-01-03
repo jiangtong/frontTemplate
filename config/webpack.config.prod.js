@@ -28,7 +28,7 @@ const publicConfig = {
         path: config.appbuild,
         filename: 'app/js/[name].[chunkhash:8].js',
         chunkFilename: 'app/js/[name].[chunkhash:8].bundle.js',
-        publicPath: '/dist'
+        publicPath: ''
     },
 
     // devtool: 'source-map',
