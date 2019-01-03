@@ -82,8 +82,8 @@ const commonConfig = {
             use: [{
                 loader: 'url-loader',
                 options: {
-                    limit: 8192,
-                    name: '/app/images/[name]_[hash:7].[ext]'
+                    limit: 15000,
+                    name: process.env.NODE_ENV === 'development' ? '[name]_[hash:7].[ext]' : '/app/images/[name]_[hash:7].[ext]'
                 }
             }]
         }, {
@@ -92,8 +92,8 @@ const commonConfig = {
                 {
                     loader: 'file-loader',
                     options: {
-                        limit: 6000,
-                        name: '/app/media/[name]_[hash:7].[ext]'
+                        limit: 15000,
+                        name: process.env.NODE_ENV === 'development' ? '[name]_[hash:7].[ext]' : '/app/files/[name]_[hash:7].[ext]'
                     }
                 }
             ]
@@ -102,8 +102,8 @@ const commonConfig = {
             use: {
                 loader: 'file-loader',
                 options: {
-                    limit: 6000,
-                    name: '/app/font/[name]_[hash:7].[ext]'
+                    limit: 15000,
+                    name: process.env.NODE_ENV === 'development' ? '[name]_[hash:7].[ext]' : '/app/fonts/[name]_[hash:7].[ext]'
                 }
             }
         }]
