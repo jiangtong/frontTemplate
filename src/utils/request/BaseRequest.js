@@ -96,7 +96,7 @@ class BaseRequest {
                         errMsg = 'HTTP版本不受支持';
                         break;
                     default:
-                        errMsg = `连接出错!`;
+                        errMsg = '连接出错!';
                 }
             }
             return new Promise((resolve => {

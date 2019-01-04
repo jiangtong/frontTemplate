@@ -166,7 +166,7 @@ export const getHashParam = function () {
     return res;
 };
 
-
+//按需异步加载组件
 export const asyncComponent = (Component, fallback = null) => {
     return props => {
         return <Suspense fallback={fallback}>

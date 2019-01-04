@@ -1,4 +1,4 @@
-import React, {lazy, Suspense} from 'react';
+import React from 'react';
 
 import {Route} from 'react-router-dom';
 import {asyncComponent} from '@utils/utils';

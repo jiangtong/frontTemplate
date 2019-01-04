@@ -134,8 +134,8 @@ class LoginComponent extends Component {
             password: md5(this.state.pwd)
         };
 
-        const res = await request.login(params);
-        // let res = await this.simulatedLoad();
+        // const res = await request.login(params);
+        let res = await this.simulatedLoad();
 
         if (res.success) {
             setSession('auth', res.obj);
