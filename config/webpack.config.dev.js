@@ -63,7 +63,7 @@ const devConfig = {
         rules: [
             {
                 test: /\.(scss|sass)$/,
-                use: ['style-loader', 'css-loader', 'sass-loader', 'postcss-loader'],
+                use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
                 exclude: '/node_modules/'
             },
             {
@@ -72,6 +72,8 @@ const devConfig = {
                     loader: 'style-loader',
                 }, {
                     loader: 'css-loader',
+                }, {
+                    loader: 'postcss-loader',
                 }, {
                     loader: 'less-loader',
                     options: {

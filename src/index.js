@@ -2,7 +2,7 @@
  * Created by yangqian on 2017/11/20.
  */
 
-import React from "react";
+import React from 'react';
 import ReactDOM from 'react-dom';
 import {Router} from 'react-router-dom';
 import createHistory from 'history/createHashHistory';
@@ -35,7 +35,7 @@ const render = Component => {
 };
 
 
-if (module.hot) {
+if (process.env.NODE_ENV !== 'production' && module.hot) {
     module.hot.accept(() => {
         render(App);
     });

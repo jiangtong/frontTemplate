@@ -7,7 +7,7 @@ const middleware = [thunk];
 let store = createStore(combineReducers, applyMiddleware(...middleware));
 
 
-if (module.hot) {
+if (process.env.NODE_ENV !== 'production' && module.hot) {
     module.hot.accept('@useRedux/reducer.js', () => {
         const nextCombineReducers = require('@useRedux/reducer.js').default;
         store.replaceReducer(nextCombineReducers);
