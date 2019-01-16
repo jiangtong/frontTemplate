@@ -32,7 +32,7 @@ class TestEchart extends Component {
             },
             tooltip: {
                 trigger: 'item',
-                formatter: "{a} <br/>{b} : {c} ({d}%)"
+                formatter: '{a} <br/>{b} : {c} ({d}%)'
             },
             legend: {
                 bottom: 0,

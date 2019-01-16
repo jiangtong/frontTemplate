@@ -29,7 +29,7 @@ module.exports = {
     color: colors.color,
 
     //分模块打包
-    viewers: ['antd', 'echarts', 'bizcharts'],
-    utiles: ['axios', 'lodash'],
-    reactzoology: ['react', 'react-router-dom', 'redux', 'react-dom', 'react-redux', 'redux-thunk']
+    viewers: ['antd', 'echarts', 'bizcharts', 'echarts-for-react'],
+    utiles: ['axios', 'lodash', 'd3'],
+    reactzoology: ['react', 'react-router-dom', 'redux', 'react-dom', 'react-redux', 'redux-thunk', 'history', 'classnames', 'prop-types']
 };
