@@ -14,7 +14,7 @@ const getDisplayName = (component) => {
  * @url 接口地址
  * @WrappComponent 组件名称
  */
-const highComponentFuc = (url) => (WrappComponent) => {
+const highComponentFuc = (url, params = {}) => (WrappComponent) => {
     if (!url) {
         throw new Error('请填写要请求的接口名称');
     }
@@ -36,7 +36,7 @@ const highComponentFuc = (url) => (WrappComponent) => {
         }
 
         async componentDidMount() {
-            let res = await request.teacherType4College();
+            let res = await request[url](params);
 
             res = [{
                 name: '测试',

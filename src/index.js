@@ -12,9 +12,14 @@ import Root from './router/router';
 import {LocaleProvider} from 'antd';
 import zh_CN from 'antd/lib/locale-provider/zh_CN';
 
-const history = createHistory();
+import echartsConfig from '@utils/echartsConfig';
+import echarts from 'echarts';
+import chinaMap from 'echarts/map/json/china.json';
+// 配置echarts常用主题
+echarts.registerTheme('echartsConfig', echartsConfig);
+echarts.registerMap('china', chinaMap);
 
-// renderWithHotReload(FlexWithAntd);
+const history = createHistory();
 
 class App extends React.Component {
     render() {
