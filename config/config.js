@@ -19,6 +19,8 @@ module.exports = {
     //静态文件比如百度地图js，d3等
     appPublic: resolveApp('public'),
     appPulicPath: resolveApp('/'),
+    // favicon 路径
+    favicon: resolveApp('public/nmg.ico'),
     // 后台接口地址
     requestUrl: 'http://119.3.74.110:9099',
     // 默认开启的本地项目端口号

@@ -20,6 +20,7 @@ const commonConfig = {
             title: '',
             filename: 'index.html',
             template: config.appHtml,
+            favicon: config.favicon,
             chunksSortMode: 'none'
         }),
 

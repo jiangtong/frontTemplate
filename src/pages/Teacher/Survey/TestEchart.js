@@ -67,7 +67,6 @@ class TestEchart extends Component {
     }
 
     render() {
-        console.log(this.props);
         return <Echart onClickAction={(params) => {
             if (this.props.onClickAction) this.props.onClickAction(params);
         }} data={{
