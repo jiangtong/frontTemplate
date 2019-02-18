@@ -21,12 +21,12 @@ module.exports = {
     appPulicPath: resolveApp('/'),
     // favicon 路径
     favicon: resolveApp('public/nmg.ico'),
-    // 后台接口地址
-    requestUrl: 'http://119.3.74.110:9099',
-    // 默认开启的本地项目端口号
+       // 默认开启的本地项目端口号
     port: '1111',
     // 默认开启本地项目的浏览器
     brower: os.platform() === 'darwin' ? 'google chrome' : 'chrome',
+    // 需要代理的 name是接口的前缀，url是需要转发的接口的地址 有几个需要转发的可以写几个
+    proxyArr: [{name: '/portrait', url: 'http://119.3.74.110:9099'}],
     //配色方案，可以根据assets找那个的variable进行配色的替换
     color: colors.color,
 

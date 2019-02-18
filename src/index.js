@@ -1,3 +1,7 @@
+/**
+ * Created by yangqian on 2017/11/20.
+ */
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Router} from 'react-router-dom';
@@ -7,7 +11,6 @@ import {Provider} from 'react-redux';
 import Root from './router/router';
 import {LocaleProvider} from 'antd';
 import zh_CN from 'antd/lib/locale-provider/zh_CN';
-
 import echartsConfig from '@utils/echartsConfig';
 import echarts from 'echarts';
 import chinaMap from 'echarts/map/json/china.json';

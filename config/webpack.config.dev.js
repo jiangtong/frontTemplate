@@ -8,6 +8,17 @@ const openBrowserWebpackPlugin = require('open-browser-webpack-plugin');
 const webpack = require('webpack');
 const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
 
+// 需要转发的接口拼接
+const {proxyArr = []} = config;
+let newProxyObj = {};
+proxyArr.forEach(item => {
+    newProxyObj[item.name] = {
+        target: item.url,
+        changeOrigin: true,
+        secure: false
+    };
+});
+
 const devConfig = {
     devtool: 'eval-source-map',
     mode: 'development',
@@ -20,35 +31,35 @@ const devConfig = {
     },
 
     plugins: [
-        // new openBrowserWebpackPlugin({
-        //     url: `http://127.0.0.1:${config.port}`,
-        //     browser: config.brower
-        // }),
+        new openBrowserWebpackPlugin({
+            url: `http://127.0.0.1:${config.port}`,
+            browser: config.brower
+        }),
 
         // 选用dll模式可以打开如下代码
-        new webpack.DllReferencePlugin({
-            context: config.appbuild,
-            manifest: require(path.resolve(config.appbuild, 'dll/reactLib-manifest.json'))
-        }),
-
-        new webpack.DllReferencePlugin({
-            context: config.appbuild,
-            manifest: require(path.resolve(config.appbuild, 'dll/viewLib-manifest.json'))
-        }),
-
-        new webpack.DllReferencePlugin({
-            context: config.appbuild,
-            manifest: require(path.resolve(config.appbuild, 'dll/utiliesLib-manifest.json'))
-        }),
-
-        new HtmlWebpackIncludeAssetsPlugin({
-            assets: [
-                'dist/dll/reactLib.dll.js',
-                'dist/dll/viewLib.dll.js',
-                'dist/dll/utiliesLib.dll.js'
-            ],
-            append: false
-        })
+        // new webpack.DllReferencePlugin({
+        //     context: config.appbuild,
+        //     manifest: require(path.resolve(config.appbuild, 'dll/reactLib-manifest.json'))
+        // }),
+        //
+        // new webpack.DllReferencePlugin({
+        //     context: config.appbuild,
+        //     manifest: require(path.resolve(config.appbuild, 'dll/viewLib-manifest.json'))
+        // }),
+        //
+        // new webpack.DllReferencePlugin({
+        //     context: config.appbuild,
+        //     manifest: require(path.resolve(config.appbuild, 'dll/utiliesLib-manifest.json'))
+        // }),
+        //
+        // new HtmlWebpackIncludeAssetsPlugin({
+        //     assets: [
+        //         'dist/dll/reactLib.dll.js',
+        //         'dist/dll/viewLib.dll.js',
+        //         'dist/dll/utiliesLib.dll.js'
+        //     ],
+        //     append: false
+        // })
         // 到这里
     ],
 
@@ -105,13 +116,7 @@ const devConfig = {
         // 默认浏览器
         open: true,
         disableHostCheck: true,
-        proxy: {
-            '/portrait': {
-                changeOrigin: true,
-                target: config.requestUrl,
-                secure: false
-            }
-        },
+        proxy: newProxyObj,
         stats: {
             // 添加缓存（但未构建）模块的信息
             cached: true,

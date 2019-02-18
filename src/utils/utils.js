@@ -1,10 +1,10 @@
 import React, {Suspense} from 'react';
 
 // 设置本地临时存储
-export const setLocal = (key, value) => localStorage.setItem(key, value);
+// export const setLocal = (key, value) => localStorage.setItem(key, value);
 
 // 读取本地临时存储
-export const getLocal = (key) => localStorage.getItem(key);
+// export const getLocal = (key) => localStorage.getItem(key);
 
 // 删除本地临时存储
 export const removeLocal = (key) => localStorage.removeItem(key);
@@ -175,12 +175,7 @@ export const asyncComponent = (Component, fallback = null) => {
     };
 };
 
-export const getSession = (name) => {
-    if (!name) {
-        return;
-    }
-    return window.localStorage.getItem(name);
-};
+
 
 export const getPermission = (props, moduleName) => {
     let res = false;
@@ -212,20 +207,42 @@ export const getPermission = (props, moduleName) => {
     return true;
 };
 
-export const setSession = (name, data) => {
-    localStorage.setItem(name, JSON.stringify(data));
+
+
+/**
+ * 存储
+ * @param {*} key :键名
+ * @param {*} value ：所存入的值
+ */
+export const setSession = (key, value) => {
+    sessionStorage.setItem(key, JSON.stringify(value));
+};
+/**
+ * 读取
+ * @param {*} key ：键名
+ */
+export const getSession = (key) => {
+    if (!key) {
+        return;
+    }
+    return sessionStorage.getItem(key);
 };
 
-
-// 函数组合
-export default function compose(...funcs) {
-    if (funcs.length === 0) {
-        return arg => arg;
+/**
+ * 存储
+ * @param {*} key :键名
+ * @param {*} value ：所存入的值
+ */
+export const setLocal = (key, value) => {
+    localStorage.setItem(key, JSON.stringify(value));
+};
+/**
+ * 读取
+ * @param {*} key ：键名
+ */
+export const getLocal = (key) => {
+    if (!key) {
+        return;
     }
-
-    if (funcs.length === 1) {
-        return funcs[0];
-    }
-
-    return funcs.reduce((a, b) => (...args) => a(b(...args)));
-}
+    return localStorage.getItem(key);
+};
