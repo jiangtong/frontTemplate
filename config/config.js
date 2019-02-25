@@ -20,7 +20,7 @@ module.exports = {
     appPublic: resolveApp('public'),
     appPulicPath: resolveApp('/'),
     // favicon 路径
-    favicon: resolveApp('public/nmg.ico'),
+    favicon: resolveApp('public/ico.ico'),
        // 默认开启的本地项目端口号
     port: '1111',
     // 默认开启本地项目的浏览器
