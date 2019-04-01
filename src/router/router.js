@@ -1,4 +1,4 @@
-import React, {Suspense} from 'react';
+import React from 'react';
 import {Switch, Route, Redirect} from 'react-router-dom';
 import BaseComponents from '@layout';
 import {getSession, asyncComponent} from '@utils/utils';

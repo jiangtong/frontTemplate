@@ -9,6 +9,7 @@ const chalk = require('chalk');
 const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
 const path = require('path');
 const webpack = require('webpack');
+const MyPlugin_skeleton = require('./MyPlugin_skeleton');
 
 const commonConfig = {
     performance: {
@@ -21,7 +22,21 @@ const commonConfig = {
             filename: 'index.html',
             template: config.appHtml,
             favicon: config.favicon,
-            chunksSortMode: 'none'
+            // chunksSortMode: 'none',
+            inject: true,
+            minify: {
+                removeComments: true,
+                collapseWhitespace: true,
+                removeAttributeQuotes: true
+                // more options:
+                // https://github.com/kangax/html-minifier#options-quick-reference
+            },
+            // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+            chunksSortMode: 'dependency'
+        }),
+
+        new MyPlugin_skeleton({
+            template: '骨架屏插件'
         }),
 
         new webpack.DefinePlugin({
@@ -67,6 +82,14 @@ const commonConfig = {
 
     module: {
         rules: [{
+            test: /\.txt$/,
+            use: {
+                loader: path.resolve(config.config, 'loader/txtloader.js'),
+                options: {
+                    name: 'Alice'
+                }
+            }
+        }, {
             test: /\.js?$/,
             use: [{
                 loader: 'babel-loader'

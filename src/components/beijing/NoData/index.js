@@ -9,7 +9,6 @@ class NoDataComponent extends Component {
     }
 
     render() {
-        const self = this;
         return (
             <div className={'no_block'} style={{height: document.body.clientHeight - 64}}>
                 <div>

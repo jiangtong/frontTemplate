@@ -107,6 +107,15 @@ class LoginComponent extends Component {
                                     'parentMenuLevel': 'ONE',
                                     'menuList': [],
                                     'moduleList': []
+                                }, {
+                                    'menuNo': 'WHHXF1710S1713',
+                                    'menuName': 'demo3-hooks',
+                                    'menuLevel': 'TWO',
+                                    'menuUrl': '/teachermanager/hooks',
+                                    'parentMenuNo': 'WHHXF1710',
+                                    'parentMenuLevel': 'ONE',
+                                    'menuList': [],
+                                    'moduleList': []
                                 }]
                             }]
                         }

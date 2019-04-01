@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dll": "webpack --progress --config config/webpack.dll.config --progress --colors",
-    "start": "cross-env NODE_ENV=development webpack-dev-server --config config/webpack.config.dev.js  --inline --color --progress --hot",
+    "start": "cross-env NODE_ENV=development webpack-dev-server --config config/webpack.config.dev.js  --watch --inline --color --progress --hot",
     "build": "cross-env NODE_ENV=production webpack --config config/webpack.config.prod.js  --progress --colors"
   },
   "author": "",
@@ -20,6 +20,7 @@
     "history": "^4.7.2",
     "lodash": "^4.17.11",
     "md5": "^2.2.1",
+    "page-skeleton-webpack-plugin": "^0.10.12",
     "prop-types": "^15.6.0",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",

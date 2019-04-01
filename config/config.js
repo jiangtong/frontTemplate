@@ -8,6 +8,8 @@ let os = require('os');
 const colors = require('../src/utils/colors');
 
 module.exports = {
+    //config
+    config: resolveApp('config'),
     //根的js
     appIndexJs: resolveApp('src/index.js'),
     //根html
