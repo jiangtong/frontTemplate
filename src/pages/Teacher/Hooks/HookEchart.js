@@ -38,13 +38,12 @@ export default (props) => {
 
     useEffect(() => {
             fetchComment();
-        }, [state.data]
+        }, [JSON.stringify(state.data)]
     );
 
-    console.log(state.data);
 
     return (
-        <div>
+        <React.Fragment>
             {
                 state.data.length > 0 && !state.loading && !state.noData &&
                 <TestEchart {...props} data={state.data}></TestEchart>
@@ -55,6 +54,6 @@ export default (props) => {
             {
                 state.noData && <NoDataComponent></NoDataComponent>
             }
-        </div>
+        </React.Fragment>
     );
 }

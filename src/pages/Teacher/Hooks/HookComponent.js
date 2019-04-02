@@ -1,5 +1,8 @@
 import React, {useState} from 'react';
 import HookEchart from './HookEchart';
+import HookContext from './HookContext';
+import HookRef from './HookRef';
+import HookReducer from './HookReducer';
 
 export default (props) => {
     const [state, setState] = useState(0);
@@ -12,11 +15,9 @@ export default (props) => {
     });
 
     return (
-        <div>
-            <p>
-                <div>{state}</div>
-                <div>{state1}</div>
-            </p>
+        <React.Fragment>
+            <div>{state}</div>
+            <div>{state1}</div>
             <button onClick={() => {
                 setState(prevstate => prevstate + 1);
                 setState1(prevstate => prevstate + 1);
@@ -24,6 +25,9 @@ export default (props) => {
             </button>
 
             <HookEchart></HookEchart>
-        </div>
+            <HookContext></HookContext>
+            <HookRef></HookRef>
+            <HookReducer></HookReducer>
+        </React.Fragment>
     );
 }
