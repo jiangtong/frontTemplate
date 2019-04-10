@@ -12,31 +12,55 @@ export default (props) => {
     });
 
 
-    async function fetchComment() {
-        let res = await request.teacherType4College();
-
-        res = [{
-            name: '测试',
-            value: '111'
-        }, {
-            name: '测试1',
-            value: '22'
-        }, {
-            name: '测试2',
-            value: '33'
-        }, {
-            name: '测试3',
-            value: '12'
-        }];
-
-        setState({
-            loading: false,
-            data: res.length > 0 ? res : [],
-            noData: res.length > 0 ? false : true
-        });
-    }
+    // async function fetchComment() {
+    //     let res = await request.teacherType4College();
+    //
+    //     res = [{
+    //         name: '测试',
+    //         value: '111'
+    //     }, {
+    //         name: '测试1',
+    //         value: '22'
+    //     }, {
+    //         name: '测试2',
+    //         value: '33'
+    //     }, {
+    //         name: '测试3',
+    //         value: '12'
+    //     }];
+    //
+    //     setState({
+    //         loading: false,
+    //         data: res.length > 0 ? res : [],
+    //         noData: res.length > 0 ? false : true
+    //     });
+    // }
 
     useEffect(() => {
+            async function fetchComment() {
+                let res = await request.teacherType4College();
+
+                res = [{
+                    name: '测试',
+                    value: '111'
+                }, {
+                    name: '测试1',
+                    value: '22'
+                }, {
+                    name: '测试2',
+                    value: '33'
+                }, {
+                    name: '测试3',
+                    value: '12'
+                }];
+
+                setState({
+                    loading: false,
+                    data: res.length > 0 ? res : [],
+                    noData: res.length > 0 ? false : true
+                });
+            }
+
             fetchComment();
         }, [JSON.stringify(state.data)]
     );
