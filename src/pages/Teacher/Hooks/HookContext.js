@@ -1,11 +1,14 @@
-import React, {useContext} from 'react';
+import React, {useState, useContext} from 'react';
 
 const Context = React.createContext();
 
 const Child = (props) => {
     const context = useContext(Context);
-    // console.log(context);
     return <div>
+        <button onClick={() => {
+            context.onChangeValueAct('222');
+        }}>context 点击
+        </button>
         {
             context.name
         }
@@ -13,9 +16,14 @@ const Child = (props) => {
 };
 
 export default (props) => {
+    const [name, setName] = useState('111');
     return (
         <React.Fragment>
-            <Context.Provider value={{name: '111'}}>
+            <Context.Provider value={{
+                name: name, onChangeValueAct: (name) => {
+                    setName(name);
+                }
+            }}>
                 <Child></Child>
             </Context.Provider>
         </React.Fragment>
