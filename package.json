@@ -10,7 +10,7 @@
   },
   "author": "",
   "dependencies": {
-    "antd": "^3.13.0",
+    "antd": "^3.16.3",
     "axios": "^0.18.0",
     "bizcharts": "^3.4.1",
     "classnames": "^2.2.5",

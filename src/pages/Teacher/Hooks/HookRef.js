@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useRef, useImperativeHandle} from 'react';
 
 class Child extends React.Component {
     constructor(props) {
@@ -35,8 +35,22 @@ const logProps = (Component) => {
 
 const ReactComponent = logProps(Child);
 
+
+const FancyInput = (props, ref) => {
+    const inputRef = useRef();
+    useImperativeHandle(ref, () => ({
+        focus: () => {
+            inputRef.current.focus();
+        }
+    }));
+    return <input ref={inputRef}/>;
+};
+
+const UseFancyInput = React.forwardRef(FancyInput);
+
 export default (props) => {
     const inputRef = useRef(111);
+    const fancyInputRef = useRef();
     let childRef = useRef(null);
 
     const onButtonClick = () => {
@@ -52,6 +66,12 @@ export default (props) => {
             <button onClick={onButtonClick}>Focus the input</button>
             <Child ref={childRef}></Child>
             <ReactComponent ref={childRef}></ReactComponent>
+
+            <FancyIUseFancyInputnput ref={fancyInputRef} onClick={() => {
+                fancyInputRef.current.focus();
+            }}/>
+
         </React.Fragment>
     );
 }
+
