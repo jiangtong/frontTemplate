@@ -67,7 +67,7 @@ export default (props) => {
             <Child ref={childRef}></Child>
             <ReactComponent ref={childRef}></ReactComponent>
 
-            <FancyIUseFancyInputnput ref={fancyInputRef} onClick={() => {
+            <UseFancyInput ref={fancyInputRef} onClick={() => {
                 fancyInputRef.current.focus();
             }}/>
 

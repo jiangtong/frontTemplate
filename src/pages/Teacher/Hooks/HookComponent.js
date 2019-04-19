@@ -3,6 +3,7 @@ import HookEchart from './HookEchart';
 import HookContext from './HookContext';
 import HookRef from './HookRef';
 import HookReducer from './HookReducer';
+import {TeacherTeachingList,EnterprisePracticeInfoList} from './HookDemo';
 
 export default (props) => {
     const [state, setState] = useState(0);
@@ -16,6 +17,9 @@ export default (props) => {
 
     return (
         <React.Fragment>
+            <TeacherTeachingList></TeacherTeachingList>
+            <EnterprisePracticeInfoList></EnterprisePracticeInfoList>
+
             <div>{state}</div>
             <div>{state1}</div>
             <button onClick={() => {
