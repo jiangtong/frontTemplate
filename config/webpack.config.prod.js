@@ -44,37 +44,37 @@ const publicConfig = {
             minSize: 30000,
             minChunks: 1,
             maxAsyncRequests: 5,
-            maxInitialRequests: 3,
+            maxInitialRequests: 5,
             name: true,
             cacheGroups: {
                 default: {
                     minChunks: 2,
                     priority: -20,
-                    reuseExistingChunk: true,
+                    reuseExistingChunk: true
                 },
                 vendors: {
                     chunks: 'all',
                     minChunks: 2,
+                    reuseExistingChunk: true,
                     test: /node_modules\/(.*)\.js/,
-                    maxInitialRequests: 5,
                     minSize: 30000,
-                    name: 'vendor',
+                    name: 'vendor'
                 },
                 views: {
                     chunks: 'all',
                     minChunks: 2,
+                    reuseExistingChunk: true,
                     test: /node_modules\/(.*)\.js/,
-                    maxInitialRequests: 5,
                     minSize: 30000,
-                    name: 'vendor',
+                    name: 'vendor'
                 },
                 utiles: {
                     chunks: 'all',
                     minChunks: 2,
+                    reuseExistingChunk: true,
                     test: /node_modules\/(.*)\.js/,
-                    maxInitialRequests: 5,
                     minSize: 30000,
-                    name: 'vendor',
+                    name: 'vendor'
                 }
             }
         }),
