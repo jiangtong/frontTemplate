@@ -58,7 +58,7 @@ const publicConfig = {
                     reuseExistingChunk: true,
                     test: /node_modules\/(.*)\.js/,
                     minSize: 30000,
-                    name: 'vendor'
+                    name: 'vendors'
                 },
                 views: {
                     chunks: 'all',
@@ -66,7 +66,7 @@ const publicConfig = {
                     reuseExistingChunk: true,
                     test: /node_modules\/(.*)\.js/,
                     minSize: 30000,
-                    name: 'vendor'
+                    name: 'views'
                 },
                 utiles: {
                     chunks: 'all',
@@ -74,7 +74,7 @@ const publicConfig = {
                     reuseExistingChunk: true,
                     test: /node_modules\/(.*)\.js/,
                     minSize: 30000,
-                    name: 'vendor'
+                    name: 'utiles'
                 }
             }
         }),

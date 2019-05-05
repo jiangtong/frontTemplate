@@ -1,15 +1,47 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef, useCallback} from 'react';
 import {request} from '@pages/Teacher/commen/request';
 import TestEchart from '@pages/Teacher/Survey/TestEchart';
 import Load from '@components/beijing/Loading';
 import NoDataComponent from '@components/beijing/NoData';
 
+function useEventCallback(fn, dependencies) {
+    const ref = useRef(() => {
+        throw new Error('Cannot call an event handler while rendering.');
+    });
+
+    useEffect(() => {
+        ref.current = fn;
+    }, [fn, ...dependencies]);
+
+    return useCallback(() => {
+        const fn = ref.current;
+        return fn();
+    }, [ref]);
+}
+
 export default (props) => {
+    const textRef = useRef();
+    const [text, updateText] = useState('111');
+
     const [state, setState] = useState({
         loading: true,
         data: [],
         noData: false
     });
+
+    useEffect(() => {
+        textRef.current = text; // 把它写入 ref
+    });
+
+    const handleSubmit1 = useEventCallback(() => {
+        console.log(text);
+    }, [text]);
+
+
+    const handleSubmit = useCallback(() => {
+        const currentText = textRef.current; // 从 ref 读取它
+        console.log(currentText);
+    }, [textRef]); // 不要像 [text] 那样重新创建 handleSubmit
 
 
     // async function fetchComment() {
@@ -68,6 +100,7 @@ export default (props) => {
 
     return (
         <React.Fragment>
+            <div onClick={handleSubmit}>饿3213123</div>
             {
                 state.data.length > 0 && !state.loading && !state.noData &&
                 <TestEchart {...props} data={state.data}></TestEchart>
