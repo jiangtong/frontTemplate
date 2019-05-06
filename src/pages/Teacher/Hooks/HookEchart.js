@@ -4,6 +4,58 @@ import TestEchart from '@pages/Teacher/Survey/TestEchart';
 import Load from '@components/beijing/Loading';
 import NoDataComponent from '@components/beijing/NoData';
 
+function Timer() {
+    const intervalRef = useRef();
+
+    useEffect(() => {
+        const id = setInterval(() => {
+            // ...
+        });
+        intervalRef.current = id;
+        return () => {
+            clearInterval(intervalRef.current);
+        };
+    });
+
+    // ...
+}
+
+function useInterval(callback, delay) {
+    const savedCallback = useRef();
+
+    useEffect(() => {
+        savedCallback.current = callback;
+    });
+
+    useEffect(() => {
+        function tick() {
+            savedCallback.current();
+        }
+
+        let id = setInterval(tick, delay);
+        return () => clearInterval(id);
+    }, [delay]);
+}
+
+function Example(props) {
+    // 把最新的 props 保存在一个 ref 中
+    let latestProps = useRef(props);
+    useEffect(() => {
+        latestProps.current = props;
+    });
+
+    useEffect(() => {
+        function tick() {
+            // 在任何时候读取最新的 props
+            console.log(latestProps.current);
+        }
+
+        const id = setInterval(tick, 1000);
+        return () => clearInterval(id);
+    }, []); // 这个 effect 从不会重新执行
+}
+
+
 function useEventCallback(fn, dependencies) {
     const ref = useRef(() => {
         throw new Error('Cannot call an event handler while rendering.');

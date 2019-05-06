@@ -4,6 +4,7 @@ import createHistory from 'history/createHashHistory';
 // import {removeSession} from 'Utilies/sessionUtilies';
 
 const history = createHistory();
+
 class BaseRequest {
     constructor(options) {
         this.dataMethodDefaults = {
@@ -120,6 +121,30 @@ class BaseRequest {
         return this.request.post(url, data, {...this.defaultRequestOptions}, {
             ...config,
             headers: {'Content-Type': 'multipart/form-data'}
+        });
+    }
+
+    downLoad(url, data = undefined, config = {}) {
+        return this.request.post(url, data, {
+            ...this.defaultRequestOptions, ...config
+        }).then(response => {
+            const useData = response.data;
+            if (!useData) {
+                return new Promise((resolve => {
+                    resolve({'success': false, 'msg': '文件下载失败'});
+                }));
+            } else {
+                let url = window.URL.createObjectURL(new Blob([useData]));
+                let link = document.createElement('a');
+                link.style.display = 'none';
+                link.href = url;
+                link.setAttribute('download', data.fileName);
+                document.body.appendChild(link);
+                link.click();
+                return new Promise((resolve => {
+                    resolve({'success': true, 'msg': '文件下载成功'});
+                }));
+            }
         });
     }
 }
