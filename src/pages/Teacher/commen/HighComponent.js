@@ -1,9 +1,8 @@
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import {request} from '@pages/Teacher/commen/request';
-import Load from '@components/beijing/Loading';
 import NoDataComponent from '@components/beijing/NoData';
-
+import {Spin} from 'antd';
 // const request = new Request();
 
 const getDisplayName = (component) => {
@@ -66,13 +65,9 @@ const highComponentFuc = (url, params = {}) => (WrappComponent) => {
 
         render() {
             return <div style={this.props.style}>
-                {
-                    this.state.data.length > 0 && !this.state.loading && !this.state.noData &&
+                <Spin spinning={this.state.loading}>
                     <WrappComponent {...this.props} data={this.state.data}></WrappComponent>
-                }
-                {
-                    this.state.loading && <Load></Load>
-                }
+                </Spin>
                 {
                     this.state.noData && <NoDataComponent></NoDataComponent>
                 }

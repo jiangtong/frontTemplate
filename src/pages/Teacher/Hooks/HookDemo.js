@@ -6,6 +6,7 @@ const useRenderPage = (requestUrl) => {
     const [list, setList] = useState([]);
     const [page, setPage] = useState(1);
     const [total, setTotal] = useState(1);
+
     useEffect(() => {
         request[requestUrl]({pageNum: page}).then(res => {
             setList(res.obj.rows);
@@ -17,6 +18,7 @@ const useRenderPage = (requestUrl) => {
     const pageChange = (pagination) => {
         setPage(pagination.current);
     };
+
     return [list, page, total, pageChange];
 };
 

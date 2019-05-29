@@ -21,11 +21,10 @@ class TeacherNumbers extends Component {
         // console.log(HighFunUse.getName());
         return (
             <Col span={24} className="enrolment-container">
-                <Row className="bg-white  chart-content">
+                <Row className="bg-white chart-content">
                     <div className="clearfix">
-                        <Col span={24} className="ptb0">
+                        <Col span={24}>
                             <HighFunUse style={this.props.style} {...this.props}></HighFunUse>
-                            {/*<TestEchart style={this.props.style} {...this.props}></HighFunUse>*/}
                         </Col>
                     </div>
                 </Row>
