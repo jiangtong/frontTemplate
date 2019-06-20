@@ -63,6 +63,7 @@ function useEventCallback(fn, dependencies) {
 
     useEffect(() => {
         ref.current = fn;
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [fn, ...dependencies]);
 
     return useCallback(() => {
@@ -73,6 +74,7 @@ function useEventCallback(fn, dependencies) {
 
 export default (props) => {
     const textRef = useRef();
+    // eslint-disable-next-line no-unused-vars
     const [text, updateText] = useState('111');
 
     const [state, setState] = useState({
@@ -85,6 +87,7 @@ export default (props) => {
         textRef.current = text; // 把它写入 ref
     });
 
+    // eslint-disable-next-line no-unused-vars
     const handleSubmit1 = useEventCallback(() => {
         console.log(text);
     }, [text]);
@@ -146,6 +149,7 @@ export default (props) => {
             }
 
             fetchComment();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [JSON.stringify(state.data)]
     );
 

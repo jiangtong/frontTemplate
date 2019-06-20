@@ -1,7 +1,10 @@
 module.exports = {
-    plugins: {
-        'postcss-preset-env': {
-            browsers: ['last 2 versions', '> 5%']
-        }
-    }
+    plugins: [
+        require('autoprefixer')({
+            overrideBrowserslist: [
+                'last 2 versions',
+                '> 1%'
+            ]
+        })
+    ]
 };

@@ -23,7 +23,9 @@ const useRenderPage = (requestUrl) => {
 };
 
 const renderTabel = (ListDom, requestUrl) => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [list, page, total, pageChange] = useRenderPage(requestUrl);
+
     return (
         <React.Fragment>
             <ListDom list={list} onChange={pageChange} pagination={{total: total, current: page}}></ListDom>
