@@ -4,6 +4,7 @@
       "@babel/preset-env",
       {
         "useBuiltIns": "entry",
+        "corejs": 3,
         "debug": false,
         "targets": {
           "node": "current",
@@ -19,6 +20,12 @@
     "@babel/preset-react"
   ],
   "plugins": [
+    [
+      "@babel/plugin-transform-runtime",
+      {
+        "corejs": 3
+      }
+    ],
     [
       "@babel/plugin-proposal-decorators",
       {
@@ -50,7 +57,6 @@
     "@babel/plugin-proposal-throw-expressions",
     "@babel/plugin-syntax-dynamic-import",
     "@babel/plugin-syntax-import-meta",
-    "@babel/plugin-transform-runtime",
     [
       "import",
       {
