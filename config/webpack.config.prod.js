@@ -31,7 +31,7 @@ const publicConfig = {
         publicPath: ''
     },
 
-    devtool: 'cheap-module-source-map',
+    // devtool: 'cheap-module-source-map',
     mode: 'production',
 
     plugins: [
@@ -205,4 +205,4 @@ const publicConfig = {
     }
 };
 
-module.exports = merge(commonConfig, publicConfig);
+module.exports = merge.smart(commonConfig, publicConfig);

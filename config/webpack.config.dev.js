@@ -150,12 +150,4 @@ const devConfig = {
     }
 };
 
-module.exports = merge({
-    customizeArray(a, b, key) {
-        /* entry.app不合并，全替换*/
-        if (key === 'entry.app') {
-            return b;
-        }
-        return undefined;
-    }
-})(commonConfig, devConfig);
+module.exports = merge.smart(commonConfig, devConfig);
