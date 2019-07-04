@@ -62,6 +62,27 @@ const commonConfig = {
             ],
             append: false
         })
+
+        // new HtmlWebpackIncludeAssetsPlugin({
+        //     assets: [
+        //         process.env.NODE_ENV === 'development' ? './public/js/baiduMap.js' : 'public/js/baiduMap.js',
+        //         process.env.NODE_ENV === 'development' ? './public/js/LuShu.js' : 'public/js/LuShu.js',
+        //         process.env.NODE_ENV === 'development' ? './public/js/Heatmap.js' : 'public/js/Heatmap.js'
+        //         //
+        //         // {
+        //         //     path: 'http://api.map.baidu.com/api?v=3.0&ak=moMIflSL2yGiq3VwQ3bynEKE7gl2cjQw',
+        //         //     type: 'js'
+        //         // },
+        //         // {
+        //         //     path: 'http://api.map.baidu.com/library/LuShu/1.2/src/LuShu_min.js',
+        //         //     type: 'js'
+        //         // }, {
+        //         //     path: 'http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js',
+        //         //     type: 'js'
+        //         // }
+        //     ],
+        //     append: false
+        // })
     ],
 
     resolve: {

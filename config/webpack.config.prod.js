@@ -31,7 +31,7 @@ const publicConfig = {
         publicPath: ''
     },
 
-    // devtool: 'source-map',
+    devtool: 'cheap-module-source-map',
     mode: 'production',
 
     plugins: [
@@ -89,7 +89,7 @@ const publicConfig = {
 
         new webpack.ProvidePlugin({
             $: 'jquery',
-            jQuery: 'jquery',
+            jQuery: 'jquery'
         }),
 
         // root是必须要写的
@@ -104,7 +104,7 @@ const publicConfig = {
             assetNameRegExp: /\.optimize\.css$/g,
             cssProcessor: require('cssnano'),
             cssProcessorPluginOptions: {
-                preset: ['default', {discardComments: {removeAll: true}}],
+                preset: ['default', {discardComments: {removeAll: true}}]
             },
             canPrint: true
         }),
@@ -175,8 +175,8 @@ const publicConfig = {
                     options: {
                         // 使用less默认运行时替换配置的@color样式
                         modifyVars: config.color,
-                        javascriptEnabled: true,
-                    },
+                        javascriptEnabled: true
+                    }
                 }
             ]
         }, {

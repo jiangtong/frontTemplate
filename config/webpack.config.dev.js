@@ -20,7 +20,7 @@ proxyArr.forEach(item => {
 });
 
 const devConfig = {
-    devtool: 'eval-source-map',
+    devtool: 'source-map',
     mode: 'development',
     entry: {
         app: [
