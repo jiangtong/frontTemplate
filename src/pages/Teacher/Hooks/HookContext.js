@@ -20,7 +20,8 @@ export default (props) => {
     return (
         <React.Fragment>
             <Context.Provider value={{
-                name: name, onChangeValueAct: (name) => {
+                name: name,
+                onChangeValueAct: (name) => {
                     setName(name);
                 }
             }}>

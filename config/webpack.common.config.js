@@ -9,7 +9,6 @@ const chalk = require('chalk');
 const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
 const path = require('path');
 const webpack = require('webpack');
-const MyPlugin_skeleton = require('./MyPlugin_skeleton');
 
 const commonConfig = {
     performance: {
@@ -33,10 +32,6 @@ const commonConfig = {
             },
             // necessary to consistently work with multiple chunks via CommonsChunkPlugin
             chunksSortMode: 'dependency'
-        }),
-
-        new MyPlugin_skeleton({
-            template: '骨架屏插件'
         }),
 
         new webpack.DefinePlugin({
@@ -103,14 +98,6 @@ const commonConfig = {
 
     module: {
         rules: [{
-            test: /\.txt$/,
-            use: {
-                loader: path.resolve(config.config, 'loader/txtloader.js'),
-                options: {
-                    name: 'Alice'
-                }
-            }
-        }, {
             test: /\.js?$/,
             use: [{
                 loader: 'babel-loader'

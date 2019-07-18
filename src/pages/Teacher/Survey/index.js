@@ -5,7 +5,6 @@ import CommenComponent from '@pages/Teacher/commen/CommenComponent';
 import BaseComponment from '@pages/Teacher/commen/BaseComponment';
 import TeacherNumbers from '@pages/Teacher/Survey/TeacherNumbers';
 import {getPermission} from '@utils/utils';
-import text from './name.txt'
 
 class OurfacultyComp extends Component {
     constructor(props) {
@@ -17,12 +16,9 @@ class OurfacultyComp extends Component {
     }
 
     componentDidMount() {
-        console.log(text)
     }
 
     render() {
-        const self = this;
-
         return (
             <BaseComponment>
                 {
