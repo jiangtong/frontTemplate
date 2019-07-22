@@ -12,6 +12,9 @@
   "dependencies": {
     "antd": "^3.16.2-alpha.0",
     "axios": "^0.18.0",
+    "bizcharts": "^3.5.4",
+    "d3": "^5.9.7",
+    "echarts-for-react": "^2.0.15-beta.0",
     "camunda-bpmn-moddle": "^3.0.0",
     "classnames": "^2.2.5",
     "deep-equal": "^1.0.1",
