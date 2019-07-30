@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import hoistNonReactStatics from 'hoist-non-react-statics';
-import {request} from '@pages/Teacher/commen/request';
+import Request from '@commenApi/teacher';
 import NoDataComponent from '@components/beijing/NoData';
 import {Spin} from 'antd';
-// const request = new Request();
 
 const getDisplayName = (component) => {
     return component.displayName || component.name || 'Component';
@@ -35,8 +34,7 @@ const highComponentFuc = (url, params = {}) => (WrappComponent) => {
         }
 
         async componentDidMount() {
-            let res = await request[url](params);
-
+            let res = await Request[url](params);
             res = [{
                 name: '测试',
                 value: '111'

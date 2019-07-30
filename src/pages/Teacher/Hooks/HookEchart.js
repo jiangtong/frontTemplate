@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useRef, useCallback} from 'react';
-import {request} from '@pages/Teacher/commen/request';
+import Request from '@commenApi/teacher';
 import TestEchart from '@pages/Teacher/Survey/TestEchart';
 import Load from '@components/beijing/Loading';
 import NoDataComponent from '@components/beijing/NoData';
@@ -100,7 +100,7 @@ export default (props) => {
 
 
     // async function fetchComment() {
-    //     let res = await request.teacherType4College();
+    //     let res = await Request.teacherType4College();
     //
     //     res = [{
     //         name: '测试',
@@ -125,7 +125,7 @@ export default (props) => {
 
     useEffect(() => {
             async function fetchComment() {
-                let res = await request.teacherType4College();
+                let res = await Request.enterprisePracticeInfoList();
 
                 res = [{
                     name: '测试',

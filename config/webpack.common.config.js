@@ -83,6 +83,8 @@ const commonConfig = {
     resolve: {
         // 目录开头为 @ 符号，文件开头为 $ 符号
         alias: {
+            '@commenApi': path.resolve(config.appSrc, 'public/data-commen/api'),
+            '@commenModel': path.resolve(config.appSrc, 'public/data-commen/model'),
             '@reducers': path.resolve(config.appSrc, 'redux/reducers'),
             '@actions': path.resolve(config.appSrc, 'redux/actions'),
             '@useRedux': path.resolve(config.appSrc, 'redux'),

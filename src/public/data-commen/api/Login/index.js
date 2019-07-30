@@ -6,15 +6,11 @@ class Request extends BaseSubFormRequest {
     }
 
     //  师资概况——专业
-    login(params) {
+    static login(params) {
         return this.post('/user/login', params);
     };
 }
 
-const request = new Request;
-
-export {
-    request
-};
+export default Request;
 
 

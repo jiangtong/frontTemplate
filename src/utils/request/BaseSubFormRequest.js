@@ -16,23 +16,17 @@ class BaseSubFormRequest {
      * @config 具体的请求头的信息配置
      */
 
-    get(url, data = {}, config = {}) {
-        return this.httpRequest.get(url, {...config, params: {...data}});
+    static get(url, data = {}, config = {}) {
+        return new this().httpRequest.get(url, {...config, params: {...data}});
     }
 
-    post(url, data = undefined, config = {}) {
-        return this.httpRequest.post(url, data, {...config});
+    static post(url, data = undefined, config = {}) {
+        return new this().httpRequest.post(url, data, {...config});
     }
 
-    upload(url, data = undefined, config = {}) {
-        return this.httpRequest.upload(url, data, {...config});
+    static upload(url, data = undefined, config = {}) {
+        return new this().httpRequest.upload(url, data, {...config});
     }
 }
-
-let request = new BaseSubFormRequest;
-
-export {
-    request
-};
 
 export default BaseSubFormRequest;

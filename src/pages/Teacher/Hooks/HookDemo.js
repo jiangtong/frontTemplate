@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import {Table} from 'antd';
-import {request} from './request';
+import {Table, message} from 'antd';
+import Request from '@commenApi/teacher';
 
 const useRenderPage = (requestUrl) => {
     const [list, setList] = useState([]);
@@ -8,11 +8,14 @@ const useRenderPage = (requestUrl) => {
     const [total, setTotal] = useState(1);
 
     useEffect(() => {
-        request[requestUrl]({pageNum: page}).then(res => {
-            setList(res.obj.rows);
-            setPage(res.obj.page);
-            setTotal(res.obj.total);
-        });
+        async function initData() {
+            const res = await Request[requestUrl]({pageNum: page});
+            setList(res.rows);
+            setPage(res.page);
+            setTotal(res.total);
+        }
+
+        initData();
     }, [page]);
 
     const pageChange = (pagination) => {
@@ -37,6 +40,7 @@ const renderTabel = (ListDom, requestUrl) => {
 const EnterprisePracticeInfoList = () => {
     const ListDom = ({list, pagination, onChange}) => {
         return <Table
+            rowKey={'CODE'}
             onChange={onChange}
             columns={[{
                 title: '序号',
@@ -82,58 +86,55 @@ const EnterprisePracticeInfoList = () => {
             pagination={pagination}></Table>;
     };
 
-    return renderTabel(ListDom, 'enterprisePracticeInfoList');
+    return renderTabel(ListDom, 'pageAlarmStrategy');
 };
 
 const TeacherTeachingList = () => {
     const ListDom = ({list, pagination, onChange}) => {
         return <Table
+            rowKey={'strategyName'}
             columns={[{
                 title: '序号',
                 dataIndex: 'index'
             }, {
                 title: '姓名',
-                dataIndex: 'teacherName'
+                dataIndex: 'strategyName'
             }, {
                 title: '工号',
-                dataIndex: 'teacherCode'
+                dataIndex: 'strategyTarget'
             }, {
                 title: '职称',
-                dataIndex: 'professionTitle'
+                dataIndex: 'startDate'
             }, {
                 title: '部门',
-                dataIndex: 'deptName'
+                dataIndex: 'endDate'
             }, {
                 title: '专业',
-                dataIndex: 'majorName'
+                dataIndex: 'removeFlag'
             }, {
                 title: '课程数',
-                dataIndex: 'courseNum'
+                dataIndex: 'status'
             }, {
                 title: '班级数',
-                dataIndex: 'classNum'
+                dataIndex: 'strategyTargetCollege'
             }, {
-                title: '调代课数',
-                dataIndex: 'substituteClassNum'
-            }, {
-                title: '每周课时',
-                dataIndex: 'workload'
-            }, {
-                title: '参与专业建设',
-                dataIndex: 'majorBuildNum'
-            }, {
-                title: '参与课程建设',
-                dataIndex: 'courseBuildNum'
-            }, {
-                title: '参与基地建设',
-                dataIndex: 'trainBuildNum'
+                title: 'Action',
+                key: 'action',
+                render: (text, record) => {
+                    return <span style={{color: '#1890ff'}} onClick={async () => {
+                        const res = await Request.findById();
+                        message.success(res.strategyName)
+                    }}>
+                       详情-{record.removeFlagAction()}
+                    </span>
+                }
             }]}
             onChange={onChange}
             pagination={pagination}
             dataSource={list}></Table>;
     };
 
-    return renderTabel(ListDom, 'teacherTeachingList');
+    return renderTabel(ListDom, 'enterprisePracticeInfoList');
 };
 
 export {

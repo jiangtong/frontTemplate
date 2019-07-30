@@ -27,7 +27,7 @@ class BaseComponment extends Component {
     }
 
     componentDidMount() {
-        this.props.menuWarnListAction({menuUrl: this.props.location.pathname});
+        // this.props.menuWarnListAction({menuUrl: this.props.location.pathname});
     }
 
     render() {

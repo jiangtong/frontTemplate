@@ -1,14 +1,14 @@
 import axios from 'axios';
 import qs from 'qs';
-import createHistory from 'history/createHashHistory';
-// import {removeSession} from 'Utilies/sessionUtilies';
+import {createHashHistory} from 'history';
+import {clearLocal} from '@utils/utils';
 
-const history = createHistory();
+const history = createHashHistory();
 
 class BaseRequest {
     constructor(options) {
         this.dataMethodDefaults = {
-            baseURL: '/portrait/',
+            baseURL: '',
             timeout: 60000,
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -49,8 +49,8 @@ class BaseRequest {
                     resolve(useResponse);
 
                     // 这里先注释了吧
-                    // removeSession('auth');
-                    // history.replace('/login');
+                    clearLocal();
+                    history.replace('/login');
                 } else {
                     resolve(useResponse);
                 }

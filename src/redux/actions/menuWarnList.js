@@ -1,6 +1,6 @@
 export const SUCCESS = 'menuWarnList/success';
 export const FAIL = 'menuWarnList/fail';
-import {request} from '@utils/request/BaseSubFormRequest';
+import BaseSubFormRequest from '@utils/request/BaseSubFormRequest';
 
 export function getListSuccess(data) {
     return {
@@ -15,7 +15,7 @@ export function getListFail() {
 
 export function menuWarnList(data) {
     return async dispatch => {
-        const res = await request.post('/warn/menuWarnList', data);
+        const res = await BaseSubFormRequest.post('/warn/menuWarnList', data);
         if (res.success) {
             dispatch(getListSuccess(res.obj || []));
         } else {

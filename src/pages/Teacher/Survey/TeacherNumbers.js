@@ -5,7 +5,7 @@ import TestEchart from '@pages/Teacher/Survey/TestEchart';
 import '@pages/Teacher/commen/assets/styles/index.less';
 import {Row, Col} from 'antd';
 
-const HighFunUse = highComponentFuc('teacherType4College')(TestEchart);
+const HighFunUse = highComponentFuc('enterprisePracticeInfoList')(TestEchart);
 
 class TeacherNumbers extends Component {
     constructor(props) {
@@ -17,8 +17,6 @@ class TeacherNumbers extends Component {
     }
 
     render() {
-        // hoistNonReactStatics的用法
-        // console.log(HighFunUse.getName());
         return (
             <Col span={24} className="enrolment-container">
                 <Row className="bg-white chart-content">
