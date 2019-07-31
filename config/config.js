@@ -22,7 +22,7 @@ module.exports = {
     // favicon 路径
     favicon: resolveApp('public/ico.ico'),
        // 默认开启的本地项目端口号
-    port: '1111',
+    port: '3333',
     // 默认开启本地项目的浏览器
     brower: os.platform() === 'darwin' ? 'google chrome' : 'chrome',
     // 需要代理的 name是接口的前缀，url是需要转发的接口的地址 有几个需要转发的可以写几个

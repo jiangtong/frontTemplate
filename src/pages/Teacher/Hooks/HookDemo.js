@@ -40,7 +40,6 @@ const renderTabel = (ListDom, requestUrl) => {
 const EnterprisePracticeInfoList = () => {
     const ListDom = ({list, pagination, onChange}) => {
         return <Table
-            rowKey={'CODE'}
             onChange={onChange}
             columns={[{
                 title: '序号',
@@ -92,7 +91,6 @@ const EnterprisePracticeInfoList = () => {
 const TeacherTeachingList = () => {
     const ListDom = ({list, pagination, onChange}) => {
         return <Table
-            rowKey={'strategyName'}
             columns={[{
                 title: '序号',
                 dataIndex: 'index'
@@ -120,14 +118,14 @@ const TeacherTeachingList = () => {
             }, {
                 title: 'Action',
                 key: 'action',
-                render: (text, record) => {
-                    return <span style={{color: '#1890ff'}} onClick={async () => {
+                render: (text, record) => (
+                    <span style={{color: '#1890ff'}} onClick={async () => {
                         const res = await Request.findById();
-                        message.success(res.strategyName)
+                        message.success(res.strategyTargetCollege)
                     }}>
-                       详情-{record.removeFlagAction()}
+                       详情
                     </span>
-                }
+                )
             }]}
             onChange={onChange}
             pagination={pagination}
