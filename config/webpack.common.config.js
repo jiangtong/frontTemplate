@@ -45,9 +45,9 @@ const commonConfig = {
         // 显示打包时间
         new ProgressBarPlugin({
             format:
-            '  build [:bar] ' +
-            chalk.green.bold(':percent') +
-            ' (:elapsed seconds)'
+                '  build [:bar] ' +
+                chalk.green.bold(':percent') +
+                ' (:elapsed seconds)'
         }),
 
         // 要动态引入到html上面的js
@@ -56,7 +56,10 @@ const commonConfig = {
                 './public/js/d3.v5.min.js'
             ],
             append: false
-        })
+        }),
+
+        //moment.js 总是会加载 locales，还假定 locales 存在，忽略locales存在。
+        new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
 
         // new HtmlWebpackIncludeAssetsPlugin({
         //     assets: [
@@ -94,7 +97,8 @@ const commonConfig = {
             '@public': path.resolve(config.appSrc, 'public'),
             '@components': path.resolve(config.appSrc, 'components'),
             '@utils': path.resolve(config.appSrc, 'utils'),
-            '$utils': path.resolve(config.appSrc, 'utils/utils')
+            '$utils': path.resolve(config.appSrc, 'utils/utils'),
+            'moment': 'moment/src/moment'
         }
     },
 
