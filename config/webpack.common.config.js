@@ -58,9 +58,6 @@ const commonConfig = {
             append: false
         }),
 
-        //moment.js 总是会加载 locales，还假定 locales 存在，忽略locales存在。
-        new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
-
         // new HtmlWebpackIncludeAssetsPlugin({
         //     assets: [
         //         process.env.NODE_ENV === 'development' ? './public/js/baiduMap.js' : 'public/js/baiduMap.js',
