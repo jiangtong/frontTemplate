@@ -87,11 +87,6 @@ const publicConfig = {
             }]
         ),
 
-        new webpack.ProvidePlugin({
-            $: 'jquery',
-            jQuery: 'jquery'
-        }),
-
         // root是必须要写的
         new CleanWebpackPlugin([path.resolve(config.appbuild, 'app'), path.resolve(config.appbuild, 'public')], {
             root: config.appPulicPath,
