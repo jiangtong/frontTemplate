@@ -156,7 +156,7 @@ const publicConfig = {
                 'css-hot-loader',
                 MiniCssExtractPlugin.loader,
                 {
-                    loader: 'css-loader?importLoaders=1',
+                    loader: 'css-loader?importLoaders=2',
                     options: {
                         publicPath: config.staticPublicPath,
                         minimize: true
@@ -180,7 +180,7 @@ const publicConfig = {
                 'css-hot-loader',
                 MiniCssExtractPlugin.loader,
                 {
-                    loader: 'css-loader?importLoaders=1',
+                    loader: 'css-loader?importLoaders=2',
                     options: {
                         publicPath: config.staticPublicPath,
                         minimize: true // css压缩
