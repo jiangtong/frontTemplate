@@ -6,9 +6,9 @@ const WebpackBar = require('webpackbar');
 // 显示编译时间
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const chalk = require('chalk');
-const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
 const path = require('path');
 const webpack = require('webpack');
+var HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 
 const commonConfig = {
     performance: {
@@ -50,16 +50,8 @@ const commonConfig = {
                 ' (:elapsed seconds)'
         }),
 
-        // 要动态引入到html上面的js
-        new HtmlWebpackIncludeAssetsPlugin({
-            assets: [
-                './public/js/d3.v5.min.js'
-            ],
-            append: false
-        }),
-
-        // new HtmlWebpackIncludeAssetsPlugin({
-        //     assets: [
+        // new HtmlWebpackTagsPlugin({
+        //     tags: [
         //         process.env.NODE_ENV === 'development' ? './public/js/baiduMap.js' : 'public/js/baiduMap.js',
         //         process.env.NODE_ENV === 'development' ? './public/js/LuShu.js' : 'public/js/LuShu.js',
         //         process.env.NODE_ENV === 'development' ? './public/js/Heatmap.js' : 'public/js/Heatmap.js'
