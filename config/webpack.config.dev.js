@@ -6,7 +6,7 @@ const config = require('./config');
 const path = require('path');
 const openBrowserWebpackPlugin = require('open-browser-webpack-plugin');
 const webpack = require('webpack');
-const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
+var HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 
 // 需要转发的接口拼接
 const {proxyArr = []} = config;
@@ -52,8 +52,8 @@ const devConfig = {
         //     manifest: require(path.resolve(config.appbuild, 'dll/utiliesLib-manifest.json'))
         // }),
         //
-        // new HtmlWebpackIncludeAssetsPlugin({
-        //     assets: [
+        // new HtmlWebpackTagsPlugin({
+        //     tags: [
         //         'dist/dll/reactLib.dll.js',
         //         'dist/dll/viewLib.dll.js',
         //         'dist/dll/utiliesLib.dll.js'
