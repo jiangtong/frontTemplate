@@ -86,8 +86,7 @@ const commonConfig = {
             '@public': path.resolve(config.appSrc, 'public'),
             '@components': path.resolve(config.appSrc, 'components'),
             '@utils': path.resolve(config.appSrc, 'utils'),
-            '$utils': path.resolve(config.appSrc, 'utils/utils'),
-            'moment': 'moment/src/moment'
+            '$utils': path.resolve(config.appSrc, 'utils/utils')
         }
     },
 

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import store from '@useRedux/store';
 import {Provider} from 'react-redux';
 import Root from './router/router';
-import {LocaleProvider} from 'antd';
+import {ConfigProvider} from 'antd';
 import {HashRouter as Router} from 'react-router-dom';
 import zh_CN from 'antd/lib/locale-provider/zh_CN';
 import echartsConfig from '@utils/echartsConfig';
@@ -16,13 +16,13 @@ echarts.registerMap('china', chinaMap);
 class App extends React.Component {
     render() {
         return (
-            <LocaleProvider locale={zh_CN}>
+            <ConfigProvider locale={zh_CN}>
                 <Provider store={store}>
                     <Router>
                         <Root/>
                     </Router>
                 </Provider>
-            </LocaleProvider>
+            </ConfigProvider>
         );
     }
 }
