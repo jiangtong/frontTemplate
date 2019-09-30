@@ -30,6 +30,15 @@ class BaseComponents extends React.Component {
     }
 
     componentDidMount() {
+        var socket = io('http://ai.sunmnet.com:9994/api/ws/meeting', {
+            transports: ['websocket']
+        });
+        socket.on('connect', function () {
+            console.log('++++++++++++++++')
+        });
+        socket.on('message', function (data) {
+            alert(data);
+        });
     }
 
 
