@@ -17,6 +17,8 @@ class BaseRequest {
             transformRequest: [function (data, headers) {
                 if (headers['Content-Type'] === 'application/x-www-form-urlencoded') {
                     return qs.stringify(data);
+                } else if (headers['Content-Type'] === 'multipart/form-data') {
+                    return data;
                 } else {
                     return JSON.stringify(data);
                 }
