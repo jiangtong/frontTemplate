@@ -27,8 +27,7 @@ const publicConfig = {
     output: {
         path: config.appbuild,
         filename: 'app/js/[name].[chunkhash:8].js',
-        chunkFilename: 'app/js/[name].[chunkhash:8].bundle.js',
-        publicPath: ''
+        chunkFilename: 'app/js/[name].[chunkhash:8].bundle.js'
     },
 
     // devtool: 'cheap-module-source-map',

@@ -109,7 +109,7 @@ const commonConfig = {
                 loader: 'url-loader',
                 options: {
                     limit: 15000,
-                    name: process.env.NODE_ENV === 'development' ? '[name]_[hash:7].[ext]' : '/app/images/[name]_[hash:7].[ext]'
+                    name: 'app/images/[name]_[hash:7].[ext]'
                 }
             }]
         }, {
@@ -119,7 +119,7 @@ const commonConfig = {
                     loader: 'file-loader',
                     options: {
                         limit: 15000,
-                        name: process.env.NODE_ENV === 'development' ? '[name]_[hash:7].[ext]' : '/app/files/[name]_[hash:7].[ext]'
+                        name: 'app/files/[name]_[hash:7].[ext]'
                     }
                 }
             ]
@@ -129,7 +129,7 @@ const commonConfig = {
                 loader: 'file-loader',
                 options: {
                     limit: 15000,
-                    name: process.env.NODE_ENV === 'development' ? '[name]_[hash:7].[ext]' : '/app/fonts/[name]_[hash:7].[ext]'
+                    name: 'app/fonts/[name]_[hash:7].[ext]'
                 }
             }
         }]
