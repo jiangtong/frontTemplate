@@ -176,6 +176,7 @@ const publicConfig = {
                 {
                     loader: MiniCssExtractPlugin.loader,
                     options: {
+                        //很重要这是css提取,这里css提取的不对图片可能位置就不对，当然前提是后台配置的地址必须是/
                         publicPath: '../../'
                     }
                 },
