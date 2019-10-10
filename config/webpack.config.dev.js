@@ -32,7 +32,7 @@ const devConfig = {
 
     plugins: [
         new openBrowserWebpackPlugin({
-            url: `http://127.0.0.1:${config.port}`,
+            url: `http://127.0.0.1:${config.port}/`,
             browser: config.brower
         }),
 
@@ -67,7 +67,7 @@ const devConfig = {
         path: config.appbuild,
         filename: 'app/[name].[hash].bundle.js',
         chunkFilename: 'app/[name].[hash].bundle.js',
-        publicPath: ''
+        publicPath: '/'
     },
 
     module: {
@@ -111,10 +111,11 @@ const devConfig = {
         port: config.port,
         historyApiFallback: true,
         compress: true,
+        contentBase: '/',
         hot: true,
         inline: true,
         // 默认浏览器
-        open: true,
+        open: false,
         disableHostCheck: true,
         proxy: newProxyObj,
         stats: {

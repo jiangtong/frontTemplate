@@ -78,16 +78,8 @@ const publicConfig = {
             }
         }),
 
-        //需要从本地文件拷贝到打包的dist文件下的
-        new CopyWebpackPlugin([
-            {
-                from: path.resolve(config.appPublic, 'js'),
-                to: path.resolve(config.appbuild, 'public/js')
-            }]
-        ),
-
         // root是必须要写的
-        new CleanWebpackPlugin([path.resolve(config.appbuild, 'app'), path.resolve(config.appbuild, 'public')], {
+        new CleanWebpackPlugin([path.resolve(config.appbuild, 'app'), path.resolve(config.appbuild, 'public'), path.resolve(config.appbuild, 'static')], {
             root: config.appPulicPath,
             verbose: true,
             dry: false
@@ -129,7 +121,6 @@ const publicConfig = {
             chunkFilename: 'app/css/[name].[contenthash:8].css'
         }),
 
-
         new UglifyJSPlugin({
             parallel: true,
             cache: true,
@@ -153,11 +144,15 @@ const publicConfig = {
             test: /\.(less|css)$/,
             use: [
                 'css-hot-loader',
-                MiniCssExtractPlugin.loader,
                 {
+                    loader: MiniCssExtractPlugin.loader,
+                    options: {
+                        publicPath: '../../'
+                    }
+                }, {
                     loader: 'css-loader?importLoaders=2',
                     options: {
-                        publicPath: config.staticPublicPath,
+                        paths: config.appbuild,
                         minimize: true
                     }
                 },
@@ -167,6 +162,7 @@ const publicConfig = {
                 {
                     loader: 'less-loader',
                     options: {
+                        paths: config.appbuild,
                         // 使用less默认运行时替换配置的@color样式
                         modifyVars: config.color,
                         javascriptEnabled: true
@@ -177,11 +173,16 @@ const publicConfig = {
             test: /\.(sass|scss)$/,
             use: [
                 'css-hot-loader',
-                MiniCssExtractPlugin.loader,
+                {
+                    loader: MiniCssExtractPlugin.loader,
+                    options: {
+                        publicPath: '../../'
+                    }
+                },
                 {
                     loader: 'css-loader?importLoaders=2',
                     options: {
-                        publicPath: config.staticPublicPath,
+                        publicPath: config.appbuild,
                         minimize: true // css压缩
                     }
                 },

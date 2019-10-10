@@ -48,7 +48,7 @@ const commonConfig = {
                 '  build [:bar] ' +
                 chalk.green.bold(':percent') +
                 ' (:elapsed seconds)'
-        }),
+        })
 
         // new HtmlWebpackTagsPlugin({
         //     tags: [
