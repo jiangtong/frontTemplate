@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {Table, message} from 'antd';
+import {withRouter} from 'react-router-dom';
 import Request from '@commenApi/teacher';
 
 const useRenderPage = (requestUrl) => {
@@ -88,7 +89,7 @@ const EnterprisePracticeInfoList = () => {
     return renderTabel(ListDom, 'pageAlarmStrategy');
 };
 
-const TeacherTeachingList = () => {
+const TeacherTeachingList = withRouter((props) => {
     const ListDom = ({list, pagination, onChange}) => {
         return <Table
             columns={[{
@@ -120,8 +121,9 @@ const TeacherTeachingList = () => {
                 key: 'action',
                 render: (text, record) => (
                     <span style={{color: '#1890ff'}} onClick={async () => {
-                        const res = await Request.findById();
-                        message.success(res.strategyTargetCollege)
+                        props.history.push('/teachermanager/hooks/detail')
+                        // const res = await Request.findById();
+                        // message.success(res.strategyTargetCollege)
                     }}>
                        详情
                     </span>
@@ -133,7 +135,7 @@ const TeacherTeachingList = () => {
     };
 
     return renderTabel(ListDom, 'enterprisePracticeInfoList');
-};
+});
 
 export {
     TeacherTeachingList,

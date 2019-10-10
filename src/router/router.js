@@ -21,7 +21,10 @@ const Root = () => (
                 <Switch>
                     <Route exact path="/" render={() => <Redirect to="/majormanager/professional"/>}/>
                     {
-                        teachermanager
+                        [...teachermanager].map(item => {
+                            return <Route key={item.path} exact path={item.path}
+                                          component={item.component}></Route>;
+                        })
                     }
                 </Switch>
             </BaseComponents> : <Route render={() => <Redirect to="/login"/>}/>)}

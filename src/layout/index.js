@@ -2,7 +2,7 @@ import React from 'react';
 import {compose} from 'redux';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
-import {Icon, Layout, Menu, Popconfirm, message, Modal} from 'antd';
+import {Icon, Layout, Menu, Button, message, Modal} from 'antd';
 import {getSession} from '@utils/utils';
 
 const {Header, Content, Footer, Sider} = Layout;
@@ -14,25 +14,11 @@ class BaseComponents extends React.Component {
         super(props);
         this.state = {
             collapsed: false,
-            menuList: [],
-            visible: false,
-            oldPassword: '',
-            newPassword: '',
-            againPassword: ''
+            menuList: []
         };
         this.openKeys = [];
         this.current = [];
     }
-
-
-    static getDerivedStateFromProps(nextProps, prevState) {
-        return null;
-    }
-
-    componentDidMount() {
-
-    }
-
 
     goHome() {
         this.props.history.push('/fullHome');
@@ -50,7 +36,7 @@ class BaseComponents extends React.Component {
             }
 
             if (path) {
-                if (item['menuUrl'] === path) {
+                if (path.indexOf(item['menuUrl']) > -1) {
                     that.openKeys = [item['parentMenuNo']];
                     that.current = [item['menuNo']];
                 }
@@ -63,6 +49,12 @@ class BaseComponents extends React.Component {
             </MenuItem>);
         }, this);
     }
+
+    toggleCollapsed = () => {
+        this.setState({
+            collapsed: !this.state.collapsed
+        });
+    };
 
     render() {
         // this.breadCrumb = [];
@@ -77,6 +69,9 @@ class BaseComponents extends React.Component {
         return (<Layout>
             <Header className="header headerBC">
                 <div>
+                    <Button type="primary" onClick={this.toggleCollapsed} style={{marginBottom: 16}}>
+                        <Icon type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}/>
+                    </Button>
                     <img style={{height: 50}} src={require('@public/img/xtzy.png')}/>
                     {/*<img style={{*/}
                     {/*height: 30,*/}
