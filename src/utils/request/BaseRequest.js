@@ -120,7 +120,7 @@ class BaseRequest {
     }
 
     upload(url, data = undefined, config = {}) {
-        return this.request.post(url, data, {...this.defaultRequestOptions}, {
+        return this.request.post(url, data, {
             ...config,
             headers: {'Content-Type': 'multipart/form-data'}
         });
