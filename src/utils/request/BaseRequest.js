@@ -130,7 +130,7 @@ class BaseRequest {
         return this.request.post(url, data, {
             ...this.defaultRequestOptions, ...config, responseType: 'blob'
         }).then(response => {
-            const useData = response.data;
+            const useData = response;
             if (!useData) {
                 return new Promise((resolve => {
                     resolve({'success': false, 'msg': '文件下载失败'});
