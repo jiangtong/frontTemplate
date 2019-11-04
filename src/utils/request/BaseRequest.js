@@ -128,7 +128,7 @@ class BaseRequest {
 
     downLoad(url, data = undefined, config = {}) {
         return this.request.post(url, data, {
-            ...this.defaultRequestOptions, ...config
+            ...this.defaultRequestOptions, ...config, responseType: 'blob'
         }).then(response => {
             const useData = response.data;
             if (!useData) {
