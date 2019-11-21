@@ -8,6 +8,15 @@ import {getSession} from '@utils/utils';
 const {Header, Content, Footer, Sider} = Layout;
 const SubMenu = Menu.SubMenu;
 const MenuItem = Menu.Item;
+import withBreadcrumbs from 'react-router-breadcrumbs-hoc';
+
+const Breadcrumbs = ({breadcrumbs}) => (
+    <React.Fragment>
+        {breadcrumbs.map(({breadcrumb}) => breadcrumb)}
+    </React.Fragment>
+);
+
+const Bread = withBreadcrumbs()(Breadcrumbs);
 
 class BaseComponents extends React.Component {
     constructor(props) {
@@ -114,6 +123,8 @@ class BaseComponents extends React.Component {
                         </Menu>
                     </div>
                 </Sider>
+                <Bread></Bread>
+
                 <Layout style={{
                     height: document.body.clientHeight - 64,
                     overflowY: 'auto'
