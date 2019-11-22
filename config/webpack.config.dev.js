@@ -7,6 +7,8 @@ const path = require('path');
 const openBrowserWebpackPlugin = require('open-browser-webpack-plugin');
 const webpack = require('webpack');
 var HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
+const postcssPresetEnv = require('postcss-preset-env');
 
 // 需要转发的接口拼接
 const {proxyArr = []} = config;
@@ -31,10 +33,29 @@ const devConfig = {
     },
 
     plugins: [
+        new HardSourceWebpackPlugin({
+            // cacheDirectory是在高速缓存写入。默认情况下，将缓存存储在node_modules下的目录中，因此如
+            // 果清除了node_modules，则缓存也是如此
+            cacheDirectory: 'node_modules/.cache/hard-source/[confighash]',
+            recordsPath: 'node_modules/.cache/hard-source/[confighash]/records.json',
+            // configHash在启动webpack实例时转换webpack配置，并用于cacheDirectory为不同的webpack配
+            // 置构建不同的缓存
+            configHash: function (webpackConfig) {
+                return require('node-object-hash')({sort: false}).hash(webpackConfig);
+            },
+            // 当加载器，插件，其他构建时脚本或其他动态依赖项发生更改时，hard-source需要替换缓存以确保输
+            // 出正确。environmentHash被用来确定这一点。如果散列与先前的构建不同，则将使用新的缓存
+            environmentHash: {
+                root: process.cwd(),
+                directories: [],
+                files: ['package-lock.json', 'yarn.lock']
+            }
+        }),
+
         new openBrowserWebpackPlugin({
             url: `http://127.0.0.1:${config.port}/`,
             browser: config.brower
-        }),
+        })
 
         // 选用dll模式可以打开如下代码
         // new webpack.DllReferencePlugin({
@@ -74,35 +95,56 @@ const devConfig = {
         rules: [
             {
                 test: /\.(scss|sass)$/,
-                use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
-                exclude: '/node_modules/'
+                use: [
+                    'style-loader',
+                    'css-loader', {
+                        loader: 'postcss-loader',
+                        options: {
+                            ident: 'postcss',
+                            plugins: () => [
+                                postcssPresetEnv({})
+                            ]
+                        }
+                    },
+                    'sass-loader'
+                ]
             },
             {
                 test: /\.less$/,
                 use: [{
-                    loader: 'style-loader',
+                    loader: 'style-loader'
                 }, {
-                    loader: 'css-loader',
+                    loader: 'css-loader'
                 }, {
-                    loader: 'postcss-loader',
+                    loader: 'postcss-loader', options: {
+                        ident: 'postcss',
+                        plugins: () => [
+                            postcssPresetEnv({})
+                        ]
+                    }
                 }, {
                     loader: 'less-loader',
                     options: {
                         // 使用less默认运行时替换配置的@color样式
                         modifyVars: config.color,
-                        javascriptEnabled: true,
-                    },
+                        javascriptEnabled: true
+                    }
                 }
-                ],
-                exclude: '/node_modules/'
+                ]
             }, {
                 test: /\.css$/,
                 use: [
                     'style-loader',
                     'css-loader',
-                    'postcss-loader'
-                ],
-                exclude: '/node_modules/'
+                    {
+                        loader: 'postcss-loader', options: {
+                            ident: 'postcss',
+                            plugins: () => [
+                                postcssPresetEnv({})
+                            ]
+                        }
+                    }
+                ]
             }
         ]
     },

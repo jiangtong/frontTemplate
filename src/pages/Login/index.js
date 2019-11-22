@@ -222,7 +222,6 @@ class LoginComponent extends Component {
                 </div>
                 <div className="main_footer">
                     <div className="side_content_footer">
-                        © 版权所有 邢台职业技术学院 技术支持 三盟科技股份有限公司
                     </div>
                 </div>
             </div>

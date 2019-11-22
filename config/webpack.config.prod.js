@@ -1,12 +1,14 @@
 /*eslint-disable*/
 const merge = require('webpack-merge');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const commonConfig = require('./webpack.common.config.js');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
+const postcssPresetEnv = require('postcss-preset-env');
 const config = require('./config');
 const seen = new Set();
 const nameLength = 4;
@@ -79,23 +81,13 @@ const publicConfig = {
         }),
 
         // root是必须要写的
-        new CleanWebpackPlugin([path.resolve(config.appbuild, 'app'), path.resolve(config.appbuild, 'public'), path.resolve(config.appbuild, 'static')], {
-            root: config.appPulicPath,
+        new CleanWebpackPlugin({
             verbose: true,
             dry: false
         }),
 
-        // 整合css
-        new OptimizeCssAssetsPlugin({
-            assetNameRegExp: /\.optimize\.css$/g,
-            cssProcessor: require('cssnano'),
-            cssProcessorPluginOptions: {
-                preset: ['default', {discardComments: {removeAll: true}}]
-            },
-            canPrint: true
-        }),
-
         new webpack.HashedModuleIdsPlugin(),
+
         new webpack.NamedChunksPlugin(chunk => {
             if (chunk.name) {
                 return chunk.name;
@@ -115,35 +107,91 @@ const publicConfig = {
             }
         }),
 
-        // 配和MiniCssExtractPlugin.loader, 提取css
+        // 配和MiniCssExtractPlugin.loader, 提取css到特定的目录下
         new MiniCssExtractPlugin({
             filename: 'app/css/[name].[contenthash:8].css',
             chunkFilename: 'app/css/[name].[contenthash:8].css'
         }),
 
-        new UglifyJSPlugin({
-            parallel: true,
-            cache: true,
-            include: /\/src/,
-
-            uglifyOptions: {
-                compress: {
-                    drop_console: true,
-                    reduce_vars: true
-                },
+        // 使用 ParallelUglifyPlugin 并行压缩输出JS代码
+        new ParallelUglifyPlugin({
+            cacheDir: '.cache/',
+            output: {
                 output: {
-                    comments: false,
-                    beautify: false
+                    /*是否输出可读性较强的代码，即会保留空格和制表符，默认为输出，为了达到更好的压缩效果，可以设置为false  */
+                    beautify: false,
+                    /* 是否保留代码中的注释，默认为保留，为了达到更好的压缩效果，可以设置为false */
+                    comments: false
                 }
-            }
-        })
+
+            },
+            /*是否在UglifyJS删除没有用到的代码时输出警告信息，默认为输出，可以设置为false关闭这些作用 不大的警告*/
+            warnings: false,
+            compress: {
+                /*是否删除代码中所有的console语句，默认为不删除，开启后，会删除所有的console语句*/
+                drop_console: true,
+                /*是否内嵌虽然已经定义了，但是只用到一次的变量，比如将 var x = 1; y = x, 转换成 y = 5, 默认为不
+                 转换，为了达到更好的压缩效果，可以设置为false*/
+                collapse_vars: true,
+                /*是否提取出现了多次但是没有定义成变量去引用的静态值，比如将 x = 'xxx'; y = 'xxx'  转换成
+                 var a = 'xxxx'; x = a; y = a; 默认为不转换，为了达到更好的压缩效果，可以设置为false*/
+                reduce_vars: true
+            },
+            test: /.js$/g,
+            include: [],
+            exclude: [],
+            workerCount: '',
+            sourceMap: false
+        }),
+        // new UglifyJSPlugin({
+        //     parallel: true,
+        //     cache: true,
+        //     include: /\/src/,
+        //
+        //     uglifyOptions: {
+        //         compress: {
+        //             drop_console: true,
+        //             reduce_vars: true
+        //         },
+        //         output: {
+        //             comments: false,
+        //             beautify: false
+        //         }
+        //     }
+        // }),
+
+
+        // 压缩css
+        new OptimizeCssAssetsPlugin()
     ],
 
     module: {
         rules: [{
-            test: /\.(less|css)$/,
+            test: /\.(scss|sass)$/,
             use: [
-                'css-hot-loader',
+                {
+                    loader: MiniCssExtractPlugin.loader,
+                    options: {
+                        publicPath: '../../'
+                    }
+                },
+                {
+                    loader: 'css-loader?importLoaders=2',
+                    options: {}
+                },
+                {
+                    loader: 'postcss-loader', options: {
+                        ident: 'postcss',
+                        plugins: () => [
+                            postcssPresetEnv({})
+                        ]
+                    }
+                },
+                'sass-loader'
+            ]
+        }, {
+            test: /\.less$/,
+            use: [
                 {
                     loader: MiniCssExtractPlugin.loader,
                     options: {
@@ -151,18 +199,17 @@ const publicConfig = {
                     }
                 }, {
                     loader: 'css-loader?importLoaders=2',
-                    options: {
-                        paths: config.appbuild,
-                        minimize: true
+                    options: {}
+                }, {
+                    loader: 'postcss-loader', options: {
+                        ident: 'postcss',
+                        plugins: () => [
+                            postcssPresetEnv({})
+                        ]
                     }
-                },
-                {
-                    loader: 'postcss-loader'
-                },
-                {
+                }, {
                     loader: 'less-loader',
                     options: {
-                        paths: config.appbuild,
                         // 使用less默认运行时替换配置的@color样式
                         modifyVars: config.color,
                         javascriptEnabled: true
@@ -170,30 +217,24 @@ const publicConfig = {
                 }
             ]
         }, {
-            test: /\.(sass|scss)$/,
+            test: /\.css$/,
             use: [
-                'css-hot-loader',
                 {
                     loader: MiniCssExtractPlugin.loader,
                     options: {
-                        //很重要这是css提取,这里css提取的不对图片可能位置就不对，当然前提是后台配置的地址必须是/
                         publicPath: '../../'
                     }
                 },
                 {
                     loader: 'css-loader?importLoaders=2',
-                    options: {
-                        publicPath: config.appbuild,
-                        minimize: true // css压缩
-                    }
+                    options: {}
                 },
                 {
-                    loader: 'postcss-loader'
-                },
-                {
-                    loader: 'sass-loader',
-                    options: {
-                        javascriptEnabled: true
+                    loader: 'postcss-loader', options: {
+                        ident: 'postcss',
+                        plugins: () => [
+                            postcssPresetEnv({})
+                        ]
                     }
                 }
             ]

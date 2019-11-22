@@ -18,7 +18,7 @@ export default [{
 }, {
     path: '/teachermanager/survey',
     component: Survey,
-    breadcrumb: '/教师管理/11'
+    breadcrumb: '教师管理/11'
 }, {
     path: '/teachermanager/growth',
     component: Context,
@@ -38,9 +38,9 @@ export default [{
 }, {
     path: '/teachermanager/hooks',
     component: Hooks,
-    breadcrumb: '/教师管理/13'
+    breadcrumb: '教师管理/13'
 }, {
     path: '/teachermanager/hooks/detail',
     component: HookDetail,
-    breadcrumb: '/教师管理/14'
+    breadcrumb: '教师管理/14'
 }];

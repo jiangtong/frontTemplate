@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {withRouter, NavLink} from 'react-router-dom';
 import {Icon, Layout, Menu, Button, message, Modal} from 'antd';
 import {getSession} from '@utils/utils';
+import './assets/styles/index.less';
 
 const {Header, Content, Footer, Sider} = Layout;
 const SubMenu = Menu.SubMenu;
@@ -43,7 +44,7 @@ class BaseComponents extends React.Component {
 
     renderMenu(data, path) {
         let that = this;
-        return data.map(function(item) {
+        return data.map(function (item) {
             if (item['menuList'] && item['menuList'].length > 0) {
                 return (<SubMenu key={item['menuNo']}
                                  title={<span>{item['menuLevel'] === 'ONE' ? <Icon type="appstore"/> : ''}
@@ -103,7 +104,7 @@ class BaseComponents extends React.Component {
                        <span style={{marginRight: '15px'}}>
                            <Icon type="user" style={{marginRight: 6}}/>{JSON.parse(getSession('auth'))['userName']}
                        </span>
-                        <span style={{
+                        <span className={'name_box'} style={{
                             marginRight: '15px',
                             cursor: 'pointer'
                         }} onClick={this.goHome.bind(this)}><Icon
@@ -153,7 +154,7 @@ class BaseComponents extends React.Component {
                         textAlign: 'center',
                         margin: 0,
                         fontSize: '12px'
-                    }}>版权所有 © 三盟科技股份有限公司 2013- {new Date().getFullYear()} 保留一切权利</p ></Footer>
+                    }}>版权所有 © 三盟科技股份有限公司 2013- {new Date().getFullYear()} 保留一切权利</p></Footer>
                 </Layout>
             </Layout>
         </Layout>);
@@ -166,7 +167,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        chartsResizeFun: function(data) {
+        chartsResizeFun: function (data) {
             // dispatch(chartsResize(data));
         }
     };

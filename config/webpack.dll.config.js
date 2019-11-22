@@ -1,7 +1,7 @@
 /*eslint-disable*/
 const webpack = require('webpack');
 const config = require('./config');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const path = require('path');
@@ -34,11 +34,8 @@ module.exports = {
             }]
         ),
 
-        new CleanWebpackPlugin([path.resolve(config.appbuild, 'dll/*')], {
-            root: config.appPulicPath,
-            verbose: true,
-            dry: false
-        }),
+        // root是必须要写的
+        new CleanWebpackPlugin(),
 
         new webpack.DllPlugin({
             path: path.resolve(config.appbuild, 'dll/[name]-manifest.json'),

@@ -9,6 +9,9 @@ const chalk = require('chalk');
 const path = require('path');
 const webpack = require('webpack');
 var HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
+const HappyPack = require('happypack');
+const os = require('os');
+const happyThreadPool = HappyPack.ThreadPool({size: os.cpus().length});
 
 const commonConfig = {
     performance: {
@@ -48,6 +51,13 @@ const commonConfig = {
                 '  build [:bar] ' +
                 chalk.green.bold(':percent') +
                 ' (:elapsed seconds)'
+        }),
+
+
+        new HappyPack({
+            id: 'happy-babel-js',
+            loaders: ['babel-loader?cacheDirectory=true'],
+            threadPool: happyThreadPool
         })
 
         // new HtmlWebpackTagsPlugin({
@@ -94,7 +104,8 @@ const commonConfig = {
         rules: [{
             test: /\.js?$/,
             use: [{
-                loader: 'babel-loader'
+                // loader: 'babel-loader'
+                loader: 'happypack/loader?id=happy-babel-js'
             }],
             // options: {
             //     configFile: false,
