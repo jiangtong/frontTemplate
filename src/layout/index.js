@@ -1,22 +1,30 @@
 import React from 'react';
 import {compose} from 'redux';
 import {connect} from 'react-redux';
-import {withRouter} from 'react-router-dom';
+import {withRouter, NavLink} from 'react-router-dom';
 import {Icon, Layout, Menu, Button, message, Modal} from 'antd';
 import {getSession} from '@utils/utils';
 
 const {Header, Content, Footer, Sider} = Layout;
 const SubMenu = Menu.SubMenu;
 const MenuItem = Menu.Item;
+
+import routes from '@router/teacher';
 import withBreadcrumbs from 'react-router-breadcrumbs-hoc';
 
-const Breadcrumbs = ({breadcrumbs}) => (
-    <React.Fragment>
-        {breadcrumbs.map(({breadcrumb}) => breadcrumb)}
-    </React.Fragment>
-);
+const Breadcrumbs = ({breadcrumbs}) => (<React.Fragment>
+    {breadcrumbs.map(({
+                          match, breadcrumb
+                      }) => {
+        return <span key={match.url}>
+        <NavLink to={match.url}>{breadcrumb['props']['children'][0] == ':' ?
+            match['params'][breadcrumb['props']['children'].substr(1)] :
+            breadcrumb}</NavLink> <span>/</span>
+      </span>;
+    })}
+</React.Fragment>);
 
-const Bread = withBreadcrumbs()(Breadcrumbs);
+const Bread = withBreadcrumbs(routes)(Breadcrumbs);
 
 class BaseComponents extends React.Component {
     constructor(props) {
@@ -35,7 +43,7 @@ class BaseComponents extends React.Component {
 
     renderMenu(data, path) {
         let that = this;
-        return data.map(function (item) {
+        return data.map(function(item) {
             if (item['menuList'] && item['menuList'].length > 0) {
                 return (<SubMenu key={item['menuNo']}
                                  title={<span>{item['menuLevel'] === 'ONE' ? <Icon type="appstore"/> : ''}
@@ -81,17 +89,24 @@ class BaseComponents extends React.Component {
                     <Button type="primary" onClick={this.toggleCollapsed} style={{marginBottom: 16}}>
                         <Icon type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}/>
                     </Button>
-                    <img style={{height: 50}} src={require('@public/img/xtzy.png')}/>
-                    {/*<img style={{*/}
+                    < img style={{height: 50}} src={require('@public/img/xtzy.png')}/>
+                    {/*< img style={{*/}
                     {/*height: 30,*/}
                     {/*marginLeft: 15*/}
                     {/*}} src={require('./img/school_name.png')}/>*/}
 
-                    <div style={{display: 'flex', float: 'right', color: 'white'}}>
+                    <div style={{
+                        display: 'flex',
+                        float: 'right',
+                        color: 'white'
+                    }}>
                        <span style={{marginRight: '15px'}}>
                            <Icon type="user" style={{marginRight: 6}}/>{JSON.parse(getSession('auth'))['userName']}
                        </span>
-                        <span style={{marginRight: '15px', cursor: 'pointer'}} onClick={this.goHome.bind(this)}><Icon
+                        <span style={{
+                            marginRight: '15px',
+                            cursor: 'pointer'
+                        }} onClick={this.goHome.bind(this)}><Icon
                             type="home" style={{marginRight: 6}}/>领导驾驶舱</span>
                     </div>
                 </div>
@@ -123,20 +138,22 @@ class BaseComponents extends React.Component {
                         </Menu>
                     </div>
                 </Sider>
-                <Bread></Bread>
+
 
                 <Layout style={{
                     height: document.body.clientHeight - 64,
                     overflowY: 'auto'
                 }}>
                     <Content style={{minHeight: 'max-content'}} className={'aiContent'}>
+                        <Bread></Bread>
+                        <div style={{marginTop: 20}}></div>
                         {this.props.children}
                     </Content>
                     <Footer><p style={{
                         textAlign: 'center',
                         margin: 0,
                         fontSize: '12px'
-                    }}>版权所有 © 三盟科技股份有限公司 2013- {new Date().getFullYear()} 保留一切权利</p></Footer>
+                    }}>版权所有 © 三盟科技股份有限公司 2013- {new Date().getFullYear()} 保留一切权利</p ></Footer>
                 </Layout>
             </Layout>
         </Layout>);
@@ -149,7 +166,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        chartsResizeFun: function (data) {
+        chartsResizeFun: function(data) {
             // dispatch(chartsResize(data));
         }
     };
@@ -158,5 +175,3 @@ const mapDispatchToProps = (dispatch) => {
 const enchce = compose(connect(mapStateToProps, mapDispatchToProps), withRouter);
 
 export default enchce(BaseComponents);
-
-
