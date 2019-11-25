@@ -6,7 +6,7 @@ const config = require('./config');
 const path = require('path');
 const openBrowserWebpackPlugin = require('open-browser-webpack-plugin');
 const webpack = require('webpack');
-var HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
+const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const postcssPresetEnv = require('postcss-preset-env');
 
@@ -34,19 +34,13 @@ const devConfig = {
 
     plugins: [
         new HardSourceWebpackPlugin({
-            // cacheDirectory是在高速缓存写入。默认情况下，将缓存存储在node_modules下的目录中，因此如
-            // 果清除了node_modules，则缓存也是如此
-            cacheDirectory: 'node_modules/.cache/hard-source/[confighash]',
-            recordsPath: 'node_modules/.cache/hard-source/[confighash]/records.json',
-            // configHash在启动webpack实例时转换webpack配置，并用于cacheDirectory为不同的webpack配
-            // 置构建不同的缓存
+            // configHash在启动webpack实例时转换webpack配置，并用于cacheDirectory为不同的webpack配置构建不同的缓存
             configHash: function (webpackConfig) {
                 return require('node-object-hash')({sort: false}).hash(webpackConfig);
             },
-            // 当加载器，插件，其他构建时脚本或其他动态依赖项发生更改时，hard-source需要替换缓存以确保输
-            // 出正确。environmentHash被用来确定这一点。如果散列与先前的构建不同，则将使用新的缓存
+            // 当加载器，插件，其他构建时脚本或其他动态依赖项发生更改时，hard-source需要替换缓存以确保输出正确。environmentHash被用来确定这一点。如果散列与先前的构建不同，则将使用新的缓存
             environmentHash: {
-                root: process.cwd(),
+                root: `${config.appPublic}/node_modules`,
                 directories: [],
                 files: ['package-lock.json', 'yarn.lock']
             }
