@@ -4,7 +4,7 @@ import '@pages/Teacher/commen/assets/styles/index.less';
 import CommenComponent from '@pages/Teacher/commen/CommenComponent';
 import BaseComponment from '@pages/Teacher/commen/BaseComponment';
 import HookComponent from '@pages/Teacher/Hooks/HookComponent';
-
+import './index.scss'
 class OurfacultyComp extends Component {
     constructor(props) {
         super(props);

@@ -22,7 +22,7 @@ export default (props) => {
 
             <div>{state}</div>
             <div>{state1}</div>
-            <button onClick={() => {
+            <button className={'aaa'} onClick={() => {
                 setState(prevstate => prevstate + 1);
                 setState1(prevstate => prevstate + 1);
             }}>加
