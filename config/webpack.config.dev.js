@@ -47,7 +47,7 @@ const devConfig = {
         }),
 
         new openBrowserWebpackPlugin({
-            url: `http://127.0.0.1:${config.port}/`,
+            url: `http://${config.host || config.baseHost}:${config.port}/`,
             browser: config.brower
         })
 
@@ -144,6 +144,7 @@ const devConfig = {
     },
 
     devServer: {
+        host: config.host || config.baseHost,
         port: config.port,
         historyApiFallback: true,
         compress: true,

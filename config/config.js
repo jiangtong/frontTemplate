@@ -23,6 +23,10 @@ module.exports = {
     favicon: resolveApp('public/ico.ico'),
        // 默认开启的本地项目端口号
     port: '3321',
+    //手动配置打开的host
+    host: '0.0.0.0',
+    //默认的host
+    baseHost: '127.0.0.1',
     // 默认开启本地项目的浏览器
     brower: os.platform() === 'darwin' ? 'google chrome' : 'chrome',
     // 需要代理的 name是接口的前缀，url是需要转发的接口的地址 有几个需要转发的可以写几个
