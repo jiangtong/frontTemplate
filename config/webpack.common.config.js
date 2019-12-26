@@ -9,10 +9,10 @@ const chalk = require('chalk');
 const path = require('path');
 const webpack = require('webpack');
 var HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
-const HappyPack = require('happypack');
 const os = require('os');
-const happyThreadPool = HappyPack.ThreadPool({size: os.cpus().length});
+const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
 
+const smp = new SpeedMeasurePlugin();
 const commonConfig = {
     performance: {
         hints: false
@@ -53,13 +53,6 @@ const commonConfig = {
                 ' (:elapsed seconds)'
         }),
 
-
-        new HappyPack({
-            id: 'happy-babel-js',
-            loaders: ['babel-loader?cacheDirectory=true'],
-            threadPool: happyThreadPool
-        })
-
         // new HtmlWebpackTagsPlugin({
         //     tags: [
         //         process.env.NODE_ENV === 'development' ? './public/js/baiduMap.js' : 'public/js/baiduMap.js',
@@ -96,7 +89,8 @@ const commonConfig = {
             '@public': path.resolve(config.appSrc, 'public'),
             '@components': path.resolve(config.appSrc, 'components'),
             '@utils': path.resolve(config.appSrc, 'utils'),
-            '$utils': path.resolve(config.appSrc, 'utils/utils')
+            '$utils': path.resolve(config.appSrc, 'utils/utils'),
+            'react-dom': '@hot-loader/react-dom'
         }
     },
 
@@ -104,15 +98,20 @@ const commonConfig = {
         rules: [{
             test: /\.js?$/,
             use: [{
-                // loader: 'babel-loader'
-                loader: 'happypack/loader?id=happy-babel-js'
+                loader: 'babel-loader',
+                options: {
+                    cacheDirectory: true
+                },
+            }, {
+                loader: 'eslint-loader',
+                options: {
+                    failOnError: false,
+                    failOnWarning: true, //警告不显示
+                    quiet: true,
+                    cache: true
+                }
             }],
-            // options: {
-            //     configFile: false,
-            //     babelrc: false,
-            //     cacheDirectory: true
-            // },
-            exclude: '/node_modules/',
+            exclude: /node_modules/,
             include: config.appSrc
         }, {
             test: /\.(png|jpg|jpeg|gif|svg)$/,
@@ -147,4 +146,4 @@ const commonConfig = {
     }
 };
 
-module.exports = commonConfig;
+module.exports = smp.wrap(commonConfig);

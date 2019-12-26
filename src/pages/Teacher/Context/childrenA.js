@@ -12,13 +12,13 @@ class Children extends Component {
     render() {
         const {context} = this.props;
         return (
-           <div>
-               <h1>childrenA</h1>
-               
-               
-               <Link to={"/teachermanager/growth/12/哈哈"}>下钻</Link>
+            <div>
+                <h1>childrenA</h1>
 
-           </div>
+
+                <Link to={'/teachermanager/growth/12/哈哈'}>下钻</Link>
+
+            </div>
         );
     }
 }

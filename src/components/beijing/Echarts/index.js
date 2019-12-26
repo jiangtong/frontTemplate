@@ -16,7 +16,7 @@ class Echart extends React.Component {
     }
 
     render() {
-        const {style = {height: '300px'}, className = {}} = this.props;
+        const {style = {height: '300px'}, className = ''} = this.props;
         return <EchartsForReact className={className}
                                 option={this.props.data}
             // showLoading

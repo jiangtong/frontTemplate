@@ -1,0 +1,70 @@
+#app, .container {
+  height: 100%;
+
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 200px repeat(12, 1fr);
+  grid-template-rows: 50px auto 50px;
+  grid-template-areas: "h h h h h h h h h h h h h" "m c c c c c c c c c c c c" "m f f f f f f f f f f f f";
+}
+
+.header {
+  grid-area: h;
+  background: red;
+}
+
+.menu {
+  grid-area: m;
+  background: #2ecc71;
+}
+
+.content {
+  padding: 20px;
+  grid-area: c;
+  background: #9b59b6;
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 100px 20px auto;
+
+}
+
+.tab1 {
+  background: yellow;
+
+  display: grid;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.tab2 {
+  background: yellowgreen
+}
+
+.tab3 {
+  background: green
+}
+
+.tab4 {
+  background: darkgreen
+}
+
+.long1 {
+  background: pink;
+  grid-column-start: 1;
+  grid-column-end: 5;
+}
+
+.long2 {
+  background: deeppink;
+  grid-column-start: 1;
+  grid-column-end: 5;
+}
+
+.footer {
+  grid-area: f;
+  background: #7596ce;
+}

@@ -15,9 +15,9 @@ export const clearLocal = () => localStorage.clear();
 // 去除字符串中所有的空格， 返回值：没有空格的字符串
 export const Trim = (str, is_global) => {
     let result;
-    result = str.replace(/(^\s+)|(\s+$)/g, "");
-    if (is_global.toLowerCase() === "g") {
-        result = result.replace(/\s/g, "");
+    result = str.replace(/(^\s+)|(\s+$)/g, '');
+    if (is_global.toLowerCase() === 'g') {
+        result = result.replace(/\s/g, '');
     }
     return result;
 };
@@ -31,12 +31,12 @@ export const setCookie = (name, value) => {
     let Days = 30;
     let exp = new Date();
     exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
-    document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString() + "; path=/";
+    document.cookie = name + '=' + escape(value) + ';expires=' + exp.toGMTString() + '; path=/';
 };
 
 //读取cookies
 export const getCookie = (name) => {
-    let arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+    let arr, reg = new RegExp('(^| )' + name + '=([^;]*)(;|$)');
     if (arr === document.cookie.match(reg))
         return unescape(arr[2]);
     else {
@@ -49,7 +49,7 @@ export const delCookie = (name) => {
     let exp = new Date();
     exp.setTime(exp.getTime() - 1);
     let cval = getCookie(name);
-    if (cval !== null) document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString() + "; path=/";
+    if (cval !== null) document.cookie = name + '=' + cval + ';expires=' + exp.toGMTString() + '; path=/';
 };
 
 //获取地址栏参数
@@ -94,7 +94,7 @@ export const isEmailAvailable = (email) => {
 
 // 判断是否为数字
 export const isNum = (num) => {
-    let myreg = new RegExp("^[0-9]*$");
+    let myreg = new RegExp('^[0-9]*$');
     if (!myreg.test(num)) {
         return false;
     } else {
@@ -104,12 +104,12 @@ export const isNum = (num) => {
 
 //判断是否是对象
 export const isObj = obj => {
-    return obj && typeof(obj) === 'object' && Object.prototype.toString.call(obj).toLowerCase() === "[object Object]";
+    return obj && typeof (obj) === 'object' && Object.prototype.toString.call(obj).toLowerCase() === '[object Object]';
 };
 
 //判断是否是数组
 export const isArray = obj => {
-    return obj && typeof(obj) === 'object' && obj.constructor === Array;
+    return obj && typeof (obj) === 'object' && obj.constructor === Array;
 };
 
 //判断对象是否相等
@@ -157,7 +157,7 @@ export const GetStrActualLength = function (str) {
 //解析hash地址栏
 export const getHashParam = function () {
     var res = {};
-    var startIndex = window.location.hash.indexOf("?") + 1;
+    var startIndex = window.location.hash.indexOf('?') + 1;
     window.location.hash.substr(startIndex).split('&').forEach(function (i) {
         var j = i.split('=');
         res[j[0]] = j[1];
@@ -173,40 +173,6 @@ export const asyncComponent = (Component, fallback = null) => {
         </Suspense>;
     };
 };
-
-
-
-export const getPermission = (props, moduleName) => {
-    let res = false;
-    const auth = getSession('auth');
-    let menus = [];
-    if (auth) {
-        menus = JSON.parse(auth);
-    }
-
-    let {menuList} = menus.menuInfo;
-    if (menuList && menuList.length > 0) {
-        let url = props.location.pathname;
-        menuList.forEach(menu => { // 循环遍历左侧主菜单栏
-            if (menu.menuList && menuList.length > 0) {
-                menu.menuList.forEach(menuTwo => { // 遍历主菜单栏子目录
-                    if (menuTwo.menuUrl && menuTwo.menuUrl.indexOf(url) > -1) {  //判断路由和子菜单路由是否相同
-                        if (menuTwo.moduleList && menuTwo.moduleList.length > 0) {
-                            menuTwo.moduleList.forEach(power => {
-                                if (power.menuName && power.menuName.indexOf(moduleName) > -1) {  //根据传递的模块名获取权限
-                                    res = true;
-                                }
-                            });
-                        }
-                    }
-                });
-            }
-        });
-    }
-    return true;
-};
-
-
 
 /**
  * 存储

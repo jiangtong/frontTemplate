@@ -25,17 +25,23 @@ export default class Index extends Component {
         return (
             <div>
                 <h1>首页</h1>
-                <Link to={"/teachermanager/growth/12"}>下钻</Link>
+                <Link to={'/teachermanager/growth/12'}>下钻</Link>
             </div>
-           
+
         );
     }
 }
 
 
-{/*<Provider value={{onClick: this.onClick, number}}>*/}
-    {/*<Link to={"/teachermanager/growth/12"}>下钻</Link>*/}
-    {/*<ChildrenA/>*/}
-    {/**/}
-    {/*<ChildrenB/>*/}
-{/*</Provider>*/}
+{/*<Provider value={{onClick: this.onClick, number}}>*/
+}
+{/*<Link to={"/teachermanager/growth/12"}>下钻</Link>*/
+}
+{/*<ChildrenA/>*/
+}
+{/**/
+}
+{/*<ChildrenB/>*/
+}
+{/*</Provider>*/
+}

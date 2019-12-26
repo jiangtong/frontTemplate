@@ -149,7 +149,7 @@ export default (props) => {
             }
 
             fetchComment();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+            // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [JSON.stringify(state.data)]
     );
 

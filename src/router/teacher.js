@@ -8,6 +8,8 @@ const childrenAA = asyncComponent(React.lazy(() => import('@pages/Teacher/Contex
 const childrenAAA = asyncComponent(React.lazy(() => import('@pages/Teacher/Context/childrenAAA')));
 const Hooks = asyncComponent(React.lazy(() => import('@pages/Teacher/Hooks')));
 const HookDetail = asyncComponent(React.lazy(() => import('@pages/Teacher/Hooks/HookDetail')));
+const Grid = asyncComponent(React.lazy(() => import('@pages/Teacher/Grid')));
+const IntersectionObserver = asyncComponent(React.lazy(() => import('@pages/yangqian/IntersectionObserver')));
 
 export default [{
     path: '/',
@@ -17,7 +19,7 @@ export default [{
     breadcrumb: '教师管理'
 }, {
     path: '/teachermanager/survey',
-    component: Survey,
+    component: IntersectionObserver,
     breadcrumb: '教师管理/11'
 }, {
     path: '/teachermanager/growth',

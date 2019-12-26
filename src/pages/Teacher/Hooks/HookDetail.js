@@ -1,9 +1,5 @@
-import React from 'react';
+import React from 'react'
 
-export default (props) => {
-    return (
-        <React.Fragment>
-            1
-        </React.Fragment>
-    );
+export default _props => {
+    return <React.Fragment>1</React.Fragment>
 }

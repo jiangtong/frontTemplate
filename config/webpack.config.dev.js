@@ -91,7 +91,14 @@ const devConfig = {
                 test: /\.(scss|sass)$/,
                 use: [
                     'style-loader',
-                    'css-loader', {
+                    {
+                        loader: 'css-loader'
+                        // options: {
+                        //     modules: true, // 指定启用css modules
+                        //     importLoaders: 1,
+                        //     localIdentName: '[name]__[local]--[hash:base64:5]'
+                        // }
+                    }, {
                         loader: 'postcss-loader',
                         options: {
                             ident: 'postcss',
@@ -109,8 +116,14 @@ const devConfig = {
                     loader: 'style-loader'
                 }, {
                     loader: 'css-loader'
+                    // options: {
+                    //     modules: true, // 指定启用css modules
+                    //     importLoaders: 1,
+                    //     localIdentName: '[name]__[local]--[hash:base64:5]'
+                    // }
                 }, {
-                    loader: 'postcss-loader', options: {
+                    loader: 'postcss-loader',
+                    options: {
                         ident: 'postcss',
                         plugins: () => [
                             postcssPresetEnv({})
@@ -129,9 +142,16 @@ const devConfig = {
                 test: /\.css$/,
                 use: [
                     'style-loader',
-                    'css-loader',
                     {
-                        loader: 'postcss-loader', options: {
+                        loader: 'css-loader'
+                        // options: {
+                        //     modules: true, // 指定启用css modules
+                        //     importLoaders: 1,
+                        //     localIdentName: '[name]__[local]--[hash:base64:5]'
+                        // }
+                    }, {
+                        loader: 'postcss-loader',
+                        options: {
                             ident: 'postcss',
                             plugins: () => [
                                 postcssPresetEnv({})

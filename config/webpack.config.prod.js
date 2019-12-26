@@ -143,6 +143,7 @@ const publicConfig = {
             workerCount: '',
             sourceMap: false
         }),
+
         // new UglifyJSPlugin({
         //     parallel: true,
         //     cache: true,
@@ -162,7 +163,13 @@ const publicConfig = {
 
 
         // 压缩css
-        new OptimizeCssAssetsPlugin()
+        new OptimizeCssAssetsPlugin({
+            cssProcessor: require('cssnano'), //引入cssnano配置压缩选项
+            cssProcessorOptions: {
+                discardComments: {removeAll: true}
+            },
+            canPrint: true //是否将插件信息打印到控制台
+        })
     ],
 
     module: {
@@ -176,8 +183,12 @@ const publicConfig = {
                     }
                 },
                 {
-                    loader: 'css-loader?importLoaders=2',
-                    options: {}
+                    loader: 'css-loader'
+                    // options: {
+                    //     modules: true, // 指定启用css modules
+                    //     importLoaders: 1,
+                    //     localIdentName: '[name]__[local]--[hash:base64:5]'
+                    // }
                 },
                 {
                     loader: 'postcss-loader', options: {
@@ -198,8 +209,12 @@ const publicConfig = {
                         publicPath: '../../'
                     }
                 }, {
-                    loader: 'css-loader?importLoaders=2',
-                    options: {}
+                    loader: 'css-loader'
+                    // options: {
+                    //     modules: true, // 指定启用css modules
+                    //     importLoaders: 1,
+                    //     localIdentName: '[name]__[local]--[hash:base64:5]'
+                    // }
                 }, {
                     loader: 'postcss-loader', options: {
                         ident: 'postcss',
@@ -226,8 +241,12 @@ const publicConfig = {
                     }
                 },
                 {
-                    loader: 'css-loader?importLoaders=2',
-                    options: {}
+                    loader: 'css-loader'
+                    // options: {
+                    //     modules: true, // 指定启用css modules
+                    //     importLoaders: 1,
+                    //     localIdentName: '[name]__[local]--[hash:base64:5]'
+                    // }
                 },
                 {
                     loader: 'postcss-loader', options: {
