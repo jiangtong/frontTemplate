@@ -9,6 +9,7 @@ const webpack = require('webpack');
 const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const postcssPresetEnv = require('postcss-preset-env');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 // 需要转发的接口拼接
 const {proxyArr = []} = config;
@@ -33,6 +34,37 @@ const devConfig = {
     },
 
     plugins: [
+        new BundleAnalyzerPlugin({
+            //  可以是`server`，`static`或`disabled`。
+            //  在`server`模式下，分析器将启动HTTP服务器来显示软件包报告。
+            //  在“静态”模式下，会生成带有报告的单个HTML文件。
+            //  在`disabled`模式下，你可以使用这个插件来将`generateStatsFile`设置为`true`来生成Webpack Stats JSON文件。
+            analyzerMode: 'server',
+            //  将在“服务器”模式下使用的主机启动HTTP服务器。
+            // analyzerHost: '127.0.0.1',
+            //  将在“服务器”模式下使用的端口启动HTTP服务器。
+            // analyzerPort: 8888,
+            //  路径捆绑，将在`static`模式下生成的报告文件。
+            //  相对于捆绑输出目录。
+            // reportFilename: 'report.html',
+            //  模块大小默认显示在报告中。
+            //  应该是`stat`，`parsed`或者`gzip`中的一个。
+            //  有关更多信息，请参见“定义”一节。
+            defaultSizes: 'parsed',
+            //  在默认浏览器中自动打开报告
+            openAnalyzer: true,
+            //  如果为true，则Webpack Stats JSON文件将在bundle输出目录中生成
+            generateStatsFile: false,
+            //  如果`generateStatsFile`为`true`，将会生成Webpack Stats JSON文件的名字。
+            //  相对于捆绑输出目录。
+            statsFilename: 'stats.json',
+            //  stats.toJson（）方法的选项。
+            //  例如，您可以使用`source：false`选项排除统计文件中模块的来源。
+            //  在这里查看更多选项：https：//github.com/webpack/webpack/blob/webpack-1/lib/Stats.js#L21
+            statsOptions: null,
+            logLevel: 'info' //日志级别。可以是'信息'，'警告'，'错误'或'沉默'。
+        }),
+
         new HardSourceWebpackPlugin({
             // configHash在启动webpack实例时转换webpack配置，并用于cacheDirectory为不同的webpack配置构建不同的缓存
             configHash: function (webpackConfig) {
@@ -45,37 +77,16 @@ const devConfig = {
                 files: ['package-lock.json', 'yarn.lock']
             }
         }),
+        new HardSourceWebpackPlugin.ExcludeModulePlugin([
+            {
+                test: /.*\.DS_Store/
+            }
+        ]),
 
         new openBrowserWebpackPlugin({
             url: `http://${config.host || config.baseHost}:${config.port}/`,
             browser: config.brower
         })
-
-        // 选用dll模式可以打开如下代码
-        // new webpack.DllReferencePlugin({
-        //     context: config.appbuild,
-        //     manifest: require(path.resolve(config.appbuild, 'dll/reactLib-manifest.json'))
-        // }),
-        //
-        // new webpack.DllReferencePlugin({
-        //     context: config.appbuild,
-        //     manifest: require(path.resolve(config.appbuild, 'dll/viewLib-manifest.json'))
-        // }),
-        //
-        // new webpack.DllReferencePlugin({
-        //     context: config.appbuild,
-        //     manifest: require(path.resolve(config.appbuild, 'dll/utiliesLib-manifest.json'))
-        // }),
-        //
-        // new HtmlWebpackTagsPlugin({
-        //     tags: [
-        //         'dist/dll/reactLib.dll.js',
-        //         'dist/dll/viewLib.dll.js',
-        //         'dist/dll/utiliesLib.dll.js'
-        //     ],
-        //     append: false
-        // })
-        // 到这里
     ],
 
     output: {
@@ -86,35 +97,24 @@ const devConfig = {
     },
 
     module: {
-        rules: [
-            {
-                test: /\.(scss|sass)$/,
-                use: [
-                    'style-loader',
-                    {
-                        loader: 'css-loader'
-                        // options: {
-                        //     modules: true, // 指定启用css modules
-                        //     importLoaders: 1,
-                        //     localIdentName: '[name]__[local]--[hash:base64:5]'
-                        // }
-                    }, {
-                        loader: 'postcss-loader',
-                        options: {
-                            ident: 'postcss',
-                            plugins: () => [
-                                postcssPresetEnv({})
-                            ]
-                        }
-                    },
-                    'sass-loader'
-                ]
-            },
-            {
-                test: /\.less$/,
-                use: [{
-                    loader: 'style-loader'
-                }, {
+        rules: [{
+            test: /\.js?$/,
+            use: [{
+                loader: 'eslint-loader',
+                options: {
+                    failOnError: false,
+                    failOnWarning: true, //警告不显示
+                    quiet: true,
+                    cache: true
+                }
+            }],
+            exclude: /node_modules/,
+            include: config.appSrc
+        }, {
+            test: /\.(scss|sass)$/,
+            use: [
+                'style-loader',
+                {
                     loader: 'css-loader'
                     // options: {
                     //     modules: true, // 指定启用css modules
@@ -129,38 +129,59 @@ const devConfig = {
                             postcssPresetEnv({})
                         ]
                     }
+                },
+                'sass-loader'
+            ]
+        }, {
+            test: /\.less$/,
+            use: [{
+                loader: 'style-loader'
+            }, {
+                loader: 'css-loader'
+                // options: {
+                //     modules: true, // 指定启用css modules
+                //     importLoaders: 1,
+                //     localIdentName: '[name]__[local]--[hash:base64:5]'
+                // }
+            }, {
+                loader: 'postcss-loader',
+                options: {
+                    ident: 'postcss',
+                    plugins: () => [
+                        postcssPresetEnv({})
+                    ]
+                }
+            }, {
+                loader: 'less-loader',
+                options: {
+                    // 使用less默认运行时替换配置的@color样式
+                    modifyVars: config.color,
+                    javascriptEnabled: true
+                }
+            }
+            ]
+        }, {
+            test: /\.css$/,
+            use: [
+                'style-loader',
+                {
+                    loader: 'css-loader'
+                    // options: {
+                    //     modules: true, // 指定启用css modules
+                    //     importLoaders: 1,
+                    //     localIdentName: '[name]__[local]--[hash:base64:5]'
+                    // }
                 }, {
-                    loader: 'less-loader',
+                    loader: 'postcss-loader',
                     options: {
-                        // 使用less默认运行时替换配置的@color样式
-                        modifyVars: config.color,
-                        javascriptEnabled: true
+                        ident: 'postcss',
+                        plugins: () => [
+                            postcssPresetEnv({})
+                        ]
                     }
                 }
-                ]
-            }, {
-                test: /\.css$/,
-                use: [
-                    'style-loader',
-                    {
-                        loader: 'css-loader'
-                        // options: {
-                        //     modules: true, // 指定启用css modules
-                        //     importLoaders: 1,
-                        //     localIdentName: '[name]__[local]--[hash:base64:5]'
-                        // }
-                    }, {
-                        loader: 'postcss-loader',
-                        options: {
-                            ident: 'postcss',
-                            plugins: () => [
-                                postcssPresetEnv({})
-                            ]
-                        }
-                    }
-                ]
-            }
-        ]
+            ]
+        }]
     },
 
     devServer: {

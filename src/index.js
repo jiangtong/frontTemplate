@@ -31,7 +31,6 @@ const render = Component => {
     ReactDOM.render(<Component/>, document.getElementById('app'));
 };
 
-
 if (process.env.NODE_ENV !== 'production' && module.hot) {
     module.hot.accept(() => {
         render(App);

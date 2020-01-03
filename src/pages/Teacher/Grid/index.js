@@ -1,12 +1,12 @@
-import React, {Component} from 'react'
-import {withRouter} from 'react-router'
-import './index.scss'
+import React, {Component} from 'react';
+import {withRouter} from 'react-router';
+import './index.scss';
 
 
 class Grid extends Component {
     constructor(props) {
-        super(props)
-        this.state = {}
+        super(props);
+        this.state = {};
     }
 
     componentDidMount() {
@@ -28,8 +28,8 @@ class Grid extends Component {
                 </div>
                 <div className="footer">FOOTER</div>
             </div>
-        )
+        );
     }
 }
 
-export default withRouter(Grid)
+export default withRouter(Grid);

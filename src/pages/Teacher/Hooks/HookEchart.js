@@ -2,7 +2,7 @@ import React, {useEffect, useState, useRef, useCallback} from 'react';
 import Request from '@commenApi/teacher';
 import TestEchart from '@pages/Teacher/Survey/TestEchart';
 import Load from '@components/beijing/Loading';
-import NoDataComponent from '@components/beijing/NoData';
+import NoDataComponent from '@components/beijing/NoDataCom';
 
 function Timer() {
     const intervalRef = useRef();

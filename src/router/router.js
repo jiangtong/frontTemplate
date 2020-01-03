@@ -1,14 +1,14 @@
-import React from 'react'
-import {Switch, Route, Redirect} from 'react-router-dom'
-import BaseComponents from '@layout'
-import {getSession, asyncComponent} from '@utils/utils'
+import React from 'react';
+import {Switch, Route, Redirect} from 'react-router-dom';
+import BaseComponents from '@layout';
+import {getSession, asyncComponent} from '@utils/utils';
 // 登陆
-const Login = asyncComponent(React.lazy(() => import('@pages/Login')))
+const Login = asyncComponent(React.lazy(() => import('@pages/Login')));
 
 // const Login = asyncComponent(() => import('@pages/Login'), '');
 
 // 师资管理
-import teachermanager from './teacher'
+import teachermanager from './teacher';
 
 const Root = () => (
     <Switch>
@@ -22,7 +22,7 @@ const Root = () => (
                         <Switch>
                             <Route exact path="/" render={() => <Redirect to="/majormanager/professional"/>}/>
                             {[...teachermanager].map(item => {
-                                return <Route key={item.path} exact path={item.path} component={item.component}></Route>
+                                return <Route key={item.path} exact path={item.path} component={item.component}></Route>;
                             })}
                         </Switch>
                     </BaseComponents>
@@ -32,6 +32,6 @@ const Root = () => (
             }
         />
     </Switch>
-)
+);
 
-export default Root
+export default Root;

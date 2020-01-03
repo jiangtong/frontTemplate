@@ -8,9 +8,12 @@ const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const chalk = require('chalk');
 const path = require('path');
 const webpack = require('webpack');
-var HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
+const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 const os = require('os');
-const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
+const SpeedMeasurePlugin = require('speed-measure-webpack-plugin');
+
+const HappyPack = require('happypack');
+const happyThreadPool = HappyPack.ThreadPool({size: os.cpus().length});
 
 const smp = new SpeedMeasurePlugin();
 const commonConfig = {
@@ -47,11 +50,16 @@ const commonConfig = {
 
         // 显示打包时间
         new ProgressBarPlugin({
-            format:
-                '  build [:bar] ' +
+            format: '  build [:bar] ' +
                 chalk.green.bold(':percent') +
                 ' (:elapsed seconds)'
         }),
+
+        new HappyPack({
+            id: 'happy-babel-js',
+            loaders: ['babel-loader?cacheDirectory=true'],
+            threadPool: happyThreadPool
+        })
 
         // new HtmlWebpackTagsPlugin({
         //     tags: [
@@ -99,16 +107,9 @@ const commonConfig = {
             test: /\.js?$/,
             use: [{
                 loader: 'babel-loader',
+                // loader: 'happypack/loader?id=happy-babel-js'
                 options: {
                     cacheDirectory: true
-                },
-            }, {
-                loader: 'eslint-loader',
-                options: {
-                    failOnError: false,
-                    failOnWarning: true, //警告不显示
-                    quiet: true,
-                    cache: true
                 }
             }],
             exclude: /node_modules/,

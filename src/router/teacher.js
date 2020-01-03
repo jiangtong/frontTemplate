@@ -19,7 +19,7 @@ export default [{
     breadcrumb: '教师管理'
 }, {
     path: '/teachermanager/survey',
-    component: IntersectionObserver,
+    component: Survey,
     breadcrumb: '教师管理/11'
 }, {
     path: '/teachermanager/growth',

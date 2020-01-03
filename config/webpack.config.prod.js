@@ -13,17 +13,11 @@ const config = require('./config');
 const seen = new Set();
 const nameLength = 4;
 const path = require('path');
-
+const TerserPlugin = require('terser-webpack-plugin');
 
 const publicConfig = {
     entry: {
-        app: [
-            '@babel/polyfill',
-            config.appIndexJs
-        ],
-        vendor: config.reactzoology,
-        views: config.viewers,
-        utiles: config.utiles
+        app: config.appIndexJs
     },
 
     output: {
@@ -44,39 +38,79 @@ const publicConfig = {
             chunks: 'all',
             minSize: 30000,
             minChunks: 1,
+            maxSize: 0,
             maxAsyncRequests: 5,
-            maxInitialRequests: 5,
+            maxInitialRequests: 6,
             name: true,
             cacheGroups: {
-                default: {
-                    minChunks: 2,
-                    priority: -20,
+                antd: {
+                    test: (module) => (/antd/.test(module.context) || /react-router-breadcrumbs-hoc/.test(module.context)),
+                    name: 'antd',
+                    priority: 11,
                     reuseExistingChunk: true
                 },
-                vendors: {
-                    chunks: 'all',
-                    minChunks: 2,
-                    reuseExistingChunk: true,
-                    test: /node_modules\/(.*)\.js/,
-                    minSize: 30000,
-                    name: 'vendors'
+
+                echarts: {
+                    test: (module) => (/echarts/.test(module.context) || /echarts-wordcloud/.test(module.context) || /echarts-for-react/.test(module.context) || /echarts-liquidfill/.test(module.context) || /echarts-stat/.test(module.context)),
+                    name: 'echarts',
+                    reuseExistingChunk: true
                 },
-                views: {
-                    chunks: 'all',
-                    minChunks: 2,
-                    reuseExistingChunk: true,
-                    test: /node_modules\/(.*)\.js/,
-                    minSize: 30000,
-                    name: 'views'
+
+                reactVendor: {
+                    name: 'reactVendor',
+                    priority: 10,
+                    test: (module) => (/react/.test(module.context) || /redux/.test(module.context) || /react-dom/.test(module.context) || /react-redux/.test(module.context) || /react-thunk/.test(module.context)),
+                    reuseExistingChunk: true
                 },
-                utiles: {
-                    chunks: 'all',
-                    minChunks: 2,
-                    reuseExistingChunk: true,
-                    test: /node_modules\/(.*)\.js/,
-                    minSize: 30000,
-                    name: 'utiles'
+
+                utils: {
+                    name: 'utils',
+                    priority: 10,
+                    test: (module) => (/axios/.test(module.context) || /classnames/.test(module.context) || /prop-types/.test(module.context) || /prop-types/.test(module.context)),
+                    reuseExistingChunk: true
                 }
+
+                // default: {
+                //     minChunks: 2,
+                //     priority: -20,
+                //     reuseExistingChunk: true
+                // },
+                //
+                // vendor: {
+                //     priority: -10,
+                //     test: /[\\/]node_modules[\\/]/,
+                //     name(module) {
+                //         // 获取第三方包名
+                //         const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
+                //         // npm 软件包名称是 URL 安全的，但是某些服务器不喜欢@符号
+                //         return `npm.${packageName.replace('@', '')}`;
+                //     }
+                // },
+                //
+                // vendor: {
+                //     chunks: 'all',
+                //     minChunks: 2,
+                //     reuseExistingChunk: true,
+                //     test: /node_modules\/(.*)\.js/,
+                //     minSize: 30000,
+                //     name: 'vendor'
+                // },
+                // views: {
+                //     chunks: 'all',
+                //     minChunks: 2,
+                //     reuseExistingChunk: true,
+                //     test: /node_modules\/(.*)\.js/,
+                //     minSize: 30000,
+                //     name: 'views'
+                // },
+                // utils: {
+                //     chunks: 'all',
+                //     minChunks: 2,
+                //     reuseExistingChunk: true,
+                //     test: /node_modules\/(.*)\.js/,
+                //     minSize: 30000,
+                //     name: 'utils'
+                // }
             }
         }),
 
@@ -86,7 +120,22 @@ const publicConfig = {
             dry: false
         }),
 
+        //  copy 在dev模式下不好使
+        // new CopyWebpackPlugin([
+        //     {
+        //         from: path.resolve(config.appPublic, 'js'),
+        //         to: path.resolve(config.appbuild, 'public/js')
+        //     }]
+        // ),
+
         new webpack.HashedModuleIdsPlugin(),
+
+        // 预编译所有模块到一个闭包中，提升代码在浏览器中的执行速度
+        new webpack.optimize.ModuleConcatenationPlugin(),
+
+        // 在编译出现错误时，使用 NoEmitOnErrorsPlugin 来跳过输出阶段。
+        // 这样可以确保输出资源不会包含错误
+        new webpack.NoEmitOnErrorsPlugin(),
 
         new webpack.NamedChunksPlugin(chunk => {
             if (chunk.name) {
@@ -110,7 +159,8 @@ const publicConfig = {
         // 配和MiniCssExtractPlugin.loader, 提取css到特定的目录下
         new MiniCssExtractPlugin({
             filename: 'app/css/[name].[contenthash:8].css',
-            chunkFilename: 'app/css/[name].[contenthash:8].css'
+            chunkFilename: 'app/css/[name].[contenthash:8].css',
+            ignoreOrder: true
         }),
 
         // 使用 ParallelUglifyPlugin 并行压缩输出JS代码
@@ -143,7 +193,23 @@ const publicConfig = {
             workerCount: '',
             sourceMap: false
         }),
-
+        // new TerserPlugin({
+        //     terserOptions: {
+        //         ecma: undefined,
+        //         warnings: false,
+        //         parse: {},
+        //         compress: {},
+        //         mangle: true, // Note `mangle.properties` is `false` by default.
+        //         module: false,
+        //         output: null,
+        //         toplevel: false,
+        //         nameCache: null,
+        //         ie8: false,
+        //         keep_classnames: undefined,
+        //         keep_fnames: false,
+        //         safari10: false
+        //     }
+        // }),
         // new UglifyJSPlugin({
         //     parallel: true,
         //     cache: true,

@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router';
-import '@components/beijing/NoData/index.less';
+import './index.scss';
 
-class NoDataComponent extends Component {
+class NoDataCom extends Component {
     constructor(props) {
         super(props);
         this.state = {};
@@ -20,5 +20,5 @@ class NoDataComponent extends Component {
     }
 }
 
-export default withRouter(NoDataComponent);
+export default withRouter(NoDataCom);
 
