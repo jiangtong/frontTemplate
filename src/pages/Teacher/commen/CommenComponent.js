@@ -16,77 +16,82 @@
  *
  * */
 
-
-import React, {Component} from 'react';
-import {Col} from 'antd';
-import {withRouter} from 'react-router';
-import {Link} from 'react-router-dom';
-import {connect} from 'react-redux';
-import {compose} from 'redux';
+import React, { Component } from 'react';
+import { Col } from 'antd';
+import { withRouter } from 'react-router';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
 
 class CommenComponent extends Component {
     constructor(props) {
         super(props);
     }
 
-    componentDidMount() {
-
-    }
+    componentDidMount() {}
 
     render() {
-        let {children, menuWarnListData} = this.props;
+        let { children } = this.props;
         return (
-            <Col span={24} className="main_content margin_top20" style={this.props.style}>
-                {
-                    children.map((item, index) => {
-                        // let showWaring = true;
-                        // if (item.showWaring === undefined) {
-                        //     showWaring = true;
-                        // } else {
-                        //     showWaring = false;
-                        // }
+            <Col
+                span={24}
+                className="main_content margin_top20"
+                style={this.props.style}
+            >
+                {children.map((item, index) => {
+                    // let showWaring = true;
+                    // if (item.showWaring === undefined) {
+                    //     showWaring = true;
+                    // } else {
+                    //     showWaring = false;
+                    // }
 
-                        return (
-                            <Col span={24} className="main_content_wrapper" style={{width: `${100 / children.length}%`}}
-                                 key={index}>
-                                <Col className="main_content_title">
+                    return (
+                        <Col
+                            span={24}
+                            className="main_content_wrapper"
+                            style={{ width: `${100 / children.length}%` }}
+                            key={index}
+                        >
+                            <Col className="main_content_title">
                                 <span>
-                                    <img src={require('@public/img/ico1.png')}/>
-                                    {
-                                        item.link ?
-                                            <Link to={item.link}>{item.linkTitle}</Link> : ''
-                                    }
+                                    <img
+                                        src={require('@public/img/ico1.png')}
+                                    />
+                                    {item.link ? (
+                                        <Link to={item.link}>
+                                            {item.linkTitle}
+                                        </Link>
+                                    ) : (
+                                        ''
+                                    )}
                                     {item.title}
                                 </span>
-                                </Col>
-                                <Col span={24} className="main_content_body">
-                                    {item.component()}
-                                </Col>
                             </Col>
-                        );
-                    })
-                }
+                            <Col span={24} className="main_content_body">
+                                {item.component()}
+                            </Col>
+                        </Col>
+                    );
+                })}
             </Col>
         );
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
     return {
         menuWarnListData: state.menuWarnList.menuDic
     };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
     return {};
 };
-
 
 const enhance = compose(
     connect(mapStateToProps, mapDispatchToProps),
     withRouter
 );
 
-
 export default enhance(CommenComponent);
-

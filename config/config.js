@@ -22,7 +22,7 @@ module.exports = {
     // favicon 路径
     favicon: resolveApp('public/ico.ico'),
     // 默认开启的本地项目端口号
-    port: '3321',
+    port: '1234',
     //手动配置打开的host
     host: '127.0.0.1',
     //默认的host
@@ -30,7 +30,7 @@ module.exports = {
     // 默认开启本地项目的浏览器
     brower: os.platform() === 'darwin' ? 'google chrome' : 'chrome',
     // 需要代理的 name是接口的前缀，url是需要转发的接口的地址 有几个需要转发的可以写几个
-    proxyArr: [{name: '/portrait', url: 'http://121.193.216.107:8290/'}],
+    proxyArr: [{ name: '/portrait', url: 'http://121.193.216.107:8290/' }],
     //配色方案，可以根据assets找那个的variable进行配色的替换
     color: colors.color
 };

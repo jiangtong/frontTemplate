@@ -1,7 +1,7 @@
 /*eslint-disable*/
 const merge = require('webpack-merge');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -26,95 +26,10 @@ const publicConfig = {
         chunkFilename: 'app/js/[name].[chunkhash:8].bundle.js'
     },
 
-    // devtool: 'cheap-module-source-map',
+    devtool: 'cheap-module-source-map',
     mode: 'production',
 
     plugins: [
-        new webpack.optimize.RuntimeChunkPlugin({
-            name: 'runtime'
-        }),
-
-        new webpack.optimize.SplitChunksPlugin({
-            chunks: 'all',
-            minSize: 30000,
-            minChunks: 1,
-            maxSize: 0,
-            maxAsyncRequests: 5,
-            maxInitialRequests: 6,
-            name: true,
-            cacheGroups: {
-                antd: {
-                    test: (module) => (/antd/.test(module.context) || /react-router-breadcrumbs-hoc/.test(module.context)),
-                    name: 'antd',
-                    priority: 11,
-                    reuseExistingChunk: true
-                },
-
-                echarts: {
-                    test: (module) => (/echarts/.test(module.context) || /echarts-wordcloud/.test(module.context) || /echarts-for-react/.test(module.context) || /echarts-liquidfill/.test(module.context) || /echarts-stat/.test(module.context)),
-                    name: 'echarts',
-                    reuseExistingChunk: true
-                },
-
-                reactVendor: {
-                    name: 'reactVendor',
-                    priority: 10,
-                    test: (module) => (/react/.test(module.context) || /redux/.test(module.context) || /react-dom/.test(module.context) || /react-redux/.test(module.context) || /react-thunk/.test(module.context)),
-                    reuseExistingChunk: true
-                },
-
-                utils: {
-                    name: 'utils',
-                    priority: 10,
-                    test: (module) => (/axios/.test(module.context) || /classnames/.test(module.context) || /prop-types/.test(module.context) || /prop-types/.test(module.context)),
-                    reuseExistingChunk: true
-                }
-
-                // default: {
-                //     minChunks: 2,
-                //     priority: -20,
-                //     reuseExistingChunk: true
-                // },
-                //
-                // vendor: {
-                //     priority: -10,
-                //     test: /[\\/]node_modules[\\/]/,
-                //     name(module) {
-                //         // 获取第三方包名
-                //         const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
-                //         // npm 软件包名称是 URL 安全的，但是某些服务器不喜欢@符号
-                //         return `npm.${packageName.replace('@', '')}`;
-                //     }
-                // },
-                //
-                // vendor: {
-                //     chunks: 'all',
-                //     minChunks: 2,
-                //     reuseExistingChunk: true,
-                //     test: /node_modules\/(.*)\.js/,
-                //     minSize: 30000,
-                //     name: 'vendor'
-                // },
-                // views: {
-                //     chunks: 'all',
-                //     minChunks: 2,
-                //     reuseExistingChunk: true,
-                //     test: /node_modules\/(.*)\.js/,
-                //     minSize: 30000,
-                //     name: 'views'
-                // },
-                // utils: {
-                //     chunks: 'all',
-                //     minChunks: 2,
-                //     reuseExistingChunk: true,
-                //     test: /node_modules\/(.*)\.js/,
-                //     minSize: 30000,
-                //     name: 'utils'
-                // }
-            }
-        }),
-
-        // root是必须要写的
         new CleanWebpackPlugin({
             verbose: true,
             dry: false
@@ -165,7 +80,7 @@ const publicConfig = {
 
         // 使用 ParallelUglifyPlugin 并行压缩输出JS代码
         new ParallelUglifyPlugin({
-            cacheDir: '.cache/',
+            cacheDir: 'node_modules/.cache/',
             output: {
                 output: {
                     /*是否输出可读性较强的代码，即会保留空格和制表符，默认为输出，为了达到更好的压缩效果，可以设置为false  */
@@ -173,7 +88,6 @@ const publicConfig = {
                     /* 是否保留代码中的注释，默认为保留，为了达到更好的压缩效果，可以设置为false */
                     comments: false
                 }
-
             },
             /*是否在UglifyJS删除没有用到的代码时输出警告信息，默认为输出，可以设置为false关闭这些作用 不大的警告*/
             warnings: false,
@@ -227,103 +141,106 @@ const publicConfig = {
         //     }
         // }),
 
-
         // 压缩css
         new OptimizeCssAssetsPlugin({
             cssProcessor: require('cssnano'), //引入cssnano配置压缩选项
             cssProcessorOptions: {
-                discardComments: {removeAll: true}
+                discardComments: { removeAll: true }
             },
             canPrint: true //是否将插件信息打印到控制台
         })
     ],
 
     module: {
-        rules: [{
-            test: /\.(scss|sass)$/,
-            use: [
-                {
-                    loader: MiniCssExtractPlugin.loader,
-                    options: {
-                        publicPath: '../../'
+        rules: [
+            {
+                test: /\.(scss|sass)$/,
+                use: [
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                            publicPath: '../../'
+                        }
+                    },
+                    {
+                        loader: 'css-loader'
+                        // options: {
+                        //     modules: true, // 指定启用css modules
+                        //     importLoaders: 1,
+                        //     localIdentName: '[name]__[local]--[hash:base64:5]'
+                        // }
+                    },
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            ident: 'postcss',
+                            plugins: () => [postcssPresetEnv({})]
+                        }
+                    },
+                    'sass-loader'
+                ]
+            },
+            {
+                test: /\.less$/,
+                use: [
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                            publicPath: '../../'
+                        }
+                    },
+                    {
+                        loader: 'css-loader'
+                        // options: {
+                        //     modules: true, // 指定启用css modules
+                        //     importLoaders: 1,
+                        //     localIdentName: '[name]__[local]--[hash:base64:5]'
+                        // }
+                    },
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            ident: 'postcss',
+                            plugins: () => [postcssPresetEnv({})]
+                        }
+                    },
+                    {
+                        loader: 'less-loader',
+                        options: {
+                            // 使用less默认运行时替换配置的@color样式
+                            modifyVars: config.color,
+                            javascriptEnabled: true
+                        }
                     }
-                },
-                {
-                    loader: 'css-loader'
-                    // options: {
-                    //     modules: true, // 指定启用css modules
-                    //     importLoaders: 1,
-                    //     localIdentName: '[name]__[local]--[hash:base64:5]'
-                    // }
-                },
-                {
-                    loader: 'postcss-loader', options: {
-                        ident: 'postcss',
-                        plugins: () => [
-                            postcssPresetEnv({})
-                        ]
+                ]
+            },
+            {
+                test: /\.css$/,
+                use: [
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                            publicPath: '../../'
+                        }
+                    },
+                    {
+                        loader: 'css-loader'
+                        // options: {
+                        //     modules: true, // 指定启用css modules
+                        //     importLoaders: 1,
+                        //     localIdentName: '[name]__[local]--[hash:base64:5]'
+                        // }
+                    },
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            ident: 'postcss',
+                            plugins: () => [postcssPresetEnv({})]
+                        }
                     }
-                },
-                'sass-loader'
-            ]
-        }, {
-            test: /\.less$/,
-            use: [
-                {
-                    loader: MiniCssExtractPlugin.loader,
-                    options: {
-                        publicPath: '../../'
-                    }
-                }, {
-                    loader: 'css-loader'
-                    // options: {
-                    //     modules: true, // 指定启用css modules
-                    //     importLoaders: 1,
-                    //     localIdentName: '[name]__[local]--[hash:base64:5]'
-                    // }
-                }, {
-                    loader: 'postcss-loader', options: {
-                        ident: 'postcss',
-                        plugins: () => [
-                            postcssPresetEnv({})
-                        ]
-                    }
-                }, {
-                    loader: 'less-loader',
-                    options: {
-                        // 使用less默认运行时替换配置的@color样式
-                        modifyVars: config.color,
-                        javascriptEnabled: true
-                    }
-                }
-            ]
-        }, {
-            test: /\.css$/,
-            use: [
-                {
-                    loader: MiniCssExtractPlugin.loader,
-                    options: {
-                        publicPath: '../../'
-                    }
-                },
-                {
-                    loader: 'css-loader'
-                    // options: {
-                    //     modules: true, // 指定启用css modules
-                    //     importLoaders: 1,
-                    //     localIdentName: '[name]__[local]--[hash:base64:5]'
-                    // }
-                },
-                {
-                    loader: 'postcss-loader', options: {
-                        ident: 'postcss',
-                        plugins: () => [
-                            postcssPresetEnv({})
-                        ]
-                    }
-                }
-            ]
-        }]
+                ]
+            }
+        ]
     }
 };
 

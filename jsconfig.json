@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+        "experimentalDecorators": true,
+        "target": "es2017",
+        "allowSyntheticDefaultImports": false,
+        "baseUrl": "./",
+        "paths": {
+            "@commenApi/*": ["src/public/data-commen/api/*"],
+            "@commenModel/*": ["src/public/data-commen/model/*"],
+            "@reducers/*": ["src/redux/reducers/*"],
+            "@actions/*": ["src/redux/actions/*"],
+            "@useRedux/*": ["src/redux/*"],
+            "@layout/*": ["src/layout/*"],
+            "@router/*": ["src/router/*"],
+            "@pages/*": ["src/pages/*"],
+            "@public/*": ["src/public/*"],
+            "@components/*": ["src/components/*"],
+            "@utils/*": ["src/utils/*"],
+            "$utils": ["src/utils/utils"]
+        }
+    },
+    "exclude": ["node_modules", "dist"],
+    "include": ["src"]
+}
