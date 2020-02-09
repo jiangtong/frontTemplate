@@ -158,7 +158,7 @@ class TeacherNumbers extends Component {
                     },
                     {
                         name: '土豪',
-                        value: '102'
+                        value: '1012'
                     }
                 ]
             }
