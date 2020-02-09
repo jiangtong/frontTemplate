@@ -1,21 +1,21 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router';
-import highComponentFuc from '@pages/Teacher/commen/HighComponent';
-import TestEchart from '@pages/Teacher/Survey/TestEchart';
-import '@pages/Teacher/commen/assets/styles/index.less';
-import { Row, Col } from 'antd';
-import Echart from '@components/beijing/Echarts';
-const HighFunUse = highComponentFuc('enterprisePracticeInfoList')(TestEchart);
-let color = ['#1890ff', '#2FC25B', '#D6C11A', '#CC5C2A', '#872ACC', '#D6C11A'];
+import React, { Component } from 'react'
+import { withRouter } from 'react-router'
+import highComponentFuc from '@pages/Teacher/commen/HighComponent'
+import TestEchart from '@pages/Teacher/Survey/TestEchart'
+import '@pages/Teacher/commen/assets/styles/index.less'
+import { Row, Col } from 'antd'
+import Echart from '@components/beijing/Echarts'
+const HighFunUse = highComponentFuc('enterprisePracticeInfoList')(TestEchart)
+let color = ['#1890ff', '#2FC25B', '#D6C11A', '#CC5C2A', '#872ACC', '#D6C11A']
 
 class TeacherNumbers extends Component {
     constructor(props) {
-        super(props);
-        this.state = {};
+        super(props)
+        this.state = {}
     }
 
     componentDidMount() {
-        console.log(document.referrer);
+        console.log(document.referrer)
     }
 
     render() {
@@ -43,7 +43,7 @@ class TeacherNumbers extends Component {
                 name: '特差',
                 value: 3354
             }
-        ];
+        ]
 
         let data1 = [
             {
@@ -54,45 +54,27 @@ class TeacherNumbers extends Component {
                 name: '贫困',
                 value: '16.29'
             }
-        ];
+        ]
 
         let data2 = [
             {
-                name: '特优',
+                name: '特差',
                 value: [
                     {
-                        name: '2019',
-                        value: '210'
+                        name: '入不敷出',
+                        value: '7'
                     },
                     {
-                        name: '2020',
-                        value: '954'
-                    }
-                ]
-            },
-            {
-                name: '优',
-                value: [
-                    {
-                        name: '2019',
-                        value: '2046'
+                        name: '普罗大众',
+                        value: '85'
                     },
                     {
-                        name: '2020',
-                        value: '2032'
-                    }
-                ]
-            },
-            {
-                name: '良',
-                value: [
-                    {
-                        name: '2019',
-                        value: '6487'
+                        name: '小康人家',
+                        value: '63'
                     },
                     {
-                        name: '2020',
-                        value: '3448'
+                        name: '土豪',
+                        value: '15'
                     }
                 ]
             },
@@ -100,30 +82,87 @@ class TeacherNumbers extends Component {
                 name: '差',
                 value: [
                     {
-                        name: '2019',
-                        value: '1840'
+                        name: '入不敷出',
+                        value: '68'
                     },
                     {
-                        name: '2020',
-                        value: '3162'
+                        name: '普罗大众',
+                        value: '145'
+                    },
+                    {
+                        name: '小康人家',
+                        value: '670'
+                    },
+                    {
+                        name: '土豪',
+                        value: '853'
                     }
                 ]
             },
             {
-                name: '特差',
+                name: '良',
                 value: [
                     {
-                        name: '2019',
-                        value: '186'
+                        name: '入不敷出',
+                        value: '173'
                     },
                     {
-                        name: '2020',
-                        value: '1427'
+                        name: '普罗大众',
+                        value: '512'
+                    },
+                    {
+                        name: '小康人家',
+                        value: '2684'
+                    },
+                    {
+                        name: '土豪',
+                        value: '2928'
+                    }
+                ]
+            },
+            {
+                name: '优',
+                value: [
+                    {
+                        name: '入不敷出',
+                        value: '35'
+                    },
+                    {
+                        name: '普罗大众',
+                        value: '163'
+                    },
+                    {
+                        name: '小康人家',
+                        value: '878'
+                    },
+                    {
+                        name: '土豪',
+                        value: '962'
+                    }
+                ]
+            },
+            {
+                name: '特优',
+                value: [
+                    {
+                        name: '入不敷出',
+                        value: '2'
+                    },
+                    {
+                        name: '普罗大众',
+                        value: '6'
+                    },
+                    {
+                        name: '小康人家',
+                        value: '95'
+                    },
+                    {
+                        name: '土豪',
+                        value: '102'
                     }
                 ]
             }
-        ];
-
+        ]
         return (
             <Col span={24} className="enrolment-container">
                 <Row className="bg-white chart-content">
@@ -159,7 +198,7 @@ class TeacherNumbers extends Component {
                                         itemHeight: 5,
                                         top: 0,
                                         data: data2.map(item => {
-                                            return item.name;
+                                            return item.name
                                         })
                                     },
                                     grid: {
@@ -175,7 +214,7 @@ class TeacherNumbers extends Component {
                                             (data2[0] &&
                                                 data2[0]['value'] &&
                                                 data2[0]['value'].map(item => {
-                                                    return item.name;
+                                                    return item.name
                                                 })) ||
                                             []
                                         // axisLabel: {
@@ -184,7 +223,7 @@ class TeacherNumbers extends Component {
                                     },
                                     yAxis: {
                                         // name: '流量(万GB)',
-                                        name: '人',
+                                        name: '消费水平',
                                         type: 'value'
                                     },
                                     // , {
@@ -198,17 +237,17 @@ class TeacherNumbers extends Component {
                                             label: {
                                                 normal: {
                                                     show: true,
-                                                    position: 'top'
+                                                    position: 'inside'
                                                 }
                                             },
                                             name: item.name,
-                                            type: 'line',
-                                            // stack: '总数',
-                                            // barWidth: '20%',
+                                            type: 'bar',
+                                            stack: '总数',
+                                            barWidth: '20%',
                                             // yAxisIndex: item.name === 'accutime' ? 1 : 0,
                                             // type: item.name === 'accutime' ? 'line' : 'bar',
                                             data: item.value
-                                        };
+                                        }
                                     })
                                 }}
                             ></Echart>
@@ -245,7 +284,7 @@ class TeacherNumbers extends Component {
                                         {
                                             type: 'category',
                                             data: data.map(item => {
-                                                return item.name;
+                                                return item.name
                                             })
                                             // ,
                                             // axisLabel: {
@@ -273,7 +312,7 @@ class TeacherNumbers extends Component {
                                                     // , itemStyle: {
                                                     //     color: color[index]
                                                     // }
-                                                };
+                                                }
                                             }),
                                             label: {
                                                 normal: {
@@ -324,7 +363,7 @@ class TeacherNumbers extends Component {
                                         {
                                             type: 'category',
                                             data: data.map(item => {
-                                                return item.name;
+                                                return item.name
                                             })
                                             // ,
                                             // axisLabel: {
@@ -350,7 +389,7 @@ class TeacherNumbers extends Component {
                                                     itemStyle: {
                                                         color: color[index]
                                                     }
-                                                };
+                                                }
                                             }),
                                             label: {
                                                 normal: {
@@ -399,7 +438,7 @@ class TeacherNumbers extends Component {
                                         data:
                                             data1 &&
                                             data1.map(item => {
-                                                return item.name;
+                                                return item.name
                                             })
                                     },
                                     series: [
@@ -442,8 +481,8 @@ class TeacherNumbers extends Component {
                     </div>
                 </Row>
             </Col>
-        );
+        )
     }
 }
 
-export default withRouter(TeacherNumbers);
+export default withRouter(TeacherNumbers)

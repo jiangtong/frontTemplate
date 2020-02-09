@@ -1,7 +1,7 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import withContext from './withContext'
 import Context from './context'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const Consumer = Context.Consumer
 

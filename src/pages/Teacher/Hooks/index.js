@@ -1,43 +1,38 @@
-import React, {Component} from 'react';
-import {withRouter} from 'react-router';
-import '@pages/Teacher/commen/assets/styles/index.less';
-import CommenComponent from '@pages/Teacher/commen/CommenComponent';
-import BaseComponment from '@pages/Teacher/commen/BaseComponment';
-import HookComponent from '@pages/Teacher/Hooks/HookComponent';
+import React, { Component } from 'react'
+import { withRouter } from 'react-router'
+import '@pages/Teacher/commen/assets/styles/index.less'
+import CommenComponent from '@pages/Teacher/commen/CommenComponent'
+import BaseComponment from '@pages/Teacher/commen/BaseComponment'
+import HookComponent from '@pages/Teacher/Hooks/HookComponent'
 import './index.scss'
 
 class OurfacultyComp extends Component {
     constructor(props) {
-        super(props);
-        this.state = {};
+        super(props)
+        this.state = {}
     }
 
-    componentDidMount() {
-    }
+    componentDidMount() {}
 
     render() {
-
         return (
             <BaseComponment>
-                <CommenComponent>{
-                    [
+                <CommenComponent>
+                    {[
                         {
                             title: 'HOOKS',
-                            linkAction: (e) => {
+                            linkAction: e => {
                                 // self.props.history.push('/teachermanager/survey/list');
                             },
                             component() {
-                                return (
-                                    <HookComponent></HookComponent>
-                                );
+                                return <HookComponent></HookComponent>
                             }
                         }
-                    ]
-                }</CommenComponent>
+                    ]}
+                </CommenComponent>
             </BaseComponment>
-        );
+        )
     }
 }
 
-export default withRouter(OurfacultyComp);
-
+export default withRouter(OurfacultyComp)

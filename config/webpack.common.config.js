@@ -1,23 +1,23 @@
 /*eslint-disable*/
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const config = require('./config');
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const config = require('./config')
 // 终端输出进度条
-const WebpackBar = require('webpackbar');
+const WebpackBar = require('webpackbar')
 // 显示编译时间
-const ProgressBarPlugin = require('progress-bar-webpack-plugin');
-const chalk = require('chalk');
-const path = require('path');
-const webpack = require('webpack');
-const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
-const os = require('os');
-const SpeedMeasurePlugin = require('speed-measure-webpack-plugin');
+const ProgressBarPlugin = require('progress-bar-webpack-plugin')
+const chalk = require('chalk')
+const path = require('path')
+const webpack = require('webpack')
+const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin')
+const os = require('os')
+const SpeedMeasurePlugin = require('speed-measure-webpack-plugin')
 
-const HappyPack = require('happypack');
-const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
+const HappyPack = require('happypack')
+const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length })
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
-    .BundleAnalyzerPlugin;
+    .BundleAnalyzerPlugin
 
-const smp = new SpeedMeasurePlugin();
+const smp = new SpeedMeasurePlugin()
 
 const commonConfig = {
     performance: {
@@ -94,9 +94,9 @@ const commonConfig = {
                         // 获取第三方包名
                         const packageName = module.context.match(
                             /[\\/]node_modules[\\/](.*?)([\\/]|$)/
-                        )[1];
+                        )[1]
                         // npm 软件包名称是 URL 安全的，但是某些服务器不喜欢@符号
-                        return `npm.${packageName.replace('@', '')}`;
+                        return `npm.${packageName.replace('@', '')}`
                     }
                 }
             }
@@ -285,6 +285,6 @@ const commonConfig = {
             }
         ]
     }
-};
+}
 
-module.exports = smp.wrap(commonConfig);
+module.exports = smp.wrap(commonConfig)

@@ -16,22 +16,22 @@
  *
  * */
 
-import React, { Component } from 'react';
-import { Col } from 'antd';
-import { withRouter } from 'react-router';
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
+import React, { Component } from 'react'
+import { Col } from 'antd'
+import { withRouter } from 'react-router'
+import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { compose } from 'redux'
 
 class CommenComponent extends Component {
     constructor(props) {
-        super(props);
+        super(props)
     }
 
     componentDidMount() {}
 
     render() {
-        let { children } = this.props;
+        let { children } = this.props
         return (
             <Col
                 span={24}
@@ -72,26 +72,26 @@ class CommenComponent extends Component {
                                 {item.component()}
                             </Col>
                         </Col>
-                    );
+                    )
                 })}
             </Col>
-        );
+        )
     }
 }
 
 const mapStateToProps = state => {
     return {
         menuWarnListData: state.menuWarnList.menuDic
-    };
-};
+    }
+}
 
 const mapDispatchToProps = dispatch => {
-    return {};
-};
+    return {}
+}
 
 const enhance = compose(
     connect(mapStateToProps, mapDispatchToProps),
     withRouter
-);
+)
 
-export default enhance(CommenComponent);
+export default enhance(CommenComponent)

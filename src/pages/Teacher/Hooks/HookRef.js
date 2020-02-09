@@ -1,17 +1,17 @@
 /* eslint-disable react/no-multi-comp */
-import React, { useRef, useImperativeHandle } from 'react';
+import React, { useRef, useImperativeHandle } from 'react'
 
 class Child extends React.Component {
     constructor(props) {
-        super(props);
+        super(props)
     }
 
     getState = () => {
-        return 123123;
-    };
+        return 123123
+    }
 
     render() {
-        return <div>ChildRef</div>;
+        return <div>ChildRef</div>
     }
 }
 
@@ -19,43 +19,43 @@ class Child extends React.Component {
 const logProps = Component => {
     class LogProps extends React.Component {
         render() {
-            const { forwardedRef, ...rest } = this.props;
-            return <Component ref={forwardedRef} {...rest} />;
+            const { forwardedRef, ...rest } = this.props
+            return <Component ref={forwardedRef} {...rest} />
         }
     }
 
     function forwardRef(props, ref) {
-        return <LogProps {...props} forwardedRef={ref} />;
+        return <LogProps {...props} forwardedRef={ref} />
     }
 
-    return React.forwardRef(forwardRef);
-};
+    return React.forwardRef(forwardRef)
+}
 
-const ReactComponent = logProps(Child);
+const ReactComponent = logProps(Child)
 
 const FancyInput = (_props, ref) => {
-    const inputRef = useRef();
+    const inputRef = useRef()
     useImperativeHandle(ref, () => ({
         focus: () => {
-            inputRef.current.focus();
+            inputRef.current.focus()
         }
-    }));
-    return <input ref={inputRef} />;
-};
+    }))
+    return <input ref={inputRef} />
+}
 
-const UseFancyInput = React.forwardRef(FancyInput);
+const UseFancyInput = React.forwardRef(FancyInput)
 
 // eslint-disable-next-line react/no-multi-comp
 export default () => {
-    const inputRef = useRef(111);
-    const fancyInputRef = useRef();
-    let childRef = useRef(null);
+    const inputRef = useRef(111)
+    const fancyInputRef = useRef()
+    let childRef = useRef(null)
 
     const onButtonClick = () => {
-        inputRef.current.focus();
-        console.log(childRef);
-        console.log(inputRef);
-    };
+        inputRef.current.focus()
+        console.log(childRef)
+        console.log(inputRef)
+    }
 
     return (
         <React.Fragment>
@@ -67,9 +67,9 @@ export default () => {
             <UseFancyInput
                 ref={fancyInputRef}
                 onClick={() => {
-                    fancyInputRef.current.focus();
+                    fancyInputRef.current.focus()
                 }}
             />
         </React.Fragment>
-    );
-};
+    )
+}

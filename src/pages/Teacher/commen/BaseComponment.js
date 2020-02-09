@@ -15,15 +15,15 @@
                             其中内容按照界面需求设计 可以写多个CommenComponent 组件
  *
  * */
-import React, {Component} from 'react';
-import {withRouter} from 'react-router';
-import {connect} from 'react-redux';
-import {compose} from 'redux';
-import {menuWarnList} from '@actions/menuWarnList';
+import React, { Component } from 'react'
+import { withRouter } from 'react-router'
+import { connect } from 'react-redux'
+import { compose } from 'redux'
+import { menuWarnList } from '@actions/menuWarnList'
 
 class BaseComponment extends Component {
     constructor(props) {
-        super(props);
+        super(props)
     }
 
     componentDidMount() {
@@ -31,33 +31,24 @@ class BaseComponment extends Component {
     }
 
     render() {
-        return (
-            <React.Fragment>
-                {
-                    this.props.children
-                }
-            </React.Fragment>
-        );
+        return <React.Fragment>{this.props.children}</React.Fragment>
     }
 }
 
-const mapStateToProps = (state) => {
-    return {};
-};
+const mapStateToProps = state => {
+    return {}
+}
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
     return {
         menuWarnListAction(data) {
-            dispatch(menuWarnList(data));
+            dispatch(menuWarnList(data))
         }
-    };
-};
-
+    }
+}
 
 const enhance = compose(
     connect(mapStateToProps, mapDispatchToProps),
     withRouter
-);
-export default enhance(BaseComponment);
-
-
+)
+export default enhance(BaseComponment)
