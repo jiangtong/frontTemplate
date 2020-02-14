@@ -1,43 +1,40 @@
 /*eslint-disable*/
 
-const merge = require('webpack-merge');
-const commonConfig = require('./webpack.common.config.js');
-const config = require('./config');
-const path = require('path');
-const openBrowserWebpackPlugin = require('open-browser-webpack-plugin');
-const webpack = require('webpack');
-const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
-const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
-const postcssPresetEnv = require('postcss-preset-env');
+const merge = require('webpack-merge')
+const commonConfig = require('./webpack.common.config.js')
+const config = require('./config')
+const path = require('path')
+const openBrowserWebpackPlugin = require('open-browser-webpack-plugin')
+const webpack = require('webpack')
+const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin')
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin')
+const postcssPresetEnv = require('postcss-preset-env')
 
 // 需要转发的接口拼接
-const {proxyArr = []} = config;
-let newProxyObj = {};
+const { proxyArr = [] } = config
+let newProxyObj = {}
 proxyArr.forEach(item => {
     newProxyObj[item.name] = {
         target: item.url,
         changeOrigin: true,
         secure: false
-    };
-});
+    }
+})
 
 const devConfig = {
-    devtool: 'cheap-module-eval-source-map',
-    // devtool: 'source-map',
+    devtool: 'source-map',
     mode: 'development',
     entry: {
-        app: [
-            '@babel/polyfill',
-            'react-hot-loader/patch',
-            config.appIndexJs
-        ]
+        app: ['@babel/polyfill', 'react-hot-loader/patch', config.appIndexJs]
     },
 
     plugins: [
         new HardSourceWebpackPlugin({
             // configHash在启动webpack实例时转换webpack配置，并用于cacheDirectory为不同的webpack配置构建不同的缓存
-            configHash: function (webpackConfig) {
-                return require('node-object-hash')({sort: false}).hash(webpackConfig);
+            configHash: function(webpackConfig) {
+                return require('node-object-hash')({ sort: false }).hash(
+                    webpackConfig
+                )
             },
             // 当加载器，插件，其他构建时脚本或其他动态依赖项发生更改时，hard-source需要替换缓存以确保输出正确。environmentHash被用来确定这一点。如果散列与先前的构建不同，则将使用新的缓存
             environmentHash: {
@@ -66,98 +63,111 @@ const devConfig = {
     },
 
     module: {
-        rules: [{
-            test: /\.js?$/,
-            use: [{
-                loader: 'eslint-loader',
-                options: {
-                    failOnError: false,
-                    failOnWarning: true, //警告不显示
-                    quiet: true,
-                    cache: true
-                }
-            }],
-            exclude: /node_modules/,
-            include: config.appSrc
-        }, {
-            test: /\.(scss|sass)$/,
-            use: [{
-                loader: 'style-loader',
-                options: {
-                    insert: 'head'
-                }
-            }, {
-                loader: 'css-loader'
-                // options: {
-                //     modules: true, // 指定启用css modules
-                //     importLoaders: 1,
-                //     localIdentName: '[name]__[local]--[hash:base64:5]'
-                // }
-            }, {
-                loader: 'postcss-loader',
-                options: {
-                    ident: 'postcss',
-                    plugins: () => [
-                        postcssPresetEnv({})
-                    ]
-                }
+        rules: [
+            {
+                test: /\.js?$/,
+                use: [
+                    {
+                        loader: 'eslint-loader',
+                        options: {
+                            failOnError: false,
+                            failOnWarning: true, //警告不显示
+                            quiet: true,
+                            cache: true
+                        }
+                    }
+                ],
+                exclude: /node_modules/,
+                include: config.appSrc
             },
-                'sass-loader'
-            ]
-        }, {
-            test: /\.less$/,
-            use: [{
-                loader: 'style-loader',
-                options: {
-                    insert: 'head'
-                }
-            }, {
-                loader: 'css-loader'
-                // options: {
-                //     modules: true, // 指定启用css modules
-                //     importLoaders: 1,
-                //     localIdentName: '[name]__[local]--[hash:base64:5]'
-                // }
-            }, {
-                loader: 'postcss-loader',
-                options: {
-                    ident: 'postcss',
-                    plugins: () => [
-                        postcssPresetEnv({})
-                    ]
-                }
-            }, {
-                loader: 'less-loader',
-                options: {
-                    // 使用less默认运行时替换配置的@color样式
-                    modifyVars: config.color,
-                    javascriptEnabled: true
-                }
-            }]
-        }, {
-            test: /\.css$/,
-            use: [{
-                loader: 'style-loader',
-                options: {
-                    insert: 'head'
-                }
-            }, {
-                loader: 'css-loader'
-                // options: {
-                //     modules: true, // 指定启用css modules
-                //     importLoaders: 1,
-                //     localIdentName: '[name]__[local]--[hash:base64:5]'
-                // }
-            }, {
-                loader: 'postcss-loader',
-                options: {
-                    ident: 'postcss',
-                    plugins: () => [
-                        postcssPresetEnv({})
-                    ]
-                }
-            }]
-        }]
+            {
+                test: /\.(scss|sass)$/,
+                use: [
+                    {
+                        loader: 'style-loader',
+                        options: {
+                            insert: 'head'
+                        }
+                    },
+                    {
+                        loader: 'css-loader'
+                        // options: {
+                        //     modules: true, // 指定启用css modules
+                        //     importLoaders: 1,
+                        //     localIdentName: '[name]__[local]--[hash:base64:5]'
+                        // }
+                    },
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            ident: 'postcss',
+                            plugins: () => [postcssPresetEnv({})]
+                        }
+                    },
+                    'sass-loader'
+                ]
+            },
+            {
+                test: /\.less$/,
+                use: [
+                    {
+                        loader: 'style-loader',
+                        options: {
+                            insert: 'head'
+                        }
+                    },
+                    {
+                        loader: 'css-loader'
+                        // options: {
+                        //     modules: true, // 指定启用css modules
+                        //     importLoaders: 1,
+                        //     localIdentName: '[name]__[local]--[hash:base64:5]'
+                        // }
+                    },
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            ident: 'postcss',
+                            plugins: () => [postcssPresetEnv({})]
+                        }
+                    },
+                    {
+                        loader: 'less-loader',
+                        options: {
+                            // 使用less默认运行时替换配置的@color样式
+                            modifyVars: config.color,
+                            javascriptEnabled: true
+                        }
+                    }
+                ]
+            },
+            {
+                test: /\.css$/,
+                use: [
+                    {
+                        loader: 'style-loader',
+                        options: {
+                            insert: 'head'
+                        }
+                    },
+                    {
+                        loader: 'css-loader'
+                        // options: {
+                        //     modules: true, // 指定启用css modules
+                        //     importLoaders: 1,
+                        //     localIdentName: '[name]__[local]--[hash:base64:5]'
+                        // }
+                    },
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            ident: 'postcss',
+                            plugins: () => [postcssPresetEnv({})]
+                        }
+                    }
+                ]
+            }
+        ]
     },
 
     devServer: {
@@ -203,6 +213,6 @@ const devConfig = {
             warnings: true
         }
     }
-};
+}
 
-module.exports = merge.smart(commonConfig, devConfig);
+module.exports = merge.smart(commonConfig, devConfig)

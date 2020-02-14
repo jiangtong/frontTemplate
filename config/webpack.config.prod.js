@@ -1,20 +1,20 @@
 /*eslint-disable*/
-const merge = require('webpack-merge');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const webpack = require('webpack');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const commonConfig = require('./webpack.common.config.js');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
-const postcssPresetEnv = require('postcss-preset-env');
-const config = require('./config');
-const seen = new Set();
-const nameLength = 4;
-const path = require('path');
-const TerserPlugin = require('terser-webpack-plugin');
-
+const merge = require('webpack-merge')
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const webpack = require('webpack')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const commonConfig = require('./webpack.common.config.js')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin')
+const postcssPresetEnv = require('postcss-preset-env')
+const config = require('./config')
+const seen = new Set()
+const nameLength = 4
+const path = require('path')
+const TerserPlugin = require('terser-webpack-plugin')
+const CompressionWebpackPlugin = require('compression-webpack-plugin')
 const publicConfig = {
     entry: {
         app: config.appIndexJs
@@ -26,10 +26,24 @@ const publicConfig = {
         chunkFilename: 'app/js/[name].[chunkhash:8].bundle.js'
     },
 
-    devtool: 'cheap-module-source-map',
+    devtool: 'none',
     mode: 'production',
 
     plugins: [
+        // new CompressionWebpackPlugin({
+        //     filename: '[path].gz[query]',
+        //     // 压缩后缀
+        //     algorithm: 'gzip',
+        //     cache: true,
+        //     test: new RegExp('\\.(js|css)$'),
+        //     // 只处理比这个值大的资源。按字节计算
+        //     threshold: 10240,
+        //     // 只有压缩率比这个值小的资源才会被处理 （minRatio = 压缩大小 / 原始大小）
+        //     minRatio: 0.8,
+        //     // 是否删除原资源
+        //     deleteOriginalAssets: false
+        // }),
+
         new CleanWebpackPlugin({
             verbose: true,
             dry: false
@@ -54,20 +68,20 @@ const publicConfig = {
 
         new webpack.NamedChunksPlugin(chunk => {
             if (chunk.name) {
-                return chunk.name;
+                return chunk.name
             }
-            const modules = Array.from(chunk.modulesIterable);
+            const modules = Array.from(chunk.modulesIterable)
             if (modules.length > 1) {
-                const hash = require('hash-sum');
-                const joinedHash = hash(modules.map(m => m.id).join('_'));
-                let len = nameLength;
+                const hash = require('hash-sum')
+                const joinedHash = hash(modules.map(m => m.id).join('_'))
+                let len = nameLength
                 while (seen.has(joinedHash.substr(0, len))) {
-                    len++;
+                    len++
                 }
-                seen.add(joinedHash.substr(0, len));
-                return `chunk-${joinedHash.substr(0, len)}`;
+                seen.add(joinedHash.substr(0, len))
+                return `chunk-${joinedHash.substr(0, len)}`
             } else {
-                return modules[0].id;
+                return modules[0].id
             }
         }),
 
@@ -242,6 +256,6 @@ const publicConfig = {
             }
         ]
     }
-};
+}
 
-module.exports = merge.smart(commonConfig, publicConfig);
+module.exports = merge.smart(commonConfig, publicConfig)

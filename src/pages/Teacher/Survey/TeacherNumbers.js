@@ -7,6 +7,7 @@ import { Row, Col } from 'antd'
 import Echart from '@components/beijing/Echarts'
 const HighFunUse = highComponentFuc('enterprisePracticeInfoList')(TestEchart)
 let color = ['#1890ff', '#2FC25B', '#D6C11A', '#CC5C2A', '#872ACC', '#D6C11A']
+import Request from '@commenApi/teacher/index'
 
 class TeacherNumbers extends Component {
     constructor(props) {
@@ -14,88 +15,97 @@ class TeacherNumbers extends Component {
         this.state = {}
     }
 
-    componentDidMount() {
-        console.log(document.referrer)
+    async componentDidMount() {
+        let res = await Request.enterprisePracticeInfoList()
+
+        console.log(res)
     }
 
     render() {
         let data = [
             {
-                name: '特优',
+                name: '优',
                 value: 40535
             },
             {
-                name: '优',
+                name: '良',
                 value: 335150
             },
-
             {
-                name: '良',
+                name: '中',
                 value: 560745
             },
-
             {
-                name: '差',
+                name: '及格',
                 value: 87187
             },
-
             {
-                name: '特差',
+                name: '不及格',
                 value: 3354
             }
         ]
 
         let data1 = [
             {
-                name: '非贫困',
-                value: '83.71'
+                name: '及格',
+                value: '17.09'
             },
-            {
-                name: '贫困',
-                value: '16.29'
-            }
+            { name: '良', value: '19.00' },
+            { name: '不及格', value: '1.73' },
+            { name: '中', value: '60.24' },
+            { name: '优', value: '1.95' }
         ]
-
         let data2 = [
             {
-                name: '特差',
+                name: '优',
                 value: [
                     {
-                        name: '入不敷出',
-                        value: '7'
+                        name: '1',
+                        value: '4688.5'
                     },
                     {
-                        name: '普罗大众',
-                        value: '85'
+                        name: '2',
+                        value: ''
                     },
                     {
-                        name: '小康人家',
-                        value: '63'
+                        name: '3',
+                        value: ''
                     },
                     {
-                        name: '土豪',
-                        value: '15'
-                    }
-                ]
-            },
-            {
-                name: '差',
-                value: [
-                    {
-                        name: '入不敷出',
-                        value: '68'
+                        name: '4',
+                        value: '1050.3'
                     },
                     {
-                        name: '普罗大众',
-                        value: '145'
+                        name: '5',
+                        value: '10709.0'
                     },
                     {
-                        name: '小康人家',
-                        value: '670'
+                        name: '6',
+                        value: '10107.9'
                     },
                     {
-                        name: '土豪',
-                        value: '853'
+                        name: '7',
+                        value: '5226.5'
+                    },
+                    {
+                        name: '8',
+                        value: ''
+                    },
+                    {
+                        name: '9',
+                        value: '10843.3'
+                    },
+                    {
+                        name: '10',
+                        value: '12004.9'
+                    },
+                    {
+                        name: '11',
+                        value: '13088.3'
+                    },
+                    {
+                        name: '12',
+                        value: '14702.1'
                     }
                 ]
             },
@@ -103,66 +113,216 @@ class TeacherNumbers extends Component {
                 name: '良',
                 value: [
                     {
-                        name: '入不敷出',
-                        value: '173'
+                        name: '1',
+                        value: '38482.6'
                     },
                     {
-                        name: '普罗大众',
-                        value: '512'
+                        name: '2',
+                        value: ''
                     },
                     {
-                        name: '小康人家',
-                        value: '2684'
+                        name: '3',
+                        value: ''
                     },
                     {
-                        name: '土豪',
-                        value: '2928'
+                        name: '4',
+                        value: '11601.7'
+                    },
+                    {
+                        name: '5',
+                        value: '116303.0'
+                    },
+                    {
+                        name: '6',
+                        value: '116530.6'
+                    },
+                    {
+                        name: '7',
+                        value: '56963.7'
+                    },
+                    {
+                        name: '8',
+                        value: ''
+                    },
+                    {
+                        name: '9',
+                        value: '123651.5'
+                    },
+                    {
+                        name: '10',
+                        value: '118872.7'
+                    },
+                    {
+                        name: '11',
+                        value: '123694.9'
+                    },
+                    {
+                        name: '12',
+                        value: '140317.0'
                     }
                 ]
             },
             {
-                name: '优',
+                name: '中',
                 value: [
                     {
-                        name: '入不敷出',
-                        value: '35'
+                        name: '1',
+                        value: '141979.4'
                     },
                     {
-                        name: '普罗大众',
-                        value: '163'
+                        name: '2',
+                        value: ''
                     },
                     {
-                        name: '小康人家',
-                        value: '878'
+                        name: '3',
+                        value: ''
                     },
                     {
-                        name: '土豪',
-                        value: '962'
+                        name: '4',
+                        value: '42482.6'
+                    },
+                    {
+                        name: '5',
+                        value: '444349.3'
+                    },
+                    {
+                        name: '6',
+                        value: '436588.0'
+                    },
+                    {
+                        name: '7',
+                        value: '199717.5'
+                    },
+                    {
+                        name: '8',
+                        value: ''
+                    },
+                    {
+                        name: '9',
+                        value: '496034.8'
+                    },
+                    {
+                        name: '10',
+                        value: '489577.0'
+                    },
+                    {
+                        name: '11',
+                        value: '497845.8'
+                    },
+                    {
+                        name: '12',
+                        value: '544379.0'
                     }
                 ]
             },
             {
-                name: '特优',
+                name: '及格',
                 value: [
                     {
-                        name: '入不敷出',
-                        value: '2'
+                        name: '1',
+                        value: '46382.7'
                     },
                     {
-                        name: '普罗大众',
-                        value: '6'
+                        name: '2',
+                        value: ''
                     },
                     {
-                        name: '小康人家',
-                        value: '95'
+                        name: '3',
+                        value: ''
                     },
                     {
-                        name: '土豪',
-                        value: '1012'
+                        name: '4',
+                        value: '13609.6'
+                    },
+                    {
+                        name: '5',
+                        value: '146651.7'
+                    },
+                    {
+                        name: '6',
+                        value: '140473.5'
+                    },
+                    {
+                        name: '7',
+                        value: '62346.6'
+                    },
+                    {
+                        name: '8',
+                        value: ''
+                    },
+                    {
+                        name: '9',
+                        value: '153823.4'
+                    },
+                    {
+                        name: '10',
+                        value: '155934.6'
+                    },
+                    {
+                        name: '11',
+                        value: '153815.2'
+                    },
+                    {
+                        name: '12',
+                        value: '169148.8'
+                    }
+                ]
+            },
+            {
+                name: '不及格',
+                value: [
+                    {
+                        name: '1',
+                        value: '4182.9'
+                    },
+                    {
+                        name: '2',
+                        value: ''
+                    },
+                    {
+                        name: '3',
+                        value: ''
+                    },
+                    {
+                        name: '4',
+                        value: '1413.0'
+                    },
+                    {
+                        name: '5',
+                        value: '16322.5'
+                    },
+                    {
+                        name: '6',
+                        value: '14417.3'
+                    },
+                    {
+                        name: '7',
+                        value: '5310.7'
+                    },
+                    {
+                        name: '8',
+                        value: ''
+                    },
+                    {
+                        name: '9',
+                        value: '15775.3'
+                    },
+                    {
+                        name: '10',
+                        value: '16270.6'
+                    },
+                    {
+                        name: '11',
+                        value: '15641.9'
+                    },
+                    {
+                        name: '12',
+                        value: '16364.6'
                     }
                 ]
             }
         ]
+
         return (
             <Col span={24} className="enrolment-container">
                 <Row className="bg-white chart-content">
@@ -214,7 +374,7 @@ class TeacherNumbers extends Component {
                                             (data2[0] &&
                                                 data2[0]['value'] &&
                                                 data2[0]['value'].map(item => {
-                                                    return item.name
+                                                    return item.name + '月'
                                                 })) ||
                                             []
                                         // axisLabel: {
@@ -223,7 +383,7 @@ class TeacherNumbers extends Component {
                                     },
                                     yAxis: {
                                         // name: '流量(万GB)',
-                                        name: '消费水平',
+                                        name: '',
                                         type: 'value'
                                     },
                                     // , {
@@ -237,13 +397,13 @@ class TeacherNumbers extends Component {
                                             label: {
                                                 normal: {
                                                     show: true,
-                                                    position: 'inside'
+                                                    position: 'top'
                                                 }
                                             },
                                             name: item.name,
                                             type: 'bar',
-                                            stack: '总数',
-                                            barWidth: '20%',
+                                            // stack: '总数',
+                                            // barWidth: '30%',
                                             // yAxisIndex: item.name === 'accutime' ? 1 : 0,
                                             // type: item.name === 'accutime' ? 'line' : 'bar',
                                             data: item.value
@@ -296,7 +456,7 @@ class TeacherNumbers extends Component {
                                     yAxis: [
                                         {
                                             // name: '流量(GB)',
-                                            name: '借书次数',
+                                            name: '',
                                             type: 'value'
                                         }
                                     ],
@@ -308,10 +468,10 @@ class TeacherNumbers extends Component {
                                             data: data.map((item, index) => {
                                                 return {
                                                     name: item.name,
-                                                    value: item.value,
-                                                    itemStyle: {
-                                                        color: color[index]
-                                                    }
+                                                    value: item.value
+                                                    // itemStyle: {
+                                                    //     color: color[index]
+                                                    // }
                                                 }
                                             }),
                                             label: {
