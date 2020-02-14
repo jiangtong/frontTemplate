@@ -26,7 +26,7 @@ const reducer = (state, action) => {
 //     return [state, dispatch];
 // }
 
-export default _props => {
+export default () => {
     const [state, dispatch] = useReducer(reducer, initState)
     return (
         <React.Fragment>

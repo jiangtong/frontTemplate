@@ -308,10 +308,10 @@ class TeacherNumbers extends Component {
                                             data: data.map((item, index) => {
                                                 return {
                                                     name: item.name,
-                                                    value: item.value
-                                                    // , itemStyle: {
-                                                    //     color: color[index]
-                                                    // }
+                                                    value: item.value,
+                                                    itemStyle: {
+                                                        color: color[index]
+                                                    }
                                                 }
                                             }),
                                             label: {
