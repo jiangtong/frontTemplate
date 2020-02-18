@@ -162,24 +162,6 @@ const commonConfig = {
             }
         }),
 
-        // 模块的动态链接库只需被编译一次，在之后的构建过程中被动态链接库包含的模块将不会重新编译，
-        // 而是直接使用动态链接库中 的代码 由于动态链接库中大多数包含的是常用的第三方模块，
-        // 例如 react、react-dom ，所以只要不升级这些模块的版本，动态链接库就不用重新编译。
-        new HardSourceWebpackPlugin({
-            // configHash在启动webpack实例时转换webpack配置，并用于cacheDirectory为不同的webpack配置构建不同的缓存
-            configHash: function(webpackConfig) {
-                return require('node-object-hash')({ sort: false }).hash(
-                    webpackConfig
-                );
-            },
-            // 当加载器，插件，其他构建时脚本或其他动态依赖项发生更改时，hard-source需要替换缓存以确保输出正确。environmentHash被用来确定这一点。如果散列与先前的构建不同，则将使用新的缓存
-            environmentHash: {
-                root: `${config.appPublic}/node_modules`,
-                directories: [],
-                files: ['package-lock.json', 'yarn.lock']
-            }
-        }),
-
         // 进度条
         new WebpackBar(),
 
@@ -197,7 +179,7 @@ const commonConfig = {
             id: 'happy-babel-js',
             loaders: ['babel-loader?cacheDirectory=true'],
             threadPool: happyThreadPool
-        })
+        }),
 
         // new HtmlWebpackTagsPlugin({
         //     tags: [
@@ -219,6 +201,41 @@ const commonConfig = {
         //     ],
         //     append: false
         // })
+
+        new HardSourceWebpackPlugin({
+            // configHash在启动webpack实例时转换webpack配置，并用于cacheDirectory为不同的webpack配置构建不同的缓存
+            configHash: function(webpackConfig) {
+                return require('node-object-hash')({ sort: false }).hash(
+                    webpackConfig
+                );
+            },
+            recordsPath:
+                'node_modules/.cache/hard-source/[confighash]/records.json',
+            info: {
+                // 'none' or 'test'.
+                mode: 'none',
+                // 'debug', 'log', 'info', 'warn', or 'error'.
+                level: 'debug'
+            },
+            cachePrune: {
+                // Caches younger than `maxAge` are not considered for deletion. They must
+                // be at least this (default: 2 days) old in milliseconds.
+                maxAge: 2 * 24 * 60 * 60 * 1000,
+                // All caches together must be larger than `sizeThreshold` before any
+                // caches will be deleted. Together they must be at least this
+                // (default: 50 MB) big in bytes.
+                sizeThreshold: 50 * 1024 * 1024
+            },
+
+            cacheDirectory: 'node_modules/.cache/hard-source/[confighash]',
+
+            // 当加载器，插件，其他构建时脚本或其他动态依赖项发生更改时，hard-source需要替换缓存以确保输出正确。environmentHash被用来确定这一点。如果散列与先前的构建不同，则将使用新的缓存
+            environmentHash: {
+                root: process.cwd(),
+                directories: [],
+                files: ['package-lock.json', 'yarn.lock']
+            }
+        })
     ],
 
     resolve: {
