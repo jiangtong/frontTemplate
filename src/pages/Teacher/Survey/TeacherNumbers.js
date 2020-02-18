@@ -1,24 +1,24 @@
-import React, { Component } from 'react'
-import { withRouter } from 'react-router'
-import highComponentFuc from '@pages/Teacher/commen/HighComponent'
-import TestEchart from '@pages/Teacher/Survey/TestEchart'
-import '@pages/Teacher/commen/assets/styles/index.less'
-import { Row, Col } from 'antd'
-import Echart from '@components/beijing/Echarts'
-const HighFunUse = highComponentFuc('enterprisePracticeInfoList')(TestEchart)
-let color = ['#1890ff', '#2FC25B', '#D6C11A', '#CC5C2A', '#872ACC', '#D6C11A']
-import Request from '@commenApi/teacher/index'
+import React, { Component } from 'react';
+import { withRouter } from 'react-router';
+import highComponentFuc from '@pages/Teacher/commen/HighComponent';
+import TestEchart from '@pages/Teacher/Survey/TestEchart';
+import '@pages/Teacher/commen/assets/styles/index.less';
+import { Row, Col } from 'antd';
+import Echart from '@components/beijing/Echarts';
+const HighFunUse = highComponentFuc('enterprisePracticeInfoList')(TestEchart);
+let color = ['#1890ff', '#2FC25B', '#D6C11A', '#CC5C2A', '#872ACC', '#D6C11A'];
+import Request from '@commenApi/teacher/index';
 
 class TeacherNumbers extends Component {
     constructor(props) {
-        super(props)
-        this.state = {}
+        super(props);
+        this.state = {};
     }
 
     async componentDidMount() {
-        let res = await Request.enterprisePracticeInfoList()
+        let res = await Request.enterprisePracticeInfoList();
 
-        console.log(res)
+        console.log(res);
     }
 
     render() {
@@ -43,7 +43,7 @@ class TeacherNumbers extends Component {
                 name: '不及格',
                 value: 3354
             }
-        ]
+        ];
 
         let data1 = [
             {
@@ -54,14 +54,14 @@ class TeacherNumbers extends Component {
             { name: '不及格', value: '1.73' },
             { name: '中', value: '60.24' },
             { name: '优', value: '1.95' }
-        ]
+        ];
         let data2 = [
             {
                 name: '优',
                 value: [
                     {
                         name: '1',
-                        value: '4688.5'
+                        value: '1222121'
                     },
                     {
                         name: '2',
@@ -321,7 +321,7 @@ class TeacherNumbers extends Component {
                     }
                 ]
             }
-        ]
+        ];
 
         return (
             <Col span={24} className="enrolment-container">
@@ -358,7 +358,7 @@ class TeacherNumbers extends Component {
                                         itemHeight: 5,
                                         top: 0,
                                         data: data2.map(item => {
-                                            return item.name
+                                            return item.name;
                                         })
                                     },
                                     grid: {
@@ -374,7 +374,7 @@ class TeacherNumbers extends Component {
                                             (data2[0] &&
                                                 data2[0]['value'] &&
                                                 data2[0]['value'].map(item => {
-                                                    return item.name + '月'
+                                                    return item.name + '月';
                                                 })) ||
                                             []
                                         // axisLabel: {
@@ -407,7 +407,7 @@ class TeacherNumbers extends Component {
                                             // yAxisIndex: item.name === 'accutime' ? 1 : 0,
                                             // type: item.name === 'accutime' ? 'line' : 'bar',
                                             data: item.value
-                                        }
+                                        };
                                     })
                                 }}
                             ></Echart>
@@ -444,7 +444,7 @@ class TeacherNumbers extends Component {
                                         {
                                             type: 'category',
                                             data: data.map(item => {
-                                                return item.name
+                                                return item.name;
                                             })
                                             // ,
                                             // axisLabel: {
@@ -472,7 +472,7 @@ class TeacherNumbers extends Component {
                                                     // itemStyle: {
                                                     //     color: color[index]
                                                     // }
-                                                }
+                                                };
                                             }),
                                             label: {
                                                 normal: {
@@ -523,7 +523,7 @@ class TeacherNumbers extends Component {
                                         {
                                             type: 'category',
                                             data: data.map(item => {
-                                                return item.name
+                                                return item.name;
                                             })
                                             // ,
                                             // axisLabel: {
@@ -549,7 +549,7 @@ class TeacherNumbers extends Component {
                                                     itemStyle: {
                                                         color: color[index]
                                                     }
-                                                }
+                                                };
                                             }),
                                             label: {
                                                 normal: {
@@ -598,7 +598,7 @@ class TeacherNumbers extends Component {
                                         data:
                                             data1 &&
                                             data1.map(item => {
-                                                return item.name
+                                                return item.name;
                                             })
                                     },
                                     series: [
@@ -641,8 +641,8 @@ class TeacherNumbers extends Component {
                     </div>
                 </Row>
             </Col>
-        )
+        );
     }
 }
 
-export default withRouter(TeacherNumbers)
+export default withRouter(TeacherNumbers);

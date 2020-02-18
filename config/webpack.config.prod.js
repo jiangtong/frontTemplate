@@ -1,20 +1,20 @@
 /*eslint-disable*/
-const merge = require('webpack-merge')
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
-const webpack = require('webpack')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const commonConfig = require('./webpack.common.config.js')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
-const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin')
-const postcssPresetEnv = require('postcss-preset-env')
-const config = require('./config')
-const seen = new Set()
-const nameLength = 4
-const path = require('path')
-const TerserPlugin = require('terser-webpack-plugin')
-const CompressionWebpackPlugin = require('compression-webpack-plugin')
+const commonConfig = require('./webpack.config.common.js');
+const merge = require('webpack-merge');
+// const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const webpack = require('webpack');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
+const postcssPresetEnv = require('postcss-preset-env');
+const config = require('./config');
+const seen = new Set();
+const nameLength = 4;
+const path = require('path');
+// const TerserPlugin = require('terser-webpack-plugin')
+const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const publicConfig = {
     entry: {
         app: config.appIndexJs
@@ -68,20 +68,20 @@ const publicConfig = {
 
         new webpack.NamedChunksPlugin(chunk => {
             if (chunk.name) {
-                return chunk.name
+                return chunk.name;
             }
-            const modules = Array.from(chunk.modulesIterable)
+            const modules = Array.from(chunk.modulesIterable);
             if (modules.length > 1) {
-                const hash = require('hash-sum')
-                const joinedHash = hash(modules.map(m => m.id).join('_'))
-                let len = nameLength
+                const hash = require('hash-sum');
+                const joinedHash = hash(modules.map(m => m.id).join('_'));
+                let len = nameLength;
                 while (seen.has(joinedHash.substr(0, len))) {
-                    len++
+                    len++;
                 }
-                seen.add(joinedHash.substr(0, len))
-                return `chunk-${joinedHash.substr(0, len)}`
+                seen.add(joinedHash.substr(0, len));
+                return `chunk-${joinedHash.substr(0, len)}`;
             } else {
-                return modules[0].id
+                return modules[0].id;
             }
         }),
 
@@ -256,6 +256,6 @@ const publicConfig = {
             }
         ]
     }
-}
+};
 
-module.exports = merge.smart(commonConfig, publicConfig)
+module.exports = merge.smart(commonConfig, publicConfig);

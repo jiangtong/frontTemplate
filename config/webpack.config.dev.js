@@ -1,25 +1,24 @@
 /*eslint-disable*/
 
-const merge = require('webpack-merge')
-const commonConfig = require('./webpack.common.config.js')
-const config = require('./config')
-const path = require('path')
-const openBrowserWebpackPlugin = require('open-browser-webpack-plugin')
-const webpack = require('webpack')
-const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin')
-const HardSourceWebpackPlugin = require('hard-source-webpack-plugin')
-const postcssPresetEnv = require('postcss-preset-env')
+const merge = require('webpack-merge');
+const commonConfig = require('./webpack.config.common.js');
+const config = require('./config');
+const path = require('path');
+const openBrowserWebpackPlugin = require('open-browser-webpack-plugin');
+const webpack = require('webpack');
+const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
+const postcssPresetEnv = require('postcss-preset-env');
 
 // 需要转发的接口拼接
-const { proxyArr = [] } = config
-let newProxyObj = {}
+const { proxyArr = [] } = config;
+let newProxyObj = {};
 proxyArr.forEach(item => {
     newProxyObj[item.name] = {
         target: item.url,
         changeOrigin: true,
         secure: false
-    }
-})
+    };
+});
 
 const devConfig = {
     devtool: 'source-map',
@@ -29,26 +28,6 @@ const devConfig = {
     },
 
     plugins: [
-        new HardSourceWebpackPlugin({
-            // configHash在启动webpack实例时转换webpack配置，并用于cacheDirectory为不同的webpack配置构建不同的缓存
-            configHash: function(webpackConfig) {
-                return require('node-object-hash')({ sort: false }).hash(
-                    webpackConfig
-                )
-            },
-            // 当加载器，插件，其他构建时脚本或其他动态依赖项发生更改时，hard-source需要替换缓存以确保输出正确。environmentHash被用来确定这一点。如果散列与先前的构建不同，则将使用新的缓存
-            environmentHash: {
-                root: `${config.appPublic}/node_modules`,
-                directories: [],
-                files: ['package-lock.json', 'yarn.lock']
-            }
-        }),
-        new HardSourceWebpackPlugin.ExcludeModulePlugin([
-            {
-                test: /.*\.DS_Store/
-            }
-        ]),
-
         new openBrowserWebpackPlugin({
             url: `http://${config.host || config.baseHost}:${config.port}/`,
             browser: config.brower
@@ -213,6 +192,6 @@ const devConfig = {
             warnings: true
         }
     }
-}
+};
 
-module.exports = merge.smart(commonConfig, devConfig)
+module.exports = merge.smart(commonConfig, devConfig);

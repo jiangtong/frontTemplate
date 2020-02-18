@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Echart from '@components/beijing/Echarts'
 import { withRouter } from 'react-router-dom'
 // import highComponentFuc from '@pages/Teacher/commen/HighComponent';
+import Request from '@commenApi/teacher/index'
 
 //装饰器写法
 // @highComponentFuc('teacherType4College')
@@ -9,6 +10,14 @@ class TestEchart extends Component {
     constructor(props) {
         super(props)
         this.state = {}
+    }
+
+    async componentDidMount() {
+        let res = await Request.enterprisePracticeInfoList()
+        let res1 = await Request.pageAlarmStrategy()
+
+        console.log(res)
+        console.log(res1)
     }
 
     render() {

@@ -1,23 +1,24 @@
 /*eslint-disable*/
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const config = require('./config')
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const config = require('./config');
 // 终端输出进度条
-const WebpackBar = require('webpackbar')
+const WebpackBar = require('webpackbar');
 // 显示编译时间
-const ProgressBarPlugin = require('progress-bar-webpack-plugin')
-const chalk = require('chalk')
-const path = require('path')
-const webpack = require('webpack')
-const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin')
-const os = require('os')
-const SpeedMeasurePlugin = require('speed-measure-webpack-plugin')
+const ProgressBarPlugin = require('progress-bar-webpack-plugin');
+const chalk = require('chalk');
+const path = require('path');
+const webpack = require('webpack');
+const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
+const os = require('os');
+const SpeedMeasurePlugin = require('speed-measure-webpack-plugin');
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 
-const HappyPack = require('happypack')
-const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length })
+const HappyPack = require('happypack');
+const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
-    .BundleAnalyzerPlugin
+    .BundleAnalyzerPlugin;
 
-const smp = new SpeedMeasurePlugin()
+const smp = new SpeedMeasurePlugin();
 
 const commonConfig = {
     performance: {
@@ -90,6 +91,16 @@ const commonConfig = {
                 vendor: {
                     priority: -10,
                     test: /[\\/]node_modules[\\/]/,
+                    // name(module, chunks, cacheGroupKey) {
+                    //     const moduleFileName = module
+                    //         .identifier()
+                    //         .split('/')
+                    //         .reduceRight(item => item)
+                    //     const allChunksNames = chunks
+                    //         .map(item => item.name)
+                    //         .join('~')
+                    //     return `${cacheGroupKey}-${allChunksNames}-${moduleFileName}`
+                    // }
                     name: 'vendor'
                 }
             }
@@ -151,6 +162,25 @@ const commonConfig = {
             }
         }),
 
+        // 模块的动态链接库只需被编译一次，在之后的构建过程中被动态链接库包含的模块将不会重新编译，
+        // 而是直接使用动态链接库中 的代码 由于动态链接库中大多数包含的是常用的第三方模块，
+        // 例如 react、react-dom ，所以只要不升级这些模块的版本，动态链接库就不用重新编译。
+        new HardSourceWebpackPlugin({
+            // configHash在启动webpack实例时转换webpack配置，并用于cacheDirectory为不同的webpack配置构建不同的缓存
+            configHash: function(webpackConfig) {
+                return require('node-object-hash')({ sort: false }).hash(
+                    webpackConfig
+                );
+            },
+            // 当加载器，插件，其他构建时脚本或其他动态依赖项发生更改时，hard-source需要替换缓存以确保输出正确。environmentHash被用来确定这一点。如果散列与先前的构建不同，则将使用新的缓存
+            environmentHash: {
+                root: `${config.appPublic}/node_modules`,
+                directories: [],
+                files: ['package-lock.json', 'yarn.lock']
+            }
+        }),
+
+        // 进度条
         new WebpackBar(),
 
         // 显示打包时间
@@ -159,13 +189,15 @@ const commonConfig = {
                 '  build [:bar] ' +
                 chalk.green.bold(':percent') +
                 ' (:elapsed seconds)'
-        })
+        }),
 
-        // new HappyPack({
-        //     id: 'happy-babel-js',
-        //     loaders: ['babel-loader?cacheDirectory=true'],
-        //     threadPool: happyThreadPool
-        // })
+        // Webpack 是单线程模型的，也就是说 Webpack 需要一个一个地处理任务，不能同时处理多个任务。
+        // HappyPack将任 务分解给多个子进程去并发执行，子进程处理完后再将结果发送给主进程, 从而发挥多核 CPU 电脑的威力
+        new HappyPack({
+            id: 'happy-babel-js',
+            loaders: ['babel-loader?cacheDirectory=true'],
+            threadPool: happyThreadPool
+        })
 
         // new HtmlWebpackTagsPlugin({
         //     tags: [
@@ -217,11 +249,11 @@ const commonConfig = {
                 test: /\.js?$/,
                 use: [
                     {
-                        loader: 'babel-loader',
-                        options: {
-                            cacheDirectory: true
-                        }
-                        // loader: 'happypack/loader?id=happy-babel-js'
+                        // loader: 'babel-loader',
+                        // options: {
+                        //     cacheDirectory: true
+                        // },
+                        loader: 'happypack/loader?id=happy-babel-js'
                     }
                 ],
                 exclude: /node_modules/,
@@ -278,6 +310,6 @@ const commonConfig = {
             }
         ]
     }
-}
+};
 
-module.exports = smp.wrap(commonConfig)
+module.exports = smp.wrap(commonConfig);
