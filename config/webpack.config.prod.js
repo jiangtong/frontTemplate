@@ -45,7 +45,7 @@ const publicConfig = {
         // }),
 
         new CleanWebpackPlugin({
-            verbose: true,
+            verbose: false,
             dry: false
         }),
 
