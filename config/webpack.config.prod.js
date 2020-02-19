@@ -173,8 +173,7 @@ const publicConfig = {
                     webpackConfig
                 );
             },
-            recordsPath:
-                '/node_modules/.cache/hard-source/[confighash]/records.json',
+
             info: {
                 // 'none' or 'test'.
                 mode: 'none',
