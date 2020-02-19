@@ -11,14 +11,14 @@ const webpack = require('webpack');
 const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 const os = require('os');
 const SpeedMeasurePlugin = require('speed-measure-webpack-plugin');
-const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
+const smp = new SpeedMeasurePlugin();
+// const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
+// SpeedMeasurePlugin有冲突目前不能一起用
 
 const HappyPack = require('happypack');
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
     .BundleAnalyzerPlugin;
-
-const smp = new SpeedMeasurePlugin();
 
 const commonConfig = {
     performance: {
@@ -188,7 +188,7 @@ const commonConfig = {
             id: 'happy-babel-js',
             loaders: ['babel-loader?cacheDirectory=true'],
             threadPool: happyThreadPool
-        }),
+        })
 
         // new HtmlWebpackTagsPlugin({
         //     tags: [
@@ -211,40 +211,40 @@ const commonConfig = {
         //     append: false
         // })
 
-        new HardSourceWebpackPlugin({
-            // configHash在启动webpack实例时转换webpack配置，并用于cacheDirectory为不同的webpack配置构建不同的缓存
-            configHash: function(webpackConfig) {
-                return require('node-object-hash')({ sort: false }).hash(
-                    webpackConfig
-                );
-            },
-            recordsPath:
-                'node_modules/.cache/hard-source/[confighash]/records.json',
-            info: {
-                // 'none' or 'test'.
-                mode: 'none',
-                // 'debug', 'log', 'info', 'warn', or 'error'.
-                level: 'debug'
-            },
-            cachePrune: {
-                // Caches younger than `maxAge` are not considered for deletion. They must
-                // be at least this (default: 2 days) old in milliseconds.
-                maxAge: 2 * 24 * 60 * 60 * 1000,
-                // All caches together must be larger than `sizeThreshold` before any
-                // caches will be deleted. Together they must be at least this
-                // (default: 50 MB) big in bytes.
-                sizeThreshold: 50 * 1024 * 1024
-            },
+        // new HardSourceWebpackPlugin({
+        //     // configHash在启动webpack实例时转换webpack配置，并用于cacheDirectory为不同的webpack配置构建不同的缓存
+        //     configHash: function(webpackConfig) {
+        //         return require('node-object-hash')({ sort: false }).hash(
+        //             webpackConfig
+        //         );
+        //     },
+        //     recordsPath:
+        //         '/node_modules/.cache/hard-source/[confighash]/records.json',
+        //     info: {
+        //         // 'none' or 'test'.
+        //         mode: 'none',
+        //         // 'debug', 'log', 'info', 'warn', or 'error'.
+        //         level: 'debug'
+        //     },
+        //     cachePrune: {
+        //         // Caches younger than `maxAge` are not considered for deletion. They must
+        //         // be at least this (default: 2 days) old in milliseconds.
+        //         maxAge: 2 * 24 * 60 * 60 * 1000,
+        //         // All caches together must be larger than `sizeThreshold` before any
+        //         // caches will be deleted. Together they must be at least this
+        //         // (default: 50 MB) big in bytes.
+        //         sizeThreshold: 50 * 1024 * 1024
+        //     },
 
-            cacheDirectory: 'node_modules/.cache/hard-source/[confighash]',
+        //     cacheDirectory: 'node_modules/.cache/hard-source/[confighash]',
 
-            // 当加载器，插件，其他构建时脚本或其他动态依赖项发生更改时，hard-source需要替换缓存以确保输出正确。environmentHash被用来确定这一点。如果散列与先前的构建不同，则将使用新的缓存
-            environmentHash: {
-                root: process.cwd(),
-                directories: [],
-                files: ['package-lock.json', 'yarn.lock']
-            }
-        })
+        //     // 当加载器，插件，其他构建时脚本或其他动态依赖项发生更改时，hard-source需要替换缓存以确保输出正确。environmentHash被用来确定这一点。如果散列与先前的构建不同，则将使用新的缓存
+        //     environmentHash: {
+        //         root: process.cwd(),
+        //         directories: [],
+        //         files: ['package-lock.json', 'yarn.lock']
+        //     }
+        // })
     ],
 
     resolve: {
@@ -339,3 +339,4 @@ const commonConfig = {
 };
 
 module.exports = smp.wrap(commonConfig);
+// module.exports = commonConfig;

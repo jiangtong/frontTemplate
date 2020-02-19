@@ -15,6 +15,8 @@ const nameLength = 4;
 const path = require('path');
 // const TerserPlugin = require('terser-webpack-plugin')
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
+
 const publicConfig = {
     entry: {
         app: config.appIndexJs
@@ -162,6 +164,41 @@ const publicConfig = {
                 discardComments: { removeAll: true }
             },
             canPrint: true //是否将插件信息打印到控制台
+        }),
+
+        new HardSourceWebpackPlugin({
+            // configHash在启动webpack实例时转换webpack配置，并用于cacheDirectory为不同的webpack配置构建不同的缓存
+            configHash: function(webpackConfig) {
+                return require('node-object-hash')({ sort: false }).hash(
+                    webpackConfig
+                );
+            },
+            recordsPath:
+                '/node_modules/.cache/hard-source/[confighash]/records.json',
+            info: {
+                // 'none' or 'test'.
+                mode: 'none',
+                // 'debug', 'log', 'info', 'warn', or 'error'.
+                level: 'debug'
+            },
+            cachePrune: {
+                // Caches younger than `maxAge` are not considered for deletion. They must
+                // be at least this (default: 2 days) old in milliseconds.
+                maxAge: 2 * 24 * 60 * 60 * 1000,
+                // All caches together must be larger than `sizeThreshold` before any
+                // caches will be deleted. Together they must be at least this
+                // (default: 50 MB) big in bytes.
+                sizeThreshold: 50 * 1024 * 1024
+            },
+
+            cacheDirectory: 'node_modules/.cache/hard-source/[confighash]',
+
+            // 当加载器，插件，其他构建时脚本或其他动态依赖项发生更改时，hard-source需要替换缓存以确保输出正确。environmentHash被用来确定这一点。如果散列与先前的构建不同，则将使用新的缓存
+            environmentHash: {
+                root: process.cwd(),
+                directories: [],
+                files: ['package-lock.json', 'yarn.lock']
+            }
         })
     ],
 
