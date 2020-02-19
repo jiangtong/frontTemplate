@@ -45,63 +45,76 @@ const commonConfig = {
             minChunks: 1,
             maxSize: 0,
             maxAsyncRequests: 5,
-            maxInitialRequests: 6,
+            // maxInitialRequests: 6,
+            maxInitialRequests: Infinity,
             name: true,
             cacheGroups: {
-                views: {
-                    test: module =>
-                        /ant/.test(module.context) ||
-                        /rc-/.test(module.context) ||
-                        /react-router-breadcrumbs-hoc/.test(module.context) ||
-                        /echarts/.test(module.context),
-                    name: 'views',
-                    priority: 10,
-                    reuseExistingChunk: true
-                },
+                // views: {
+                //     test: module =>
+                //         /ant/.test(module.context) ||
+                //         /rc-/.test(module.context) ||
+                //         /react-router-breadcrumbs-hoc/.test(module.context) ||
+                //         /echarts/.test(module.context),
+                //     name: 'views',
+                //     priority: 10,
+                //     reuseExistingChunk: true
+                // },
 
-                reactVendor: {
-                    name: 'reactVendor',
-                    priority: 10,
-                    test: module =>
-                        /react/.test(module.context) ||
-                        /redux/.test(module.context) ||
-                        /react-dom/.test(module.context) ||
-                        /react-redux/.test(module.context) ||
-                        /react-thunk/.test(module.context),
-                    reuseExistingChunk: true
-                },
+                // reactVendor: {
+                //     name: 'reactVendor',
+                //     priority: 10,
+                //     test: module =>
+                //         /react/.test(module.context) ||
+                //         /redux/.test(module.context) ||
+                //         /react-dom/.test(module.context) ||
+                //         /react-redux/.test(module.context) ||
+                //         /react-thunk/.test(module.context),
+                //     reuseExistingChunk: true
+                // },
 
-                utils: {
-                    name: 'utils',
-                    priority: 10,
-                    test: module =>
-                        /moment/.test(module.context) ||
-                        /axios/.test(module.context) ||
-                        /classnames/.test(module.context) ||
-                        /prop-types/.test(module.context),
-                    reuseExistingChunk: true
-                },
+                // utils: {
+                //     name: 'utils',
+                //     priority: 10,
+                //     test: module =>
+                //         /moment/.test(module.context) ||
+                //         /axios/.test(module.context) ||
+                //         /classnames/.test(module.context) ||
+                //         /prop-types/.test(module.context),
+                //     reuseExistingChunk: true
+                // },
+
+                // vendor: {
+                //     priority: -10,
+                //     test: /[\\/]node_modules[\\/]/,
+                //     // name(module, chunks, cacheGroupKey) {
+                //     //     const moduleFileName = module
+                //     //         .identifier()
+                //     //         .split('/')
+                //     //         .reduceRight(item => item)
+                //     //     const allChunksNames = chunks
+                //     //         .map(item => item.name)
+                //     //         .join('~')
+                //     //     return `${cacheGroupKey}-${allChunksNames}-${moduleFileName}`
+                //     // }
+                //     name: 'vendor'
+                // }
 
                 default: {
                     minChunks: 2,
-                    priority: -20,
+                    priority: 20,
                     reuseExistingChunk: true
                 },
 
                 vendor: {
-                    priority: -10,
+                    priority: 10,
                     test: /[\\/]node_modules[\\/]/,
-                    // name(module, chunks, cacheGroupKey) {
-                    //     const moduleFileName = module
-                    //         .identifier()
-                    //         .split('/')
-                    //         .reduceRight(item => item)
-                    //     const allChunksNames = chunks
-                    //         .map(item => item.name)
-                    //         .join('~')
-                    //     return `${cacheGroupKey}-${allChunksNames}-${moduleFileName}`
-                    // }
-                    name: 'vendor'
+                    name(module) {
+                        const packageName = module.context.match(
+                            /[\\/]node_modules[\\/](.*?)([\\/]|$)/
+                        )[1];
+
+                        return `npm.${packageName.replace('@', '')}`;
+                    }
                 }
             }
         }),
@@ -143,16 +156,12 @@ const commonConfig = {
             filename: 'index.html',
             template: config.appHtml,
             favicon: config.favicon,
-            // chunksSortMode: 'none',
             inject: true,
             minify: {
                 removeComments: true,
                 collapseWhitespace: true,
                 removeAttributeQuotes: true
-                // more options:
-                // https://github.com/kangax/html-minifier#options-quick-reference
             },
-            // necessary to consistently work with multiple chunks via CommonsChunkPlugin
             chunksSortMode: 'dependency'
         }),
 
