@@ -50,10 +50,10 @@ class TeacherNumbers extends Component {
                 name: '及格',
                 value: '17.09'
             },
-            { name: '良', value: '19.00' },
-            { name: '不及格', value: '1.73' },
-            { name: '中', value: '60.24' },
-            { name: '优', value: '1.95' }
+            { name: '良', value: '19.111' },
+            { name: '不及格', value: '312312.73' },
+            { name: '中', value: '1231260.24' },
+            { name: '优', value: '1.931235' }
         ];
         let data2 = [
             {

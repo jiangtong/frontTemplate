@@ -7,8 +7,6 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
-const postcssPresetEnv = require('postcss-preset-env');
 const config = require('./config');
 const seen = new Set();
 const nameLength = 4;
@@ -16,6 +14,7 @@ const path = require('path');
 // const TerserPlugin = require('terser-webpack-plugin')
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 const publicConfig = {
     entry: {
@@ -96,52 +95,23 @@ const publicConfig = {
             ignoreOrder: true
         }),
 
-        // 使用 ParallelUglifyPlugin 并行压缩输出JS代码
-        new ParallelUglifyPlugin({
-            cacheDir: 'node_modules/.cache/',
-            output: {
-                output: {
-                    /*是否输出可读性较强的代码，即会保留空格和制表符，默认为输出，为了达到更好的压缩效果，可以设置为false  */
-                    beautify: false,
-                    /* 是否保留代码中的注释，默认为保留，为了达到更好的压缩效果，可以设置为false */
-                    comments: false
-                }
-            },
-            /*是否在UglifyJS删除没有用到的代码时输出警告信息，默认为输出，可以设置为false关闭这些作用 不大的警告*/
-            warnings: false,
-            compress: {
-                /*是否删除代码中所有的console语句，默认为不删除，开启后，会删除所有的console语句*/
-                drop_console: true,
-                /*是否内嵌虽然已经定义了，但是只用到一次的变量，比如将 var x = 1; y = x, 转换成 y = 5, 默认为不
-                 转换，为了达到更好的压缩效果，可以设置为false*/
-                collapse_vars: true,
-                /*是否提取出现了多次但是没有定义成变量去引用的静态值，比如将 x = 'xxx'; y = 'xxx'  转换成
-                 var a = 'xxxx'; x = a; y = a; 默认为不转换，为了达到更好的压缩效果，可以设置为false*/
-                reduce_vars: true
-            },
-            test: /.js$/g,
-            include: [],
-            exclude: [],
-            workerCount: '',
-            sourceMap: false
+        new TerserPlugin({
+            terserOptions: {
+                ecma: undefined,
+                warnings: false,
+                parse: {},
+                compress: {},
+                mangle: true, // Note `mangle.properties` is `false` by default.
+                module: false,
+                output: null,
+                toplevel: false,
+                nameCache: null,
+                ie8: false,
+                keep_classnames: undefined,
+                keep_fnames: false,
+                safari10: false
+            }
         }),
-        // new TerserPlugin({
-        //     terserOptions: {
-        //         ecma: undefined,
-        //         warnings: false,
-        //         parse: {},
-        //         compress: {},
-        //         mangle: true, // Note `mangle.properties` is `false` by default.
-        //         module: false,
-        //         output: null,
-        //         toplevel: false,
-        //         nameCache: null,
-        //         ie8: false,
-        //         keep_classnames: undefined,
-        //         keep_fnames: false,
-        //         safari10: false
-        //     }
-        // }),
         // new UglifyJSPlugin({
         //     parallel: true,
         //     cache: true,
@@ -201,99 +171,7 @@ const publicConfig = {
                 files: ['package-lock.json', 'yarn.lock']
             }
         })
-    ],
-
-    module: {
-        rules: [
-            {
-                test: /\.(scss|sass)$/,
-                use: [
-                    {
-                        loader: MiniCssExtractPlugin.loader,
-                        options: {
-                            publicPath: '../../'
-                        }
-                    },
-                    {
-                        loader: 'css-loader'
-                        // options: {
-                        //     modules: true, // 指定启用css modules
-                        //     importLoaders: 1,
-                        //     localIdentName: '[name]__[local]--[hash:base64:5]'
-                        // }
-                    },
-                    {
-                        loader: 'postcss-loader',
-                        options: {
-                            ident: 'postcss',
-                            plugins: () => [postcssPresetEnv({})]
-                        }
-                    },
-                    'sass-loader'
-                ]
-            },
-            {
-                test: /\.less$/,
-                use: [
-                    {
-                        loader: MiniCssExtractPlugin.loader,
-                        options: {
-                            publicPath: '../../'
-                        }
-                    },
-                    {
-                        loader: 'css-loader'
-                        // options: {
-                        //     modules: true, // 指定启用css modules
-                        //     importLoaders: 1,
-                        //     localIdentName: '[name]__[local]--[hash:base64:5]'
-                        // }
-                    },
-                    {
-                        loader: 'postcss-loader',
-                        options: {
-                            ident: 'postcss',
-                            plugins: () => [postcssPresetEnv({})]
-                        }
-                    },
-                    {
-                        loader: 'less-loader',
-                        options: {
-                            // 使用less默认运行时替换配置的@color样式
-                            modifyVars: config.color,
-                            javascriptEnabled: true
-                        }
-                    }
-                ]
-            },
-            {
-                test: /\.css$/,
-                use: [
-                    {
-                        loader: MiniCssExtractPlugin.loader,
-                        options: {
-                            publicPath: '../../'
-                        }
-                    },
-                    {
-                        loader: 'css-loader'
-                        // options: {
-                        //     modules: true, // 指定启用css modules
-                        //     importLoaders: 1,
-                        //     localIdentName: '[name]__[local]--[hash:base64:5]'
-                        // }
-                    },
-                    {
-                        loader: 'postcss-loader',
-                        options: {
-                            ident: 'postcss',
-                            plugins: () => [postcssPresetEnv({})]
-                        }
-                    }
-                ]
-            }
-        ]
-    }
+    ]
 };
 
 module.exports = merge.smart(commonConfig, publicConfig);

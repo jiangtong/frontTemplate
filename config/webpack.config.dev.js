@@ -4,10 +4,8 @@ const merge = require('webpack-merge');
 const commonConfig = require('./webpack.config.common.js');
 const config = require('./config');
 const path = require('path');
-const openBrowserWebpackPlugin = require('open-browser-webpack-plugin');
 const webpack = require('webpack');
 const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
-const postcssPresetEnv = require('postcss-preset-env');
 const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const portfinder = require('portfinder');
 
@@ -64,10 +62,11 @@ const devConfig = merge.smart(commonConfig, {
             }
         }),
 
-        new openBrowserWebpackPlugin({
-            url: `http://${config.host || config.baseHost}:${config.port}/`,
-            browser: config.brower
-        })
+        new HardSourceWebpackPlugin.ExcludeModulePlugin([
+            {
+                test: /.*\.DS_Store/
+            }
+        ])
     ],
 
     output: {
@@ -75,98 +74,6 @@ const devConfig = merge.smart(commonConfig, {
         filename: 'app/[name].[hash].bundle.js',
         chunkFilename: 'app/[name].[hash].bundle.js',
         publicPath: '/'
-    },
-
-    module: {
-        rules: [
-            {
-                test: /\.(scss|sass)$/,
-                use: [
-                    {
-                        loader: 'style-loader',
-                        options: {
-                            insert: 'head'
-                        }
-                    },
-                    {
-                        loader: 'css-loader'
-                        // options: {
-                        //     modules: true, // 指定启用css modules
-                        //     importLoaders: 1,
-                        //     localIdentName: '[name]__[local]--[hash:base64:5]'
-                        // }
-                    },
-                    {
-                        loader: 'postcss-loader',
-                        options: {
-                            ident: 'postcss',
-                            plugins: () => [postcssPresetEnv({})]
-                        }
-                    },
-                    'sass-loader'
-                ]
-            },
-            {
-                test: /\.less$/,
-                use: [
-                    {
-                        loader: 'style-loader',
-                        options: {
-                            insert: 'head'
-                        }
-                    },
-                    {
-                        loader: 'css-loader'
-                        // options: {
-                        //     modules: true, // 指定启用css modules
-                        //     importLoaders: 1,
-                        //     localIdentName: '[name]__[local]--[hash:base64:5]'
-                        // }
-                    },
-                    {
-                        loader: 'postcss-loader',
-                        options: {
-                            ident: 'postcss',
-                            plugins: () => [postcssPresetEnv({})]
-                        }
-                    },
-                    {
-                        loader: 'less-loader',
-                        options: {
-                            // 使用less默认运行时替换配置的@color样式
-                            modifyVars: config.color,
-                            javascriptEnabled: true
-                        }
-                    }
-                ]
-            },
-            {
-                test: /\.css$/,
-                use: [
-                    {
-                        loader: 'style-loader',
-                        options: {
-                            insert: 'head'
-                        }
-                    },
-                    {
-                        loader: 'css-loader'
-                        // options: {
-                        //     modules: true, // 指定启用css modules
-                        //     importLoaders: 1,
-                        //     localIdentName: '[name]__[local]--[hash:base64:5]'
-                        // }
-                    },
-                    {
-                        loader: 'postcss-loader',
-                        options: {
-                            ident: 'postcss',
-                            plugins: () => [postcssPresetEnv({})]
-                        }
-                    }
-                ]
-            }
-        ]
     },
 
     devServer: {
@@ -178,7 +85,7 @@ const devConfig = merge.smart(commonConfig, {
         hot: true,
         inline: true,
         // 默认浏览器
-        open: false,
+        open: true,
         disableHostCheck: true,
         proxy: newProxyObj,
         stats: {
@@ -223,11 +130,11 @@ module.exports = new Promise((resolve, reject) => {
         else {
             devConfig.devServer.port = port;
             devConfig.plugins = [
-                ...devConfig.plugins,
-                new openBrowserWebpackPlugin({
-                    url: `http://${config.host || config.baseHost}:${port}/`,
-                    browser: config.brower
-                })
+                ...devConfig.plugins
+                // new openBrowserWebpackPlugin({
+                //     url: `http://${config.host || config.baseHost}:${port}/`,
+                //     browser: config.brower
+                // })
             ];
         }
         resolve(devConfig);

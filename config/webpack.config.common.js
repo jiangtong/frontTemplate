@@ -12,13 +12,74 @@ const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 const os = require('os');
 const SpeedMeasurePlugin = require('speed-measure-webpack-plugin');
 const smp = new SpeedMeasurePlugin();
-// const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 // SpeedMeasurePlugin有冲突目前不能一起用
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const postcssPresetEnv = require('postcss-preset-env');
 
-const HappyPack = require('happypack');
-const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
     .BundleAnalyzerPlugin;
+const threadLoader = require('thread-loader');
+// 判断环境
+const isDev = process.env.NODE_ENV === 'development';
+const cssWorkerPool = {
+    // 一个 worker 进程中并行执行工作的数量
+    // 默认为 20
+    workerParallelJobs: 2,
+    poolTimeout: 2000
+};
+
+const jsWorkerPool = {
+    // options
+
+    // 产生的 worker 的数量，默认是 (cpu 核心数 - 1)
+    // 当 require('os').cpus() 是 undefined 时，则为 1
+    workers: 2,
+
+    // 闲置时定时删除 worker 进程
+    // 默认为 500ms
+    // 可以设置为无穷大， 这样在监视模式(--watch)下可以保持 worker 持续存在
+    poolTimeout: 2000
+};
+
+threadLoader.warmup(cssWorkerPool, [
+    'css-loader',
+    'postcss-loader',
+    'sass-loader',
+    'less-loader'
+]);
+threadLoader.warmup(jsWorkerPool, ['babel-loader']);
+
+let styleLoader = {
+    loader: 'style-loader',
+    options: {
+        insert: 'head'
+    }
+};
+
+let cssLoader = {
+    loader: 'css-loader'
+    // options: {
+    //     modules: true, // 指定启用css modules
+    //     importLoaders: 1,
+    //     localIdentName: '[name]__[local]--[hash:base64:5]'
+    // }
+};
+
+let postcssLoader = {
+    loader: 'postcss-loader',
+    options: {
+        ident: 'postcss',
+        plugins: () => [postcssPresetEnv({})]
+    }
+};
+
+let MiniCssExtractPluginLoader = {
+    loader: MiniCssExtractPlugin.loader,
+    options: {
+        publicPath: '../../'
+    }
+};
 
 const commonConfig = {
     performance: {
@@ -95,37 +156,37 @@ const commonConfig = {
             }
         }),
 
-        // new BundleAnalyzerPlugin({
-        //     // concatenateModules: false,
-        //     //  可以是`server`，`static`或`disabled`。
-        //     //  在`server`模式下，分析器将启动HTTP服务器来显示软件包报告。
-        //     //  在“静态”模式下，会生成带有报告的单个HTML文件。
-        //     //  在`disabled`模式下，你可以使用这个插件来将`generateStatsFile`设置为`true`来生成Webpack Stats JSON文件。
-        //     analyzerMode: 'server',
-        //     //  将在“服务器”模式下使用的主机启动HTTP服务器。
-        //     analyzerHost: '127.0.0.1',
-        //     //  将在“服务器”模式下使用的端口启动HTTP服务器。
-        //     analyzerPort: 9119,
-        //     //  路径捆绑，将在`static`模式下生成的报告文件。
-        //     //  相对于捆绑输出目录。
-        //     // reportFilename: 'report.html',
-        //     //  模块大小默认显示在报告中。
-        //     //  应该是`stat`，`parsed`或者`gzip`中的一个。
-        //     //  有关更多信息，请参见“定义”一节。
-        //     defaultSizes: 'parsed',
-        //     //  在默认浏览器中自动打开报告
-        //     openAnalyzer: true,
-        //     //  如果为true，则Webpack Stats JSON文件将在bundle输出目录中生成
-        //     generateStatsFile: false,
-        //     //  如果`generateStatsFile`为`true`，将会生成Webpack Stats JSON文件的名字。
-        //     //  相对于捆绑输出目录。
-        //     statsFilename: 'stats.json',
-        //     //  stats.toJson（）方法的选项。
-        //     //  例如，您可以使用`source：false`选项排除统计文件中模块的来源。
-        //     //  在这里查看更多选项：https：//github.com/webpack/webpack/blob/webpack-1/lib/Stats.js#L21
-        //     statsOptions: null,
-        //     logLevel: 'info' //日志级别。可以是'信息'，'警告'，'错误'或'沉默'。
-        // }),
+        new BundleAnalyzerPlugin({
+            // concatenateModules: false,
+            //  可以是`server`，`static`或`disabled`。
+            //  在`server`模式下，分析器将启动HTTP服务器来显示软件包报告。
+            //  在“静态”模式下，会生成带有报告的单个HTML文件。
+            //  在`disabled`模式下，你可以使用这个插件来将`generateStatsFile`设置为`true`来生成Webpack Stats JSON文件。
+            analyzerMode: 'server',
+            //  将在“服务器”模式下使用的主机启动HTTP服务器。
+            analyzerHost: '127.0.0.1',
+            //  将在“服务器”模式下使用的端口启动HTTP服务器。
+            analyzerPort: 9119,
+            //  路径捆绑，将在`static`模式下生成的报告文件。
+            //  相对于捆绑输出目录。
+            // reportFilename: 'report.html',
+            //  模块大小默认显示在报告中。
+            //  应该是`stat`，`parsed`或者`gzip`中的一个。
+            //  有关更多信息，请参见“定义”一节。
+            defaultSizes: 'parsed',
+            //  在默认浏览器中自动打开报告
+            openAnalyzer: true,
+            //  如果为true，则Webpack Stats JSON文件将在bundle输出目录中生成
+            generateStatsFile: false,
+            //  如果`generateStatsFile`为`true`，将会生成Webpack Stats JSON文件的名字。
+            //  相对于捆绑输出目录。
+            statsFilename: 'stats.json',
+            //  stats.toJson（）方法的选项。
+            //  例如，您可以使用`source：false`选项排除统计文件中模块的来源。
+            //  在这里查看更多选项：https：//github.com/webpack/webpack/blob/webpack-1/lib/Stats.js#L21
+            statsOptions: null,
+            logLevel: 'info' //日志级别。可以是'信息'，'警告'，'错误'或'沉默'。
+        }),
 
         new HtmlWebpackPlugin({
             title: '',
@@ -156,21 +217,13 @@ const commonConfig = {
                 '  build [:bar] ' +
                 chalk.green.bold(':percent') +
                 ' (:elapsed seconds)'
-        }),
-
-        // Webpack 是单线程模型的，也就是说 Webpack 需要一个一个地处理任务，不能同时处理多个任务。
-        // HappyPack将任 务分解给多个子进程去并发执行，子进程处理完后再将结果发送给主进程, 从而发挥多核 CPU 电脑的威力
-        new HappyPack({
-            id: 'happy-babel-js',
-            loaders: ['babel-loader?cacheDirectory=true'],
-            threadPool: happyThreadPool
         })
 
         // new HtmlWebpackTagsPlugin({
         //     tags: [
-        //         process.env.NODE_ENV === 'development' ? './public/js/baiduMap.js' : 'public/js/baiduMap.js',
-        //         process.env.NODE_ENV === 'development' ? './public/js/LuShu.js' : 'public/js/LuShu.js',
-        //         process.env.NODE_ENV === 'development' ? './public/js/Heatmap.js' : 'public/js/Heatmap.js'
+        //         isDev ? './public/js/baiduMap.js' : 'public/js/baiduMap.js',
+        //         isDev ? './public/js/LuShu.js' : 'public/js/LuShu.js',
+        //         isDev ? './public/js/Heatmap.js' : 'public/js/Heatmap.js'
         //         //
         //         // {
         //         //     path: 'http://api.map.baidu.com/api?v=3.0&ak=moMIflSL2yGiq3VwQ3bynEKE7gl2cjQw',
@@ -194,6 +247,7 @@ const commonConfig = {
         //             webpackConfig
         //         );
         //     },
+
         //     info: {
         //         // 'none' or 'test'.
         //         mode: 'none',
@@ -267,11 +321,14 @@ const commonConfig = {
                 test: /\.js?$/,
                 use: [
                     {
-                        // loader: 'babel-loader',
-                        // options: {
-                        //     cacheDirectory: true
-                        // },
-                        loader: 'happypack/loader?id=happy-babel-js'
+                        loader: 'thread-loader',
+                        options: jsWorkerPool
+                    },
+                    {
+                        loader: 'babel-loader',
+                        options: {
+                            cacheDirectory: true
+                        }
                     }
                 ],
                 exclude: /node_modules/,
@@ -290,6 +347,45 @@ const commonConfig = {
                             icon: true
                         }
                     }
+                ]
+            },
+
+            {
+                test: /\.(scss|sass)$/,
+                use: [
+                    isDev ? 'style-loader' : MiniCssExtractPluginLoader,
+                    cssLoader,
+                    postcssLoader,
+                    'sass-loader'
+                ]
+            },
+            {
+                test: /\.less$/,
+                use: [
+                    isDev ? 'style-loader' : MiniCssExtractPluginLoader,
+                    cssLoader,
+                    postcssLoader,
+                    {
+                        loader: 'less-loader',
+                        options: {
+                            // 使用less默认运行时替换配置的@color样式
+                            modifyVars: config.color,
+                            javascriptEnabled: true
+                        }
+                    }
+                ]
+            },
+            {
+                test: /\.css$/,
+                exclude: /node_modules/,
+                use: [
+                    isDev ? 'style-loader' : MiniCssExtractPluginLoader,
+                    {
+                        loader: 'thread-loader',
+                        options: cssWorkerPool
+                    },
+                    cssLoader,
+                    postcssLoader
                 ]
             },
             {
