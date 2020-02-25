@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([["QKnE"],{QKnE:function(n,e,t){"use strict";t.r(e);var a=t("DCg4"),r=t.n(a);e.default=function(n){return r.a.createElement(r.a.Fragment,null,"1")}}}]);

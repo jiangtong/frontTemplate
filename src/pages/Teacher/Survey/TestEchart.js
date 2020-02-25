@@ -1,23 +1,20 @@
-import React, { Component } from 'react'
-import Echart from '@components/beijing/Echarts'
-import { withRouter } from 'react-router-dom'
+import React, { Component } from 'react';
+import Echart from '@components/beijing/Echarts';
+import { withRouter } from 'react-router-dom';
 // import highComponentFuc from '@pages/Teacher/commen/HighComponent';
-import Request from '@commenApi/teacher/index'
 
 //装饰器写法
 // @highComponentFuc('teacherType4College')
 class TestEchart extends Component {
     constructor(props) {
-        super(props)
-        this.state = {}
+        super(props);
+        this.state = {};
     }
 
     async componentDidMount() {
-        let res = await Request.enterprisePracticeInfoList()
-        let res1 = await Request.pageAlarmStrategy()
+        let res1 = await Request.pageAlarmStrategy();
 
-        console.log(res)
-        console.log(res1)
+        console.log(res1);
     }
 
     render() {
@@ -25,7 +22,7 @@ class TestEchart extends Component {
             <Echart
                 onClickAction={params => {
                     if (this.props.onClickAction)
-                        this.props.onClickAction(params)
+                        this.props.onClickAction(params);
                 }}
                 data={{
                     title: {
@@ -46,7 +43,7 @@ class TestEchart extends Component {
                         data:
                             this.props.data &&
                             this.props.data.map(item => {
-                                return item.name
+                                return item.name;
                             })
                     },
                     series: [
@@ -67,8 +64,8 @@ class TestEchart extends Component {
                     ]
                 }}
             ></Echart>
-        )
+        );
     }
 }
 
-export default withRouter(TestEchart)
+export default withRouter(TestEchart);

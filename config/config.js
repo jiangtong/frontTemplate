@@ -22,7 +22,7 @@ module.exports = {
     // favicon 路径
     favicon: resolveApp('public/ico.ico'),
     // 默认开启的本地项目端口号
-    port: '1234',
+    port: '3311',
     //手动配置打开的host
     host: '127.0.0.1',
     //默认的host

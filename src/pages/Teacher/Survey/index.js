@@ -1,13 +1,13 @@
-import React, { Component } from 'react'
-import { withRouter } from 'react-router'
-import '@pages/Teacher/commen/assets/styles/index.less'
-import CommenComponent from '@pages/Teacher/commen/CommenComponent'
-import BaseComponment from '@pages/Teacher/commen/BaseComponment'
-import TeacherNumbers from '@pages/Teacher/Survey/TeacherNumbers'
+import React, { Component } from 'react';
+import { withRouter } from 'react-router';
+import '@pages/Teacher/commen/assets/styles/index.less';
+import CommenComponent from '@pages/Teacher/commen/CommenComponent';
+import BaseComponment from '@pages/Teacher/commen/BaseComponment';
+import TeacherNumbers from '@pages/Teacher/Survey/TeacherNumbers';
 
 class OurfacultyComp extends Component {
     constructor(props) {
-        super(props)
+        super(props);
     }
 
     componentDidMount() {}
@@ -24,17 +24,19 @@ class OurfacultyComp extends Component {
                             },
                             component() {
                                 return (
-                                    <TeacherNumbers
-                                        style={{ height: 300 }}
-                                    ></TeacherNumbers>
-                                )
+                                    <>
+                                        <TeacherNumbers
+                                            style={{ height: 300 }}
+                                        ></TeacherNumbers>
+                                    </>
+                                );
                             }
                         }
                     ]}
                 </CommenComponent>
             </BaseComponment>
-        )
+        );
     }
 }
 
-export default withRouter(OurfacultyComp)
+export default withRouter(OurfacultyComp);

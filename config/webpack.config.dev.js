@@ -9,6 +9,7 @@ const webpack = require('webpack');
 const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 const postcssPresetEnv = require('postcss-preset-env');
 const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
+const portfinder = require('portfinder');
 
 // 需要转发的接口拼接
 const { proxyArr = [] } = config;
@@ -21,7 +22,7 @@ proxyArr.forEach(item => {
     };
 });
 
-const devConfig = {
+const devConfig = merge.smart(commonConfig, {
     devtool: 'source-map',
     mode: 'development',
     entry: {
@@ -227,6 +228,24 @@ const devConfig = {
             warnings: true
         }
     }
-};
+});
 
-module.exports = merge.smart(commonConfig, devConfig);
+// 自动寻找空余端口
+module.exports = new Promise((resolve, reject) => {
+    // 搜寻可用的端口号
+    portfinder.basePort = config.port;
+    portfinder.getPort((err, port) => {
+        if (err) reject(err);
+        else {
+            devConfig.devServer.port = port;
+            devConfig.plugins = [
+                ...devConfig.plugins,
+                new openBrowserWebpackPlugin({
+                    url: `http://${config.host || config.baseHost}:${port}/`,
+                    browser: config.brower
+                })
+            ];
+        }
+        resolve(devConfig);
+    });
+});

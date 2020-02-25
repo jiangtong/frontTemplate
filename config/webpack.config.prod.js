@@ -26,25 +26,27 @@ const publicConfig = {
         path: config.appbuild,
         filename: 'app/js/[name].[chunkhash:8].js',
         chunkFilename: 'app/js/[name].[chunkhash:8].bundle.js'
+        // library: 'result', // 函数或变量名字
+        // libraryTarget: 'umd' //打包文件加载方式
     },
 
     devtool: 'none',
     mode: 'production',
 
     plugins: [
-        // new CompressionWebpackPlugin({
-        //     filename: '[path].gz[query]',
-        //     // 压缩后缀
-        //     algorithm: 'gzip',
-        //     cache: true,
-        //     test: new RegExp('\\.(js|css)$'),
-        //     // 只处理比这个值大的资源。按字节计算
-        //     threshold: 10240,
-        //     // 只有压缩率比这个值小的资源才会被处理 （minRatio = 压缩大小 / 原始大小）
-        //     minRatio: 0.8,
-        //     // 是否删除原资源
-        //     deleteOriginalAssets: false
-        // }),
+        new CompressionWebpackPlugin({
+            filename: '[path].gz[query]',
+            // 压缩后缀
+            algorithm: 'gzip',
+            cache: true,
+            test: new RegExp('\\.(js|css)$'),
+            // 只处理比这个值大的资源。按字节计算
+            threshold: 10240,
+            // 只有压缩率比这个值小的资源才会被处理 （minRatio = 压缩大小 / 原始大小）
+            minRatio: 0.8,
+            // 是否删除原资源
+            deleteOriginalAssets: false
+        }),
 
         new CleanWebpackPlugin({
             verbose: false,
