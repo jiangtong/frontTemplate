@@ -246,6 +246,24 @@ const commonConfig = {
     module: {
         rules: [
             {
+                enforce: 'pre',
+                test: /\.js?$/,
+                use: [
+                    {
+                        loader: 'eslint-loader',
+                        options: {
+                            failOnError: false,
+                            failOnWarning: true, //警告不显示
+                            quiet: true,
+                            cache: true,
+                            fix: false // 是否自动修复
+                        }
+                    }
+                ],
+                exclude: /node_modules/,
+                include: config.appSrc
+            },
+            {
                 test: /\.js?$/,
                 use: [
                     {

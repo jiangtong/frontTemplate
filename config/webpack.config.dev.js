@@ -80,22 +80,6 @@ const devConfig = merge.smart(commonConfig, {
     module: {
         rules: [
             {
-                test: /\.js?$/,
-                use: [
-                    {
-                        loader: 'eslint-loader',
-                        options: {
-                            failOnError: false,
-                            failOnWarning: true, //警告不显示
-                            quiet: true,
-                            cache: true
-                        }
-                    }
-                ],
-                exclude: /node_modules/,
-                include: config.appSrc
-            },
-            {
                 test: /\.(scss|sass)$/,
                 use: [
                     {
