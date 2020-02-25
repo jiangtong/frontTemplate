@@ -129,13 +129,6 @@ module.exports = new Promise((resolve, reject) => {
         if (err) reject(err);
         else {
             devConfig.devServer.port = port;
-            devConfig.plugins = [
-                ...devConfig.plugins
-                // new openBrowserWebpackPlugin({
-                //     url: `http://${config.host || config.baseHost}:${port}/`,
-                //     browser: config.brower
-                // })
-            ];
         }
         resolve(devConfig);
     });
