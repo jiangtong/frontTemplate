@@ -6,6 +6,7 @@ function ComplexButton(props) {
 
 // eslint-disable-next-line react/no-multi-comp
 export default () => {
+    console.log('++++++++++++++++++++++++++++++++++');
     const [count, setCount] = useState(0);
     const [count11, setCount11] = useState(count);
 
@@ -14,12 +15,12 @@ export default () => {
     }, [count]);
 
     const handleIncr = useCallback(() => {
-        console.log('useCallback');
+        // console.log('useCallback');
         setCount(count + 1);
     }, [count]);
 
     const count1 = useMemo(() => {
-        console.log(count * 10, 'useMemo');
+        // console.log(count * 10, 'useMemo');
         return count * 10;
     }, [count]);
 

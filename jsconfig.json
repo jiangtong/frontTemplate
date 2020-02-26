@@ -9,6 +9,7 @@
             "@commenModel/*": ["src/public/data-commen/model/*"],
             "@reducers/*": ["src/redux/reducers/*"],
             "@actions/*": ["src/redux/actions/*"],
+            "@useHooks/*": ["src/useHooks/*"],
             "@useRedux/*": ["src/redux/*"],
             "@layout/*": ["src/layout/*"],
             "@router/*": ["src/router/*"],

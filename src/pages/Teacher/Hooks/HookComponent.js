@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import HookEchart from './HookEchart';
 import HookContext from './HookContext';
 import HookRef from './HookRef';
@@ -16,6 +16,8 @@ export default props => {
         return initialState;
     });
 
+    const HookTestCom = useMemo(() => <HookTest></HookTest>, []);
+
     return (
         <React.Fragment>
             {/* <TeacherTeachingList></TeacherTeachingList>
@@ -32,7 +34,8 @@ export default props => {
             >
                 加
             </button>
-            <HookTest></HookTest>
+            {HookTestCom}
+
             {/* <HookEchart></HookEchart> */}
             <HookContext></HookContext>
             <HookRef></HookRef>

@@ -31,7 +31,6 @@ const cssWorkerPool = {
 
 const jsWorkerPool = {
     // options
-
     // 产生的 worker 的数量，默认是 (cpu 核心数 - 1)
     // 当 require('os').cpus() 是 undefined 时，则为 1
     workers: 2,
@@ -278,6 +277,7 @@ const commonConfig = {
                 config.appSrc,
                 'public/data-commen/model'
             ),
+            '@useHooks': path.resolve(config.appSrc, 'useHooks'),
             '@reducers': path.resolve(config.appSrc, 'redux/reducers'),
             '@actions': path.resolve(config.appSrc, 'redux/actions'),
             '@useRedux': path.resolve(config.appSrc, 'redux'),
