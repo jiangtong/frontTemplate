@@ -8,7 +8,7 @@ function ComplexButton(props) {
 export default () => {
     console.log('++++++++++++++++++++++++++++++++++');
     const [count, setCount] = useState(0);
-    const [count11, setCount11] = useState(count);
+    // const [count11, setCount11] = useState(count);
 
     useEffect(() => {
         console.log(count, 'useEffect');
