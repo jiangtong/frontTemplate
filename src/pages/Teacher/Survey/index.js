@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
-import '@pages/Teacher/commen/assets/styles/index.less';
 import CommenComponent from '@pages/Teacher/commen/CommenComponent';
 import BaseComponment from '@pages/Teacher/commen/BaseComponment';
 import TeacherNumbers from '@pages/Teacher/Survey/TeacherNumbers';
+import TestEchart from '@pages/Teacher/Survey/TestEchart';
 
 class OurfacultyComp extends Component {
     constructor(props) {
@@ -25,6 +25,7 @@ class OurfacultyComp extends Component {
                             component() {
                                 return (
                                     <>
+                                        <TestEchart></TestEchart>
                                         <TeacherNumbers
                                             style={{ height: 300 }}
                                         ></TeacherNumbers>

@@ -17,6 +17,9 @@ module.exports = {
     },
 
     settings: {
+        react: {
+            version: 'detect'
+        },
         'import/ignore': ['node_modules']
     },
 
@@ -91,4 +94,4 @@ module.exports = {
         'arrow-parens': 0, //箭头函数用小括号括起来
         'arrow-spacing': 0 //=>的前/后括号
     }
-}
+};

@@ -52,7 +52,7 @@ const devConfig = merge.smart(commonConfig, {
                 sizeThreshold: 50 * 1024 * 1024
             },
 
-            cacheDirectory: 'node_modules/.cache/hard-source/[confighash]',
+            // cacheDirectory: 'node_modules/.cache/hard-source/[confighash]',
 
             // 当加载器，插件，其他构建时脚本或其他动态依赖项发生更改时，hard-source需要替换缓存以确保输出正确。environmentHash被用来确定这一点。如果散列与先前的构建不同，则将使用新的缓存
             environmentHash: {

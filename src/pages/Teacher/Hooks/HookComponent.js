@@ -32,7 +32,7 @@ export default props => {
                     setState1(prevstate => prevstate + 1);
                 }}
             >
-                加
+                312321
             </button>
             {HookTestCom}
 

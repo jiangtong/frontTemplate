@@ -1,15 +1,15 @@
-import React from 'react'
-import { withRouter, NavLink } from 'react-router-dom'
-import { Icon, Layout, Menu, Button } from 'antd'
-import { getSession } from '@utils/utils'
-import './assets/styles/index.less'
+import React from 'react';
+import { withRouter, NavLink } from 'react-router-dom';
+import { Layout, Menu, Button } from 'antd';
+import { getSession } from '@utils/utils';
+import './assets/styles/index.less';
 
-const { Header, Content, Footer, Sider } = Layout
-const SubMenu = Menu.SubMenu
-const MenuItem = Menu.Item
+const { Header, Content, Footer, Sider } = Layout;
+const SubMenu = Menu.SubMenu;
+const MenuItem = Menu.Item;
 
-import routes from '@router/teacher'
-import withBreadcrumbs from 'react-router-breadcrumbs-hoc'
+import routes from '@router/teacher';
+import withBreadcrumbs from 'react-router-breadcrumbs-hoc';
 
 const Breadcrumbs = ({ breadcrumbs }) => (
     <React.Fragment>
@@ -25,31 +25,31 @@ const Breadcrumbs = ({ breadcrumbs }) => (
                     </NavLink>{' '}
                     <span>/</span>
                 </span>
-            )
+            );
         })}
     </React.Fragment>
-)
+);
 
-const Bread = withBreadcrumbs(routes)(Breadcrumbs)
+const Bread = withBreadcrumbs(routes)(Breadcrumbs);
 
 // eslint-disable-next-line react/no-multi-comp
 class BaseComponents extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             collapsed: false,
             menuList: []
-        }
-        this.openKeys = []
-        this.current = []
+        };
+        this.openKeys = [];
+        this.current = [];
     }
 
     goHome() {
-        this.props.history.push('/fullHome')
+        this.props.history.push('/fullHome');
     }
 
     renderMenu(data, path) {
-        let that = this
+        let that = this;
         return data.map(function(item) {
             if (item['menuList'] && item['menuList'].length > 0) {
                 return (
@@ -58,7 +58,7 @@ class BaseComponents extends React.Component {
                         title={
                             <span>
                                 {item['menuLevel'] === 'ONE' ? (
-                                    <Icon type="appstore" />
+                                    <span type="appstore">11</span>
                                 ) : (
                                     ''
                                 )}
@@ -68,47 +68,47 @@ class BaseComponents extends React.Component {
                     >
                         {::this.renderMenu(item.menuList, path)}
                     </SubMenu>
-                )
+                );
             }
 
             if (path) {
                 if (path.indexOf(item['menuUrl']) > -1) {
-                    that.openKeys = [item['parentMenuNo']]
-                    that.current = [item['menuNo']]
+                    that.openKeys = [item['parentMenuNo']];
+                    that.current = [item['menuNo']];
                 }
             }
             return (
                 <MenuItem
                     key={item['menuNo']}
                     onClick={() => {
-                        this.props.history.push(item['menuUrl'])
+                        this.props.history.push(item['menuUrl']);
                     }}
                 >
-                    {item['menuLevel'] === 'ONE' ? <Icon type="desktop" /> : ''}
+                    {item['menuLevel'] === 'ONE' ? <span>11</span> : ''}
                     <span>{item['menuName']}</span>
                 </MenuItem>
-            )
-        }, this)
+            );
+        }, this);
     }
 
     toggleCollapsed = () => {
         this.setState({
             collapsed: !this.state.collapsed
-        })
-    }
+        });
+    };
 
     render() {
         // this.breadCrumb = [];
         // this.renderBreadcrumb(this.state.menuList, this.props.history.location.pathname);
         // this.breadCrumb.reverse();
 
-        let menus = JSON.parse(getSession('auth'))
-        let { menuInfo } = menus
-        let { menuList } = menuInfo
+        let menus = JSON.parse(getSession('auth'));
+        let { menuInfo } = menus;
+        let { menuList } = menuInfo;
         let menu = this.renderMenu(
             menuList,
             this.props.history.location.pathname
-        )
+        );
 
         return (
             <Layout>
@@ -118,15 +118,7 @@ class BaseComponents extends React.Component {
                             type="primary"
                             onClick={this.toggleCollapsed}
                             style={{ marginBottom: 16 }}
-                        >
-                            <Icon
-                                type={
-                                    this.state.collapsed
-                                        ? 'menu-unfold'
-                                        : 'menu-fold'
-                                }
-                            />
-                        </Button>
+                        ></Button>
                         <img
                             style={{ height: 50 }}
                             src={require('@public/img/xtzy.png')}
@@ -144,7 +136,6 @@ class BaseComponents extends React.Component {
                             }}
                         >
                             <span style={{ marginRight: '15px' }}>
-                                <Icon type="user" style={{ marginRight: 6 }} />
                                 {JSON.parse(getSession('auth'))['userName']}
                             </span>
                             <span
@@ -155,7 +146,6 @@ class BaseComponents extends React.Component {
                                 }}
                                 onClick={this.goHome.bind(this)}
                             >
-                                <Icon type="home" style={{ marginRight: 6 }} />
                                 领导驾驶舱
                             </span>
                         </div>
@@ -224,8 +214,8 @@ class BaseComponents extends React.Component {
                     </Layout>
                 </Layout>
             </Layout>
-        )
+        );
     }
 }
 
-export default withRouter(BaseComponents)
+export default withRouter(BaseComponents);

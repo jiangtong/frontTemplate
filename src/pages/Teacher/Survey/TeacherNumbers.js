@@ -25,304 +25,305 @@ class TeacherNumbers extends Component {
         let data = [
             {
                 name: '优',
-                value: 40535
+                value: 204800
             },
             {
                 name: '良',
-                value: 335150
+                value: 490663
             },
+
             {
                 name: '中',
-                value: 560745
+                value: 477524
             },
+
             {
                 name: '及格',
-                value: 87187
+                value: 289894
             },
+
             {
                 name: '不及格',
-                value: 3354
+                value: 156721
             }
         ];
 
         let data1 = [
-            {
-                name: '及格',
-                value: '17.09'
-            },
-            { name: '良', value: '19.111' },
-            { name: '不及格', value: '312312.73' },
-            { name: '中', value: '1231260.24' },
-            { name: '优', value: '1.931235' }
+            { name: '优', value: '8.69' },
+            { name: '良', value: '18.43' },
+            { name: '中', value: '30.83' },
+            { name: '及格', value: '28.92' },
+            { name: '不及格', value: '13.10' }
         ];
         let data2 = [
             {
-                name: '优',
+                name: '医疗支出',
                 value: [
                     {
-                        name: '1',
-                        value: '1222121'
+                        name: '及格',
+                        value: 8627.66
                     },
                     {
-                        name: '2',
-                        value: ''
+                        name: '良',
+                        value: 4016.44
                     },
                     {
-                        name: '3',
-                        value: ''
+                        name: '不及格',
+                        value: 2446.43
                     },
                     {
-                        name: '4',
-                        value: '1050.3'
+                        name: '中',
+                        value: 7751.35
                     },
                     {
-                        name: '5',
-                        value: '10709.0'
-                    },
-                    {
-                        name: '6',
-                        value: '10107.9'
-                    },
-                    {
-                        name: '7',
-                        value: '5226.5'
-                    },
-                    {
-                        name: '8',
-                        value: ''
-                    },
-                    {
-                        name: '9',
-                        value: '10843.3'
-                    },
-                    {
-                        name: '10',
-                        value: '12004.9'
-                    },
-                    {
-                        name: '11',
-                        value: '13088.3'
-                    },
-                    {
-                        name: '12',
-                        value: '14702.1'
+                        name: '优',
+                        value: 3146.37
                     }
                 ]
             },
             {
-                name: '良',
+                name: '商场购物',
                 value: [
                     {
-                        name: '1',
-                        value: '38482.6'
+                        name: '及格',
+                        value: 885175.0
                     },
                     {
-                        name: '2',
-                        value: ''
+                        name: '良',
+                        value: 408502.5
                     },
                     {
-                        name: '3',
-                        value: ''
+                        name: '不及格',
+                        value: 247385.94
                     },
                     {
-                        name: '4',
-                        value: '11601.7'
+                        name: '中',
+                        value: 801005.48
                     },
                     {
-                        name: '5',
-                        value: '116303.0'
-                    },
-                    {
-                        name: '6',
-                        value: '116530.6'
-                    },
-                    {
-                        name: '7',
-                        value: '56963.7'
-                    },
-                    {
-                        name: '8',
-                        value: ''
-                    },
-                    {
-                        name: '9',
-                        value: '123651.5'
-                    },
-                    {
-                        name: '10',
-                        value: '118872.7'
-                    },
-                    {
-                        name: '11',
-                        value: '123694.9'
-                    },
-                    {
-                        name: '12',
-                        value: '140317.0'
+                        name: '优',
+                        value: 309296.7
                     }
                 ]
             },
             {
-                name: '中',
+                name: '学生上网缴费',
                 value: [
                     {
-                        name: '1',
-                        value: '141979.4'
+                        name: '及格',
+                        value: 532.0
                     },
                     {
-                        name: '2',
-                        value: ''
+                        name: '良',
+                        value: 1166.0
                     },
                     {
-                        name: '3',
-                        value: ''
+                        name: '不及格',
+                        value: 848.0
                     },
                     {
-                        name: '4',
-                        value: '42482.6'
+                        name: '中',
+                        value: 1149.0
                     },
                     {
-                        name: '5',
-                        value: '444349.3'
-                    },
-                    {
-                        name: '6',
-                        value: '436588.0'
-                    },
-                    {
-                        name: '7',
-                        value: '199717.5'
-                    },
-                    {
-                        name: '8',
-                        value: ''
-                    },
-                    {
-                        name: '9',
-                        value: '496034.8'
-                    },
-                    {
-                        name: '10',
-                        value: '489577.0'
-                    },
-                    {
-                        name: '11',
-                        value: '497845.8'
-                    },
-                    {
-                        name: '12',
-                        value: '544379.0'
+                        name: '优',
+                        value: 216.0
                     }
                 ]
             },
             {
-                name: '及格',
+                name: '教材费支出',
                 value: [
                     {
-                        name: '1',
-                        value: '46382.7'
+                        name: '及格',
+                        value: 226376.52
                     },
                     {
-                        name: '2',
-                        value: ''
+                        name: '良',
+                        value: 244298.34
                     },
                     {
-                        name: '3',
-                        value: ''
+                        name: '不及格',
+                        value: 67494.7
                     },
                     {
-                        name: '4',
-                        value: '13609.6'
+                        name: '中',
+                        value: 195954.35
                     },
                     {
-                        name: '5',
-                        value: '146651.7'
-                    },
-                    {
-                        name: '6',
-                        value: '140473.5'
-                    },
-                    {
-                        name: '7',
-                        value: '62346.6'
-                    },
-                    {
-                        name: '8',
-                        value: ''
-                    },
-                    {
-                        name: '9',
-                        value: '153823.4'
-                    },
-                    {
-                        name: '10',
-                        value: '155934.6'
-                    },
-                    {
-                        name: '11',
-                        value: '153815.2'
-                    },
-                    {
-                        name: '12',
-                        value: '169148.8'
+                        name: '优',
+                        value: 108574.5
                     }
                 ]
             },
             {
-                name: '不及格',
+                name: '校医院体检费',
                 value: [
                     {
-                        name: '1',
-                        value: '4182.9'
+                        name: '不及格',
+                        value: 165.0
                     },
                     {
-                        name: '2',
-                        value: ''
+                        name: '中',
+                        value: 220.0
                     },
                     {
-                        name: '3',
-                        value: ''
+                        name: '优',
+                        value: 110.0
+                    }
+                ]
+            },
+            {
+                name: '淋浴支出',
+                value: [
+                    {
+                        name: '及格',
+                        value: 116280.9
                     },
                     {
-                        name: '4',
-                        value: '1413.0'
+                        name: '良',
+                        value: 95548.45
                     },
                     {
-                        name: '5',
-                        value: '16322.5'
+                        name: '不及格',
+                        value: 36587.34
                     },
                     {
-                        name: '6',
-                        value: '14417.3'
+                        name: '中',
+                        value: 138610.12
                     },
                     {
-                        name: '7',
-                        value: '5310.7'
+                        name: '优',
+                        value: 53655.95
+                    }
+                ]
+            },
+            {
+                name: '用电支出',
+                value: [
+                    {
+                        name: '及格',
+                        value: 80.0
                     },
                     {
-                        name: '8',
-                        value: ''
+                        name: '优',
+                        value: 15.0
                     },
                     {
-                        name: '9',
-                        value: '15775.3'
+                        name: '良',
+                        value: 10.0
                     },
                     {
-                        name: '10',
-                        value: '16270.6'
+                        name: '不及格',
+                        value: 42.0
                     },
                     {
-                        name: '11',
-                        value: '15641.9'
+                        name: '中',
+                        value: 47.0
+                    }
+                ]
+            },
+            {
+                name: '补卡支出',
+                value: [
+                    {
+                        name: '及格',
+                        value: 540.0
                     },
                     {
-                        name: '12',
-                        value: '16364.6'
+                        name: '良',
+                        value: 0.0
+                    },
+                    {
+                        name: '不及格',
+                        value: 420.0
+                    },
+                    {
+                        name: '中',
+                        value: 330.0
+                    },
+                    {
+                        name: '优',
+                        value: 60.0
+                    }
+                ]
+            },
+            {
+                name: '购热水支出',
+                value: [
+                    {
+                        name: '及格',
+                        value: 28902.92
+                    },
+                    {
+                        name: '良',
+                        value: 21051.35
+                    },
+                    {
+                        name: '不及格',
+                        value: 9378.09
+                    },
+                    {
+                        name: '中',
+                        value: 33752.53
+                    },
+                    {
+                        name: '优',
+                        value: 11604.2
+                    }
+                ]
+            },
+            {
+                name: '还款类',
+                value: [
+                    {
+                        name: '及格',
+                        value: 504090.58
+                    },
+                    {
+                        name: '良',
+                        value: 315779.37
+                    },
+                    {
+                        name: '不及格',
+                        value: 177752.59
+                    },
+                    {
+                        name: '中',
+                        value: 516581.94
+                    },
+                    {
+                        name: '优',
+                        value: 179312.8
+                    }
+                ]
+            },
+            {
+                name: '餐费支出',
+                value: [
+                    {
+                        name: '及格',
+                        value: 3290352.27
+                    },
+                    {
+                        name: '良',
+                        value: 2034578.68
+                    },
+                    {
+                        name: '不及格',
+                        value: 928404.75
+                    },
+                    {
+                        name: '中',
+                        value: 3361249.75
+                    },
+                    {
+                        name: '优',
+                        value: 1346151.6
                     }
                 ]
             }
         ];
-
         return (
             <Col span={24} className="enrolment-container">
                 <Row className="bg-white chart-content">
@@ -350,7 +351,11 @@ class TeacherNumbers extends Component {
                                         '#D6C11A',
                                         '#CC5C2A',
                                         '#872ACC',
-                                        '#D6C11A'
+                                        '#5C9CF8',
+                                        '#5059CA',
+                                        '#EC7C72',
+                                        '#2a99c9',
+                                        '#61CAB2'
                                     ],
                                     legend: {
                                         icon: 'rect',
@@ -374,7 +379,7 @@ class TeacherNumbers extends Component {
                                             (data2[0] &&
                                                 data2[0]['value'] &&
                                                 data2[0]['value'].map(item => {
-                                                    return item.name + '月';
+                                                    return item.name;
                                                 })) ||
                                             []
                                         // axisLabel: {

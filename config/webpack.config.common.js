@@ -8,6 +8,7 @@ const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const chalk = require('chalk');
 const path = require('path');
 const webpack = require('webpack');
+const AntdDayjsWebpackPlugin = require('antd-dayjs-webpack-plugin');
 const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 const os = require('os');
 const SpeedMeasurePlugin = require('speed-measure-webpack-plugin');
@@ -16,16 +17,16 @@ const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 // SpeedMeasurePlugin有冲突目前不能一起用
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const postcssPresetEnv = require('postcss-preset-env');
-
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
     .BundleAnalyzerPlugin;
 const threadLoader = require('thread-loader');
 // 判断环境
 const isDev = process.env.NODE_ENV === 'development';
+
 const cssWorkerPool = {
     // 一个 worker 进程中并行执行工作的数量
     // 默认为 20
-    workerParallelJobs: 4,
+    workerParallelJobs: 20,
     poolTimeout: 2000
 };
 
@@ -34,7 +35,6 @@ const jsWorkerPool = {
     // 产生的 worker 的数量，默认是 (cpu 核心数 - 1)
     // 当 require('os').cpus() 是 undefined 时，则为 1
     workers: 2,
-
     // 闲置时定时删除 worker 进程
     // 默认为 500ms
     // 可以设置为无穷大， 这样在监视模式(--watch)下可以保持 worker 持续存在
@@ -44,35 +44,72 @@ const jsWorkerPool = {
 threadLoader.warmup(cssWorkerPool, ['css-loader', 'postcss-loader']);
 threadLoader.warmup(jsWorkerPool, ['babel-loader', 'eslint-loader']);
 
-let styleLoader = {
-    loader: 'style-loader',
-    options: {
-        insert: 'head'
-    }
+const cssReg = /\.css$/;
+const cssModuleReg = /\.module\.css$/;
+const sassModuleReg = /\.module\.(scss|sass)$/;
+const sassReg = /\.scss|.sass$/;
+const lessModuleReg = /\.module\.less/;
+const lessReg = /\.less$/;
+
+const styleLoader = (options = {}) => {
+    const styleInner = isDev
+        ? {
+              loader: 'style-loader',
+              options: {
+                  insert: 'head'
+              }
+          }
+        : {
+              loader: MiniCssExtractPlugin.loader,
+              options: {
+                  publicPath: '../../'
+              }
+          };
+
+    return [
+        styleInner,
+        {
+            loader: 'thread-loader'
+        },
+        {
+            loader: 'css-loader',
+            options
+        },
+        {
+            loader: 'postcss-loader',
+            options: {
+                ident: 'postcss',
+                plugins: () => [postcssPresetEnv({})]
+            }
+        }
+    ].filter(Boolean);
 };
 
-let cssLoader = {
-    loader: 'css-loader'
-    // options: {
-    //     modules: true, // 指定启用css modules
-    //     importLoaders: 1,
-    //     localIdentName: '[name]__[local]--[hash:base64:5]'
-    // }
+const sassLoader = () => {
+    return [
+        'sass-loader',
+        {
+            loader: 'sass-resources-loader',
+            options: {
+                resources: `${config.appSrc}/public/styles/variable.scss`
+            }
+        }
+    ].filter(Boolean);
 };
 
-let postcssLoader = {
-    loader: 'postcss-loader',
-    options: {
-        ident: 'postcss',
-        plugins: () => [postcssPresetEnv({})]
-    }
-};
-
-let MiniCssExtractPluginLoader = {
-    loader: MiniCssExtractPlugin.loader,
-    options: {
-        publicPath: '../../'
-    }
+const lessLoader = (options = {}) => {
+    return [
+        {
+            loader: 'less-loader',
+            options
+        },
+        {
+            loader: 'sass-resources-loader',
+            options: {
+                resources: `${config.appSrc}/public/styles/variable.less`
+            }
+        }
+    ].filter(Boolean);
 };
 
 const commonConfig = {
@@ -129,7 +166,6 @@ const commonConfig = {
                     name: 'utils',
                     priority: 10,
                     test: module =>
-                        /moment/.test(module.context) ||
                         /axios/.test(module.context) ||
                         /classnames/.test(module.context) ||
                         /prop-types/.test(module.context),
@@ -149,6 +185,9 @@ const commonConfig = {
                 }
             }
         }),
+
+        // 用Day.js替换moment
+        new AntdDayjsWebpackPlugin(),
 
         // new BundleAnalyzerPlugin({
         //     // concatenateModules: false,
@@ -217,19 +256,23 @@ const commonConfig = {
         //     tags: [
         //         isDev ? './public/js/baiduMap.js' : 'public/js/baiduMap.js',
         //         isDev ? './public/js/LuShu.js' : 'public/js/LuShu.js',
-        //         isDev ? './public/js/Heatmap.js' : 'public/js/Heatmap.js'
-        //         //
-        //         // {
-        //         //     path: 'http://api.map.baidu.com/api?v=3.0&ak=moMIflSL2yGiq3VwQ3bynEKE7gl2cjQw',
-        //         //     type: 'js'
-        //         // },
-        //         // {
-        //         //     path: 'http://api.map.baidu.com/library/LuShu/1.2/src/LuShu_min.js',
-        //         //     type: 'js'
-        //         // }, {
-        //         //     path: 'http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js',
-        //         //     type: 'js'
-        //         // }
+        //         isDev ? './public/js/Heatmap.js' : 'public/js/Heatmap.js',
+
+        //         {
+        //             path:
+        //                 'http://api.map.baidu.com/api?v=3.0&ak=moMIflSL2yGiq3VwQ3bynEKE7gl2cjQw',
+        //             type: 'js'
+        //         },
+        //         {
+        //             path:
+        //                 'http://api.map.baidu.com/library/LuShu/1.2/src/LuShu_min.js',
+        //             type: 'js'
+        //         },
+        //         {
+        //             path:
+        //                 'http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js',
+        //             type: 'js'
+        //         }
         //     ],
         //     append: false
         // })
@@ -348,45 +391,6 @@ const commonConfig = {
                     }
                 ]
             },
-
-            {
-                test: /\.(scss|sass)$/,
-                use: [
-                    isDev ? 'style-loader' : MiniCssExtractPluginLoader,
-                    cssLoader,
-                    postcssLoader,
-                    'sass-loader'
-                ]
-            },
-            {
-                test: /\.less$/,
-                use: [
-                    isDev ? 'style-loader' : MiniCssExtractPluginLoader,
-                    cssLoader,
-                    postcssLoader,
-                    {
-                        loader: 'less-loader',
-                        options: {
-                            // 使用less默认运行时替换配置的@color样式
-                            modifyVars: config.color,
-                            javascriptEnabled: true
-                        }
-                    }
-                ]
-            },
-            {
-                test: /\.css$/,
-                exclude: /node_modules/,
-                use: [
-                    isDev ? 'style-loader' : MiniCssExtractPluginLoader,
-                    {
-                        loader: 'thread-loader'
-                        // options: cssWorkerPool
-                    },
-                    cssLoader,
-                    postcssLoader
-                ]
-            },
             {
                 test: /\.(png|jpg|jpeg|gif|svg)$/,
                 use: [
@@ -420,6 +424,80 @@ const commonConfig = {
                         name: 'app/fonts/[name]_[hash:7].[ext]'
                     }
                 }
+            },
+            // 找到第一个匹配的进行解析  设置module与非module形式都支持，根据文件名称区分，文件写了[name].module.scss或者[name].module.less即支持module
+            {
+                oneOf: [
+                    {
+                        test: sassModuleReg,
+                        use: [
+                            ...styleLoader({
+                                modules: {
+                                    localIdentName: 'local]--[hash:base64:5]'
+                                }
+                            }),
+                            ...sassLoader()
+                        ],
+                        include: config.appSrc
+                    },
+                    {
+                        test: lessModuleReg,
+                        use: [
+                            ...styleLoader({
+                                modules: {
+                                    localIdentName: '[local]--[hash:base64:5]'
+                                }
+                            }),
+                            ...lessLoader({
+                                javascriptEnabled: true
+                            })
+                        ],
+                        include: config.appSrc
+                    },
+                    {
+                        test: sassReg,
+                        use: [...styleLoader(), ...sassLoader()],
+                        include: config.appSrc
+                    },
+                    {
+                        test: lessReg,
+                        use: [
+                            ...styleLoader(),
+                            ...lessLoader({
+                                javascriptEnabled: true
+                            })
+                        ],
+                        include: config.appSrc
+                    },
+                    {
+                        test: cssModuleReg,
+                        use: [
+                            ...styleLoader({
+                                modules: {
+                                    localIdentName: '[local]--[hash:base64:5]'
+                                }
+                            })
+                        ],
+                        include: config.appSrc
+                    },
+                    {
+                        test: cssReg,
+                        use: [...styleLoader()],
+                        include: config.appSrc
+                    },
+                    {
+                        test: lessReg,
+                        use: [
+                            ...styleLoader(),
+                            ...lessLoader({
+                                // 使用less默认运行时替换配置的@color样式
+                                modifyVars: config.color,
+                                javascriptEnabled: true
+                            })
+                        ],
+                        include: /node_modules/
+                    }
+                ]
             }
         ]
     }
