@@ -5,8 +5,7 @@ import {
     Route,
     useParams,
     useLocation,
-    useHistory,
-    useRouteMatch
+    useHistory
 } from 'react-router-dom';
 
 const Home = () => {
