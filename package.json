@@ -3,14 +3,13 @@
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
-    "lint-staged": {
-        "src/**/*.js": [
-            "eslint --fix",
-            "git add"
-        ]
+    "husky": {
+        "hooks": {
+            "pre-commit": "npm test",
+            "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+        }
     },
     "scripts": {
-        "precommit": "lint-staged",
         "lint": "eslint --ext .js,.ts src ",
         "fix": "npm run lint -- --fix",
         "test": "jest --config jestconfig.js --coverage",
