@@ -5,15 +5,9 @@
     "main": "index.js",
     "husky": {
         "hooks": {
-            "pre-commit": "lint-staged"
+            "pre-commit": "npm test",
+            "pre-push": "npm test"
         }
-    },
-    "lint-staged": {
-        "src/**/*.{jsx,txs,ts,js,json,css,md}": [
-            "prettier --write",
-            "eslint --fix",
-            "git add"
-        ]
     },
     "scripts": {
         "test": "jest --config jestconfig.js --coverage",
