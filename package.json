@@ -10,7 +10,6 @@
             "pre-push": "echo 提交代码前需要先进行单元测试 && npn test"
         }
     },
-
     "scripts": {
         "precommit": "lint-staged",
         "fix": "eslint --ext .js,.ts src   --fix",
