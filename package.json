@@ -3,16 +3,21 @@
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
+    // "husky": {
+    //     "hooks": {
+    //         "pre-commit": "lint-staged"
+    //     }
+    // },
+    // "lint-staged": {
+    //     "src/**/*.{js,jsx}": [
+    //         "eslint --fix",
+    //         "git add"
+    //     ]
+    // },
     "husky": {
         "hooks": {
-            "pre-commit": "lint-staged"
+            "commit-msg": "commitlint -e $HUSKY_GIT_PARAMS"
         }
-    },
-    "lint-staged": {
-        "src/**/*.{js,jsx}": [
-            "eslint --fix",
-            "git add"
-        ]
     },
     "scripts": {
         "precommit": "eslint src/**/*.js",
