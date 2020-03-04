@@ -1,13 +1,16 @@
 # 前端标准化
 
-鉴于目前前端项目在某些方面关于复制重用的问题，特写个demo。主要技术栈，webpack4，babel7，react-router4，axios，react16
+husky 必须用 npm 进行更新
+
+鉴于目前前端项目在某些方面关于复制重用的问题，特写个 demo。主要技术栈，webpack4，babel7，react-router4，axios，react16
 
 ## 一、项目启动
+
     1. cnpm i 或 npm i
     2. npm run start (或者可以使用npm run dll,npm run start方式进行启动，前提是confg文件夹中的webpack.config.dev去打开部分注释代码)
 
-
 ## 二、项目结构
+
     1. src/router 为项目的路由文件夹，望每个模块新建一个路由文件，最后汇总到router.js中
     2. src/redux 为状态管理的组件，先保留
     3. src/components 是封装的一些通用组件 目前分成wuhan,xian,beijing,guangzhou四个文件夹

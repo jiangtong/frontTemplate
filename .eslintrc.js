@@ -10,7 +10,6 @@ module.exports = {
             experimentalObjectRestSpread: true
         }
     },
-    extends: ['plugin:prettier/recommended'],
     env: {
         browser: true,
         node: true,
