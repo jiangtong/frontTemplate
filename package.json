@@ -3,15 +3,15 @@
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
-    "husky": {
-        "hooks": {
-            "pre-commit": "npm test",
-            "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-        }
+    "lint-staged": {
+        "src/**/*.js": [
+            "eslint --fix --ext .js",
+            "git add"
+        ]
     },
     "scripts": {
-        "lint": "eslint --ext .js,.ts src ",
-        "fix": "npm run lint -- --fix",
+        "precommit": "lint-staged",
+        "fix": "eslint --ext .js,.ts src   --fix",
         "test": "jest --config jestconfig.js --coverage",
         "start": "cross-env NODE_ENV=development webpack-dev-server --config config/webpack.config.dev.js  --inline --color --progress --hot",
         "build": "cross-env NODE_ENV=production webpack --config config/webpack.config.prod.js  --progress --color"
