@@ -4,7 +4,7 @@ import './loading.less';
 class Loading extends React.Component {
     render() {
         return (
-            <div className="shield" style={{display: 'flex'}}>
+            <div className="shield" style={{ display: 'flex' }}>
                 <span className={'item-1'}></span>
                 <span className={'item-2'}></span>
                 <span className={'item-3'}></span>
@@ -18,4 +18,3 @@ class Loading extends React.Component {
 }
 
 export default Loading;
-
