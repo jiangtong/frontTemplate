@@ -5,15 +5,12 @@
     "main": "index.js",
     "husky": {
         "hooks": {
-            "pre-commit": "npm run build && git add dist"
+            "pre-commit": "echo 我要提交代码啦",
+            "commit-msg": "echo $HUSKY_GIT_PARAMS $HUSKY_GIT_STDIN",
+            "pre-push": "echo 提交代码前需要先进行单元测试 && npn test"
         }
     },
-    "lint-staged": {
-        "src/**/*.js": [
-            "eslint --fix --ext .js",
-            "git add"
-        ]
-    },
+
     "scripts": {
         "precommit": "lint-staged",
         "fix": "eslint --ext .js,.ts src   --fix",
