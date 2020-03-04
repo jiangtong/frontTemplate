@@ -5,11 +5,17 @@
     "main": "index.js",
     "husky": {
         "hooks": {
-            "commit-msg": "commitlint -e $HUSKY_GIT_PARAMS"
+            "pre-commit": "lint-staged"
         }
     },
+    "lint-staged": {
+        "src/**/*.{jsx,txs,ts,js,json,css,md}": [
+            "prettier --write",
+            "eslint --fix",
+            "git add"
+        ]
+    },
     "scripts": {
-        // "precommit": "eslint src/**/*.js",
         "test": "jest --config jestconfig.js --coverage",
         "start": "cross-env NODE_ENV=development webpack-dev-server --config config/webpack.config.dev.js  --inline --color --progress --hot",
         "build": "cross-env NODE_ENV=production webpack --config config/webpack.config.prod.js  --progress --color"
