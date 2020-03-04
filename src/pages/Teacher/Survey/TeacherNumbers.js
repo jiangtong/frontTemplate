@@ -49,11 +49,8 @@ class TeacherNumbers extends Component {
         ];
 
         let data1 = [
-            { name: '优', value: '8.69' },
-            { name: '良', value: '18.43' },
-            { name: '中', value: '30.83' },
-            { name: '及格', value: '28.92' },
-            { name: '不及格', value: '13.10' }
+            { name: '男', value: '86.24' },
+            { name: '女', value: '13.75' }
         ];
         let data2 = [
             {
