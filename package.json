@@ -3,6 +3,11 @@
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
+    "husky": {
+        "hooks": {
+            "pre-commit": "npm run build && git add dist"
+        }
+    },
     "lint-staged": {
         "src/**/*.js": [
             "eslint --fix --ext .js",

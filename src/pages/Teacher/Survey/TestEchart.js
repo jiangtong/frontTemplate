@@ -14,7 +14,7 @@ import '../commen/assets/styles/index.scss';
 class TestEchart extends Component {
     constructor(props) {
         super(props);
-        this.state =
+        this.state = {};
     }
 
     // async componentDidMount() {
