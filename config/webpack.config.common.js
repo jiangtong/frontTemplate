@@ -68,9 +68,9 @@ const styleLoader = (options = {}) => {
 
     return [
         styleInner,
-        {
-            loader: 'thread-loader'
-        },
+        // {
+        //     loader: 'thread-loader'
+        // },
         {
             loader: 'css-loader',
             options

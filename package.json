@@ -16,7 +16,6 @@
         ]
     },
     "scripts": {
-        "precommit": "lint-staged",
         "fix": "eslint --ext .js,.ts src   --fix",
         "test": "jest --config jestconfig.js --coverage",
         "start": "cross-env NODE_ENV=development webpack-dev-server --config config/webpack.config.dev.js  --inline --color --progress --hot",
@@ -80,6 +79,7 @@
         "babel-jest": "^25.1.0",
         "babel-loader": "^8.0.6",
         "babel-plugin-import": "^1.12.2",
+        "baili_cli": "^1.0.0",
         "bundle-loader": "^0.5.6",
         "chalk": "^2.4.1",
         "clean-webpack-plugin": "^3.0.0",

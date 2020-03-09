@@ -1,6 +1,8 @@
 # 前端标准化
 
-husky 必须用 npm 进行更新
+husky 必须用 npm 进行更新 提交前代码格式化
+npm run fix 代码格式化工具
+npm run test 测试库
 
 鉴于目前前端项目在某些方面关于复制重用的问题，特写个 demo。主要技术栈，webpack4，babel7，react-router4，axios，react16
 
