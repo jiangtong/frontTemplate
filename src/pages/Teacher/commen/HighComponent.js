@@ -1,12 +1,12 @@
-import React, { Component } from 'react'
-import hoistNonReactStatics from 'hoist-non-react-statics'
-import Request from '@commenApi/teacher'
-import NoDataComponent from '@components/beijing/NoDataCom'
-import { Spin } from 'antd'
+import React, { Component } from 'react';
+import hoistNonReactStatics from 'hoist-non-react-statics';
+import Request from '@commenApi/teacher';
+import NoDataComponent from '@components/beijing/NoDataCom';
+import { Spin } from 'antd';
 
 const getDisplayName = component => {
-    return component.displayName || component.name || 'Component'
-}
+    return component.displayName || component.name || 'Component';
+};
 
 /**
  * @url 接口地址
@@ -14,29 +14,29 @@ const getDisplayName = component => {
  */
 const highComponentFuc = (url, params = {}) => WrappComponent => {
     if (!url) {
-        throw new Error('请填写要请求的接口名称')
+        throw new Error('请填写要请求的接口名称');
     }
 
     if (!WrappComponent) {
-        throw new Error('请填写组件名称')
+        throw new Error('请填写组件名称');
     }
 
     class EnhanceComponent extends Component {
         static displayName = `highComponentFuc(${getDisplayName(
             WrappComponent
-        )})`
+        )})`;
 
         constructor(props) {
-            super(props)
+            super(props);
             this.state = {
                 loading: true,
                 data: [],
                 noData: false
-            }
+            };
         }
 
         async componentDidMount() {
-            let res = await Request[url](params)
+            let res = await Request[url](params);
             res = [
                 {
                     name: '测试',
@@ -54,17 +54,17 @@ const highComponentFuc = (url, params = {}) => WrappComponent => {
                     name: '测试3',
                     value: '12'
                 }
-            ]
+            ];
 
             this.setState({
                 loading: false,
                 noData: res.length > 0 ? false : true
-            })
+            });
 
             if (res.length > 0) {
                 this.setState({
                     data: res
-                })
+                });
             }
         }
 
@@ -79,13 +79,13 @@ const highComponentFuc = (url, params = {}) => WrappComponent => {
                     </Spin>
                     {this.state.noData && <NoDataComponent></NoDataComponent>}
                 </div>
-            )
+            );
         }
     }
 
-    hoistNonReactStatics(EnhanceComponent, WrappComponent)
+    hoistNonReactStatics(EnhanceComponent, WrappComponent);
 
-    return EnhanceComponent
-}
+    return EnhanceComponent;
+};
 
-export default highComponentFuc
+export default highComponentFuc;

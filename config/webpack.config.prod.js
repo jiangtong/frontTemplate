@@ -11,7 +11,6 @@ const config = require('./config');
 const seen = new Set();
 const nameLength = 4;
 const path = require('path');
-// const TerserPlugin = require('terser-webpack-plugin')
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');

@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
-import withContext from './withContext'
-import Context from './context'
+import React, { Component } from 'react';
+import withContext from './withContext';
+import Context from './context';
 
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
-const Consumer = Context.Consumer
+const Consumer = Context.Consumer;
 
 class Children extends Component {
     render() {
@@ -14,8 +14,8 @@ class Children extends Component {
 
                 <Link to={'/teachermanager/growth/12/哈哈'}>下钻</Link>
             </div>
-        )
+        );
     }
 }
 
-export default withContext(Consumer, Children)
+export default withContext(Consumer, Children);

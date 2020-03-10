@@ -1,5 +1,4 @@
-import {FAIL, SUCCESS} from '@actions/menuWarnList';
-
+import { FAIL, SUCCESS } from '@actions/menuWarnList';
 
 const initState = {
     menuDic: {}

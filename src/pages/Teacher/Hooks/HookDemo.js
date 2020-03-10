@@ -1,35 +1,35 @@
 /* eslint-disable react/no-multi-comp */
-import React, { useState, useEffect } from 'react'
-import { Table } from 'antd'
-import { withRouter } from 'react-router-dom'
-import Request from '@commenApi/teacher/index'
+import React, { useState, useEffect } from 'react';
+import { Table } from 'antd';
+import { withRouter } from 'react-router-dom';
+import Request from '@commenApi/teacher/index';
 
 const useRenderPage = requestUrl => {
-    const [list, setList] = useState([])
-    const [page, setPage] = useState(1)
-    const [total, setTotal] = useState(1)
+    const [list, setList] = useState([]);
+    const [page, setPage] = useState(1);
+    const [total, setTotal] = useState(1);
 
     useEffect(() => {
         async function initData() {
-            const res = await Request[requestUrl]({ pageNum: page })
-            setList(res.rows)
-            setPage(res.page)
-            setTotal(res.total)
+            const res = await Request[requestUrl]({ pageNum: page });
+            setList(res.rows);
+            setPage(res.page);
+            setTotal(res.total);
         }
 
-        initData()
-    }, [page, requestUrl])
+        initData();
+    }, [page, requestUrl]);
 
     const pageChange = pagination => {
-        setPage(pagination.current)
-    }
+        setPage(pagination.current);
+    };
 
-    return [list, page, total, pageChange]
-}
+    return [list, page, total, pageChange];
+};
 
 const renderTabel = (ListDom, requestUrl) => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [list, page, total, pageChange] = useRenderPage(requestUrl)
+    const [list, page, total, pageChange] = useRenderPage(requestUrl);
 
     return (
         <React.Fragment>
@@ -40,8 +40,8 @@ const renderTabel = (ListDom, requestUrl) => {
             ></ListDom>
             {/*可以在此处抽象分页搜索等等，所以在此多抽象了一层*/}
         </React.Fragment>
-    )
-}
+    );
+};
 
 const EnterprisePracticeInfoList = () => {
     const ListDom = ({ list, pagination, onChange }) => {
@@ -106,11 +106,11 @@ const EnterprisePracticeInfoList = () => {
                 dataSource={list}
                 pagination={pagination}
             ></Table>
-        )
-    }
+        );
+    };
 
-    return renderTabel(ListDom, 'pageAlarmStrategy')
-}
+    return renderTabel(ListDom, 'pageAlarmStrategy');
+};
 
 const TeacherTeachingList = withRouter(props => {
     const ListDom = ({ list, pagination, onChange }) => {
@@ -158,7 +158,7 @@ const TeacherTeachingList = withRouter(props => {
                                 onClick={async () => {
                                     props.history.push(
                                         '/teachermanager/hooks/detail'
-                                    )
+                                    );
                                     // const res = await Request.findById();
                                     // message.success(res.strategyTargetCollege)
                                 }}
@@ -172,10 +172,10 @@ const TeacherTeachingList = withRouter(props => {
                 pagination={pagination}
                 dataSource={list}
             ></Table>
-        )
-    }
+        );
+    };
 
-    return renderTabel(ListDom, 'enterprisePracticeInfoList')
-})
+    return renderTabel(ListDom, 'enterprisePracticeInfoList');
+});
 
-export { TeacherTeachingList, EnterprisePracticeInfoList }
+export { TeacherTeachingList, EnterprisePracticeInfoList };

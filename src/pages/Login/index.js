@@ -1,27 +1,27 @@
-import React, { Component } from 'react'
-import { withRouter } from 'react-router-dom'
-import { Col, message } from 'antd'
-import '@pages/Login/commen/assets/styles/login.less'
-import Request from '@commenApi/Login'
-import { setSession } from '@utils/utils'
+import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+import { Col, message } from 'antd';
+import '@pages/Login/commen/assets/styles/login.less';
+import Request from '@commenApi/Login';
+import { setSession } from '@utils/utils';
 
-import md5 from 'md5'
+import md5 from 'md5';
 
 class LoginComponent extends Component {
     state = {
         userName: '',
         pwd: ''
-    }
+    };
 
     /**
      * 处理输入
      */
     handelChange(event) {
-        let name = event.target.name
-        let value = event.target.value
+        let name = event.target.name;
+        let value = event.target.value;
         this.setState({
             [name]: value
-        })
+        });
     }
 
     simulatedLoad() {
@@ -126,51 +126,53 @@ class LoginComponent extends Component {
                         }
                     },
                     errorCode: 0
-                })
-            }, 2000)
-        })
+                });
+            }, 2000);
+        });
     }
 
     /**
      * 登录
      */
     async goLogin() {
-        let query = this.props.location?.query //获取到传递过来的query对象也就是登录失败的时候存的url地址
-        let redirect = query?.redirect
+        let query = this.props.location?.query; //获取到传递过来的query对象也就是登录失败的时候存的url地址
+        let redirect = query?.redirect;
 
         if (!this.state.userName) {
-            message.error('请输入账号！')
-            return
+            message.error('请输入账号！');
+            return;
         }
         if (!this.state.pwd) {
-            message.error('密码不能为空！')
-            return
+            message.error('密码不能为空！');
+            return;
         }
         let params = {
             username: this.state.userName,
             password: md5(this.state.pwd)
-        }
+        };
 
-        let res = await Request.login(params)
-        res = await this.simulatedLoad()
+        let res = await Request.login(params);
+        res = await this.simulatedLoad();
 
         if (res.success) {
-            setSession('auth', res.obj)
+            setSession('auth', res.obj);
             if (res.obj.menuInfo) {
-                let { menuList } = res.obj.menuInfo
+                let { menuList } = res.obj.menuInfo;
                 if (menuList.length > 0) {
-                    let menuItem = menuList[0]
+                    let menuItem = menuList[0];
                     if (menuItem.menuList.length > 0) {
                         this.props.history.replace(
                             redirect || menuItem.menuList[0].menuUrl
-                        )
+                        );
                     } else {
-                        this.props.history.replace(redirect || menuItem.menuUrl)
+                        this.props.history.replace(
+                            redirect || menuItem.menuUrl
+                        );
                     }
                 }
             }
         } else {
-            message.error(res.msg || '登录失败')
+            message.error(res.msg || '登录失败');
         }
     }
 
@@ -243,8 +245,8 @@ class LoginComponent extends Component {
                     </div>
                 </div>
             </Col>
-        )
+        );
     }
 }
 
-export default withRouter(LoginComponent)
+export default withRouter(LoginComponent);

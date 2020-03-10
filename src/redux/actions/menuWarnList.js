@@ -10,7 +10,7 @@ export function getListSuccess(data) {
 }
 
 export function getListFail() {
-    return {type: FAIL};
+    return { type: FAIL };
 }
 
 export function menuWarnList(data) {
