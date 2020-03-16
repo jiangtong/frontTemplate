@@ -21,7 +21,8 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
     .BundleAnalyzerPlugin;
 const threadLoader = require('thread-loader');
 // 判断环境
-const isDev = process.env.NODE_ENV === 'development';
+const isDev =
+    process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'mock';
 
 const cssWorkerPool = {
     // 一个 worker 进程中并行执行工作的数量
@@ -41,7 +42,12 @@ const jsWorkerPool = {
     poolTimeout: 2000
 };
 
-threadLoader.warmup(cssWorkerPool, ['css-loader', 'postcss-loader']);
+threadLoader.warmup(cssWorkerPool, [
+    'css-loader',
+    'postcss-loader',
+    'sass-loader',
+    'less-loader'
+]);
 threadLoader.warmup(jsWorkerPool, ['babel-loader', 'eslint-loader']);
 
 const cssReg = /\.css$/;
@@ -61,6 +67,8 @@ const styleLoader = (options = {}) => {
           }
         : {
               loader: MiniCssExtractPlugin.loader,
+              //如果提取到单独文件夹下，记得配置一下publicPath，为了正确的照片css中使用的图片资源
+              //个人习惯将css文件放在单独目录下
               options: {
                   publicPath: '../../'
               }
@@ -68,9 +76,10 @@ const styleLoader = (options = {}) => {
 
     return [
         styleInner,
-        // {
-        //     loader: 'thread-loader'
-        // },
+        {
+            loader: 'thread-loader',
+            options: cssWorkerPool
+        },
         {
             loader: 'css-loader',
             options
@@ -126,12 +135,12 @@ const commonConfig = {
     //     }
     // ],
 
-    plugins: [
-        new webpack.optimize.RuntimeChunkPlugin({
-            name: 'runtime'
-        }),
+    optimization: {
+        minimize: !isDev,
 
-        new webpack.optimize.SplitChunksPlugin({
+        // 修改文件的ids的形成方式，避免单文件修改，会导致其他文件的hash值变化，影响缓存
+        moduleIds: 'hashed',
+        splitChunks: {
             chunks: 'all',
             minSize: 30000,
             maxAsyncRequests: 5,
@@ -184,42 +193,49 @@ const commonConfig = {
                     reuseExistingChunk: true
                 }
             }
-        }),
+        },
+        runtimeChunk: {
+            name: entrypoint => `runtime-${entrypoint.name}`
+        }
+    },
 
+    plugins: [
         // 用Day.js替换moment
         new AntdDayjsWebpackPlugin(),
+        // 只加载 `moment/locale/ja.js` 和 `moment/locale/it.js` 优化moment体积
+        new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /ja|it/),
 
-        new BundleAnalyzerPlugin({
-            // concatenateModules: false,
-            //  可以是`server`，`static`或`disabled`。
-            //  在`server`模式下，分析器将启动HTTP服务器来显示软件包报告。
-            //  在“静态”模式下，会生成带有报告的单个HTML文件。
-            //  在`disabled`模式下，你可以使用这个插件来将`generateStatsFile`设置为`true`来生成Webpack Stats JSON文件。
-            analyzerMode: 'server',
-            //  将在“服务器”模式下使用的主机启动HTTP服务器。
-            analyzerHost: '127.0.0.1',
-            //  将在“服务器”模式下使用的端口启动HTTP服务器。
-            analyzerPort: 9119,
-            //  路径捆绑，将在`static`模式下生成的报告文件。
-            //  相对于捆绑输出目录。
-            // reportFilename: 'report.html',
-            //  模块大小默认显示在报告中。
-            //  应该是`stat`，`parsed`或者`gzip`中的一个。
-            //  有关更多信息，请参见“定义”一节。
-            defaultSizes: 'parsed',
-            //  在默认浏览器中自动打开报告
-            openAnalyzer: true,
-            //  如果为true，则Webpack Stats JSON文件将在bundle输出目录中生成
-            generateStatsFile: false,
-            //  如果`generateStatsFile`为`true`，将会生成Webpack Stats JSON文件的名字。
-            //  相对于捆绑输出目录。
-            statsFilename: 'stats.json',
-            //  stats.toJson（）方法的选项。
-            //  例如，您可以使用`source：false`选项排除统计文件中模块的来源。
-            //  在这里查看更多选项：https：//github.com/webpack/webpack/blob/webpack-1/lib/Stats.js#L21
-            statsOptions: null,
-            logLevel: 'info' //日志级别。可以是'信息'，'警告'，'错误'或'沉默'。
-        }),
+        // new BundleAnalyzerPlugin({
+        //     // concatenateModules: false,
+        //     //  可以是`server`，`static`或`disabled`。
+        //     //  在`server`模式下，分析器将启动HTTP服务器来显示软件包报告。
+        //     //  在“静态”模式下，会生成带有报告的单个HTML文件。
+        //     //  在`disabled`模式下，你可以使用这个插件来将`generateStatsFile`设置为`true`来生成Webpack Stats JSON文件。
+        //     analyzerMode: 'server',
+        //     //  将在“服务器”模式下使用的主机启动HTTP服务器。
+        //     analyzerHost: '127.0.0.1',
+        //     //  将在“服务器”模式下使用的端口启动HTTP服务器。
+        //     analyzerPort: 9119,
+        //     //  路径捆绑，将在`static`模式下生成的报告文件。
+        //     //  相对于捆绑输出目录。
+        //     // reportFilename: 'report.html',
+        //     //  模块大小默认显示在报告中。
+        //     //  应该是`stat`，`parsed`或者`gzip`中的一个。
+        //     //  有关更多信息，请参见“定义”一节。
+        //     defaultSizes: 'parsed',
+        //     //  在默认浏览器中自动打开报告
+        //     openAnalyzer: true,
+        //     //  如果为true，则Webpack Stats JSON文件将在bundle输出目录中生成
+        //     generateStatsFile: false,
+        //     //  如果`generateStatsFile`为`true`，将会生成Webpack Stats JSON文件的名字。
+        //     //  相对于捆绑输出目录。
+        //     statsFilename: 'stats.json',
+        //     //  stats.toJson（）方法的选项。
+        //     //  例如，您可以使用`source：false`选项排除统计文件中模块的来源。
+        //     //  在这里查看更多选项：https：//github.com/webpack/webpack/blob/webpack-1/lib/Stats.js#L21
+        //     statsOptions: null,
+        //     logLevel: 'info' //日志级别。可以是'信息'，'警告'，'错误'或'沉默'。
+        // }),
 
         new HtmlWebpackPlugin({
             title: '',
@@ -397,6 +413,7 @@ const commonConfig = {
                     {
                         loader: 'url-loader',
                         options: {
+                            esModule: false,
                             limit: 15000,
                             name: 'app/images/[name]_[hash:7].[ext]'
                         }
@@ -409,6 +426,7 @@ const commonConfig = {
                     {
                         loader: 'file-loader',
                         options: {
+                            esModule: false,
                             limit: 15000,
                             name: 'app/files/[name]_[hash:7].[ext]'
                         }
@@ -421,6 +439,7 @@ const commonConfig = {
                     loader: 'file-loader',
                     options: {
                         limit: 15000,
+                        esModule: false,
                         name: 'app/fonts/[name]_[hash:7].[ext]'
                     }
                 }

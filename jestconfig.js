@@ -1,5 +1,5 @@
 module.exports = {
-    setupFiles: ['<rootDir>/src/__tests__/setup.js'],
+    setupFiles: ['<rootDir>/__tests__/setup.js'],
     moduleFileExtensions: ['js', 'json', 'jsx', 'ts', 'tsx', 'node'],
     testPathIgnorePatterns: ['/node_modules/'],
     testRegex: '.*\\.test\\.js$',

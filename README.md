@@ -10,6 +10,7 @@ npm run test 测试库
 
     1. cnpm i 或 npm i
     2. npm run start (或者可以使用npm run dll,npm run start方式进行启动，前提是confg文件夹中的webpack.config.dev去打开部分注释代码)
+    3. 在mockUtils中配置好数据，执行npm run mock可以进行mock数据的开发
 
 ## 二、项目结构
 

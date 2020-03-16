@@ -31,7 +31,57 @@ const publicConfig = {
     devtool: 'none',
     mode: 'production',
 
+    optimization: {
+        minimizer: [
+            //允许你通过提供一个或多个定制过的 TerserPlugin 实例，覆盖默认压缩工具(minimizer)。
+            // new UglifyJSPlugin({
+            //     parallel: true,
+            //     cache: true,
+            //     include: /\/src/,
+            //
+            //     uglifyOptions: {
+            //         compress: {
+            //             drop_console: true,
+            //             reduce_vars: true
+            //         },
+            //         output: {
+            //             comments: false,
+            //             beautify: false
+            //         }
+            //     }
+            // }),
+
+            new TerserPlugin({
+                cache: true,
+                extractComments: false,
+                parallel: true,
+                terserOptions: {
+                    ecma: undefined,
+                    warnings: false,
+                    parse: {},
+                    compress: {},
+                    mangle: false, // Note `mangle.properties` is `false` by default.
+                    module: false,
+                    output: null,
+                    toplevel: false,
+                    nameCache: null,
+                    ie8: false,
+                    keep_classnames: undefined,
+                    keep_fnames: false,
+                    safari10: false
+                }
+            })
+        ]
+    },
+
     plugins: [
+        // brotli-webpack-plugin br压缩方式 待实践
+        // new BrotliPlugin({
+        // 	asset: '[path].br[query]',
+        // 	test: /\.(js|css|html|svg)$/,
+        // 	threshold: 10240,
+        // 	minRatio: 0.8
+        // })
         new CompressionWebpackPlugin({
             filename: '[path].gz[query]',
             // 压缩后缀
@@ -94,48 +144,11 @@ const publicConfig = {
             ignoreOrder: true
         }),
 
-        new TerserPlugin({
-            cache: true,
-            extractComments: false,
-            parallel: true,
-            terserOptions: {
-                ecma: undefined,
-                warnings: false,
-                parse: {},
-                compress: {},
-                mangle: false, // Note `mangle.properties` is `false` by default.
-                module: false,
-                output: null,
-                toplevel: false,
-                nameCache: null,
-                ie8: false,
-                keep_classnames: undefined,
-                keep_fnames: false,
-                safari10: false
-            }
-        }),
-        // new UglifyJSPlugin({
-        //     parallel: true,
-        //     cache: true,
-        //     include: /\/src/,
-        //
-        //     uglifyOptions: {
-        //         compress: {
-        //             drop_console: true,
-        //             reduce_vars: true
-        //         },
-        //         output: {
-        //             comments: false,
-        //             beautify: false
-        //         }
-        //     }
-        // }),
-
         // 压缩css
         new OptimizeCssAssetsPlugin({
-            cssProcessor: require('cssnano'), //引入cssnano配置压缩选项
-            cssProcessorOptions: {
-                discardComments: { removeAll: true }
+            cssProcessor: require('cssnano'),
+            cssProcessorPluginOptions: {
+                preset: ['default', { discardComments: { removeAll: true } }]
             },
             canPrint: true //是否将插件信息打印到控制台
         }),

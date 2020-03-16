@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { hot } from 'react-hot-loader/root';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import BaseComponents from '@layout';
 import { getSession, asyncComponent } from '@utils/utils';
 // 登陆
-
 const Login = asyncComponent(React.lazy(() => import('@pages/Login')));
 
 // 师资管理
@@ -40,14 +40,14 @@ const Root = () => {
         <Switch>
             <Route
                 path="/login"
-                render={props =>
+                render={() =>
                     getSession('auth') ? <Redirect to="/" /> : <Login />
                 }
             />
 
             <Route
                 path="/"
-                render={props =>
+                render={() =>
                     getSession('auth') ? (
                         <BaseComponents>
                             <Switch>
@@ -90,4 +90,4 @@ const Root = () => {
     );
 };
 
-export default Root;
+export default hot(Root);

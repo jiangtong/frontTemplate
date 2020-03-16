@@ -4,7 +4,7 @@ import { Col, message } from 'antd';
 import '@pages/Login/commen/assets/styles/login.less';
 import Request from '@commenApi/Login';
 import { setSession } from '@utils/utils';
-
+import img from '@pages/Login/commen/assets/img/xtzy.png';
 import md5 from 'md5';
 
 class LoginComponent extends Component {
@@ -183,11 +183,7 @@ class LoginComponent extends Component {
             <Col className="login-container">
                 <div className="main_container">
                     <div className="main_title">
-                        <img
-                            alt=""
-                            src={require('@pages/Login/commen/assets/img/xtzy.png')}
-                            style={{ width: '196px' }}
-                        />
+                        <img alt="" src={img} style={{ width: '196px' }} />
                         {/*<span>校园大数据应用平台</span>*/}
                     </div>
                     <div className="main_content">

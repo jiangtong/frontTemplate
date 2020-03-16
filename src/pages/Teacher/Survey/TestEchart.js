@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Echart from '@components/beijing/Echarts';
+// import Echart from '@components/beijing/Echarts';
 import { withRouter } from 'react-router-dom';
 // import highComponentFuc from '@pages/Teacher/commen/HighComponent';
 import '@pages/Teacher/commen/assets/styles/index.less';
@@ -24,14 +24,14 @@ class TestEchart extends Component {
     render() {
         return (
             <div>
-                <div className={'color'}>less </div>
+                <div className={'color'}>less 11</div>
                 <div className={lessModule.color1}>lessModle</div>
                 <div className={cssModule.color}>cssModule</div>
                 <div className={'csscolor'}>css</div>
 
                 <div className={scssModule.color}>scssModule</div>
                 <div className={'scsscolor'}>scss</div>
-                <Echart
+                {/* <Echart
                     onClickAction={params => {
                         if (this.props.onClickAction)
                             this.props.onClickAction(params);
@@ -75,7 +75,7 @@ class TestEchart extends Component {
                             }
                         ]
                     }}
-                ></Echart>
+                ></Echart> */}
             </div>
         );
     }

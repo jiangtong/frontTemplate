@@ -8,6 +8,7 @@ const webpack = require('webpack');
 const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const portfinder = require('portfinder');
+const Mock = require('../mock/mockApi');
 
 // 需要转发的接口拼接
 const { proxyArr = [] } = config;
@@ -22,9 +23,12 @@ proxyArr.forEach(item => {
 
 const devConfig = merge.smart(commonConfig, {
     devtool: 'source-map',
-    mode: 'development',
+    mode:
+        (process.env.NODE_ENV === 'mock' ||
+            process.env.NODE_ENV === 'development') &&
+        'development',
     entry: {
-        app: ['@babel/polyfill', 'react-hot-loader/patch', config.appIndexJs]
+        app: config.appIndexJs
     },
 
     plugins: [
@@ -87,6 +91,12 @@ const devConfig = merge.smart(commonConfig, {
         // 默认浏览器
         open: true,
         disableHostCheck: true,
+        before(app) {
+            if (process.env.NODE_ENV === 'mock') {
+                //进入mock
+                Mock(app);
+            }
+        },
         proxy: newProxyObj,
         stats: {
             // 添加缓存（但未构建）模块的信息

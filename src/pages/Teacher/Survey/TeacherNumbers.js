@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
-import highComponentFuc from '@pages/Teacher/commen/HighComponent';
-import TestEchart from '@pages/Teacher/Survey/TestEchart';
+// import highComponentFuc from '@pages/Teacher/commen/HighComponent';
+// import TestEchart from '@pages/Teacher/Survey/TestEchart';
 import '@pages/Teacher/commen/assets/styles/index.less';
 import { Row, Col } from 'antd';
 import Echart from '@components/beijing/Echarts';
-const HighFunUse = highComponentFuc('enterprisePracticeInfoList')(TestEchart);
+// const HighFunUse = highComponentFuc('enterprisePracticeInfoList')(TestEchart);
 let color = ['#1890ff', '#2FC25B', '#D6C11A', '#CC5C2A', '#872ACC', '#D6C11A'];
 import Request from '@commenApi/teacher/index';
 
@@ -15,7 +15,13 @@ class TeacherNumbers extends Component {
         this.state = {};
     }
 
+    async pageAlarmStrategy() {
+        let res1 = await Request.pageAlarmStrategy();
+        console.log(res1);
+    }
+
     async componentDidMount() {
+        this.pageAlarmStrategy();
         let res = await Request.enterprisePracticeInfoList();
 
         console.log(res);
@@ -467,7 +473,7 @@ class TeacherNumbers extends Component {
                                             name: '',
                                             type: 'bar',
                                             barWidth: '25%',
-                                            data: data.map((item, index) => {
+                                            data: data.map(item => {
                                                 return {
                                                     name: item.name,
                                                     value: item.value
