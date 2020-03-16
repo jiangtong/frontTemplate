@@ -32,6 +32,7 @@ const devConfig = merge.smart(commonConfig, {
     },
 
     plugins: [
+        // 设置缓存
         new HardSourceWebpackPlugin({
             // configHash在启动webpack实例时转换webpack配置，并用于cacheDirectory为不同的webpack配置构建不同的缓存
             configHash: function(webpackConfig) {

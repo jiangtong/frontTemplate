@@ -51,6 +51,7 @@ const publicConfig = {
             //     }
             // }),
 
+            // 开启多线程压缩代码
             new TerserPlugin({
                 cache: true,
                 extractComments: false,

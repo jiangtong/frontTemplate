@@ -1,4 +1,4 @@
-import {createHttpClient} from '@utils/request/BaseRequest';
+import { createHttpClient } from '@utils/request/BaseRequest';
 
 /**
  * 可以使用createHttpClient重新更改请求头等信息
@@ -21,7 +21,10 @@ class BaseSubJsonRequest {
      */
 
     static get(url, data = {}, config = {}) {
-        return new this().httpRequest.get(url, {...config, params: {...data}});
+        return new this().httpRequest.get(url, {
+            ...config,
+            params: { ...data }
+        });
     }
 
     static post(url, data = undefined, config = {}) {
@@ -34,7 +37,7 @@ class BaseSubJsonRequest {
     }
 
     static upload(url, data = undefined, config = {}) {
-        return new this().httpRequest.upload(url, data, {...config});
+        return new this().httpRequest.upload(url, data, { ...config });
     }
 }
 
