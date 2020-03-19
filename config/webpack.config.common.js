@@ -19,6 +19,9 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const postcssPresetEnv = require('postcss-preset-env');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
     .BundleAnalyzerPlugin;
+const LifeCycleWebpackPlugin = require('lifecycle-webpack-plugin')
+    .LifeCycleWebpackPlugin;
+
 const threadLoader = require('thread-loader');
 // 判断环境
 const isDev =
@@ -74,12 +77,13 @@ const styleLoader = (options = {}) => {
               }
           };
 
+    const threeLoaderStatus = isDev && {
+        loader: 'thread-loader',
+        options: cssWorkerPool
+    };
     return [
         styleInner,
-        {
-            loader: 'thread-loader',
-            options: cssWorkerPool
-        },
+        threeLoaderStatus,
         {
             loader: 'css-loader',
             options
@@ -127,6 +131,11 @@ const commonConfig = {
     },
 
     // externals: [
+    // lodash : {
+    //     commonjs: 'lodash',
+    //     amd: 'lodash',
+    //     root: '_' // 指向全局变量
+    //   },
     //     function(context, request, callback) {
     //         if (/^js$/.test(request)) {
     //             return callback(null, 'commonjs ' + request);
@@ -200,6 +209,11 @@ const commonConfig = {
     },
 
     plugins: [
+        // new LifeCycleWebpackPlugin({
+        //     done: compiler => {
+        //         console.log('\n done \n', new Date());
+        //     }
+        // }),
         // 用Day.js替换moment
         new AntdDayjsWebpackPlugin(),
         // 只加载 `moment/locale/ja.js` 和 `moment/locale/it.js` 优化moment体积
@@ -245,8 +259,8 @@ const commonConfig = {
             inject: true,
             minify: {
                 removeComments: true,
-                collapseWhitespace: true,
-                removeAttributeQuotes: true
+                collapseWhitespace: true, //折叠空行
+                removeAttributeQuotes: true //删除双引号
             },
             chunksSortMode: 'dependency'
         }),

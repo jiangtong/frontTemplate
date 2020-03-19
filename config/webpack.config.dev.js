@@ -8,7 +8,7 @@ const webpack = require('webpack');
 const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const portfinder = require('portfinder');
-const Mock = require('../mock/mockApi');
+const Mock = require('../src/mock/mockApi');
 
 // 需要转发的接口拼接
 const { proxyArr = [] } = config;

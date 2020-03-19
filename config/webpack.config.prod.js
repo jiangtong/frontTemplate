@@ -37,8 +37,9 @@ const publicConfig = {
             // new UglifyJSPlugin({
             //     parallel: true,
             //     cache: true,
+            // sourceMap: true
             //     include: /\/src/,
-            //
+
             //     uglifyOptions: {
             //         compress: {
             //             drop_console: true,
