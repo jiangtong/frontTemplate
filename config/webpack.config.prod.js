@@ -1,7 +1,6 @@
 /*eslint-disable*/
 const commonConfig = require('./webpack.config.common.js');
 const merge = require('webpack-merge');
-// const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const webpack = require('webpack');
@@ -33,25 +32,6 @@ const publicConfig = {
 
     optimization: {
         minimizer: [
-            //允许你通过提供一个或多个定制过的 TerserPlugin 实例，覆盖默认压缩工具(minimizer)。
-            // new UglifyJSPlugin({
-            //     parallel: true,
-            //     cache: true,
-            // sourceMap: true
-            //     include: /\/src/,
-
-            //     uglifyOptions: {
-            //         compress: {
-            //             drop_console: true,
-            //             reduce_vars: true
-            //         },
-            //         output: {
-            //             comments: false,
-            //             beautify: false
-            //         }
-            //     }
-            // }),
-
             // 开启多线程压缩代码
             new TerserPlugin({
                 cache: true,

@@ -1,4 +1,4 @@
-const Mock = require('src/mock/mockjs');
+const Mock = require('mockjs');
 
 function MockApi(app) {
     app.post('/bigdata/alarmStrategy/enterprisePracticeInfoList', function(
