@@ -22,3 +22,17 @@ npm run test 测试库
     6. src/public 整体项目中要到的css，img等
     7. src/utils 一些js方法， src/utils/request axios封装有form和json两种方式，可选择继承
     8. public 为项目中的可能用到的一些本地js文件，可以选择不使用，若不使用webpack中的commen.config的HtmlWebpackIncludeAssetsPlugin要注释其中部分引用的js。其中的html一定要保留
+
+## 四、集成工具
+
+    git add.  -> git cz -> git commit -m '文字' -> git push
+    1. commitizen/cz-cli 是一个可以实现规范的提交说明的工具： npm install -g commitizen
+    2. commitizen init cz-conventional-changelog --save --save-exact
+    3. npm install --save-dev @commitlint/cli 校验工具
+    4. npm install --save-dev @commitlint/config-conventional 安装符合Angular风格的校验规则
+    5. npm install husky --save-dev 安装commit钩子
+    6.package.jso中加入"husky": {
+        "hooks": {
+        "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+        }
+    }
