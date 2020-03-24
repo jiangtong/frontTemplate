@@ -1,5 +1,4 @@
 import React from 'react';
-import { hot } from 'react-hot-loader/root';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import BaseComponents from '@layout';
 import { getSession, asyncComponent } from '@utils/utils';
@@ -90,4 +89,4 @@ const Root = () => {
     );
 };
 
-export default hot(Root);
+export default Root;

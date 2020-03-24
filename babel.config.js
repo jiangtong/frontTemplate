@@ -52,6 +52,7 @@ module.exports = {
         '@babel/plugin-proposal-logical-assignment-operators',
         '@babel/plugin-proposal-nullish-coalescing-operator',
         '@babel/plugin-proposal-numeric-separator',
+        '@babel/plugin-transform-arrow-functions',
         '@babel/plugin-proposal-optional-chaining',
         [
             '@babel/plugin-proposal-pipeline-operator',

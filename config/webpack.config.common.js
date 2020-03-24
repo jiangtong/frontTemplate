@@ -19,11 +19,9 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const postcssPresetEnv = require('postcss-preset-env');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
     .BundleAnalyzerPlugin;
-
 const threadLoader = require('thread-loader');
 // 判断环境
-const isDev =
-    process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'mock';
+const isDev = process.env.NODE_ENV === 'development';
 
 const cssWorkerPool = {
     // 一个 worker 进程中并行执行工作的数量
@@ -47,7 +45,8 @@ threadLoader.warmup(cssWorkerPool, [
     'css-loader',
     'postcss-loader',
     'sass-loader',
-    'less-loader'
+    'less-loader',
+    'sass-resources-loader'
 ]);
 threadLoader.warmup(jsWorkerPool, ['babel-loader', 'eslint-loader']);
 
@@ -102,7 +101,7 @@ const sassLoader = () => {
         {
             loader: 'sass-resources-loader',
             options: {
-                resources: `${config.appSrc}/public/styles/variable.scss`
+                resources: `${config.appSrc}/commen/styles/variable.scss`
             }
         }
     ].filter(Boolean);
@@ -117,7 +116,7 @@ const lessLoader = (options = {}) => {
         {
             loader: 'sass-resources-loader',
             options: {
-                resources: `${config.appSrc}/public/styles/variable.less`
+                resources: `${config.appSrc}/commen/styles/variable.less`
             }
         }
     ].filter(Boolean);
@@ -210,39 +209,39 @@ const commonConfig = {
         // 用Day.js替换moment
         new AntdDayjsWebpackPlugin(),
         // 只加载 `moment/locale/ja.js` 和 `moment/locale/it.js` 优化moment体积
-        new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /ja|it/),
+        // new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /ja|it/),
 
-        new BundleAnalyzerPlugin({
-            // concatenateModules: false,
-            //  可以是`server`，`static`或`disabled`。
-            //  在`server`模式下，分析器将启动HTTP服务器来显示软件包报告。
-            //  在“静态”模式下，会生成带有报告的单个HTML文件。
-            //  在`disabled`模式下，你可以使用这个插件来将`generateStatsFile`设置为`true`来生成Webpack Stats JSON文件。
-            analyzerMode: 'server',
-            //  将在“服务器”模式下使用的主机启动HTTP服务器。
-            analyzerHost: '127.0.0.1',
-            //  将在“服务器”模式下使用的端口启动HTTP服务器。
-            analyzerPort: 9119,
-            //  路径捆绑，将在`static`模式下生成的报告文件。
-            //  相对于捆绑输出目录。
-            // reportFilename: 'report.html',
-            //  模块大小默认显示在报告中。
-            //  应该是`stat`，`parsed`或者`gzip`中的一个。
-            //  有关更多信息，请参见“定义”一节。
-            defaultSizes: 'parsed',
-            //  在默认浏览器中自动打开报告
-            openAnalyzer: true,
-            //  如果为true，则Webpack Stats JSON文件将在bundle输出目录中生成
-            generateStatsFile: false,
-            //  如果`generateStatsFile`为`true`，将会生成Webpack Stats JSON文件的名字。
-            //  相对于捆绑输出目录。
-            statsFilename: 'stats.json',
-            //  stats.toJson（）方法的选项。
-            //  例如，您可以使用`source：false`选项排除统计文件中模块的来源。
-            //  在这里查看更多选项：https：//github.com/webpack/webpack/blob/webpack-1/lib/Stats.js#L21
-            statsOptions: null,
-            logLevel: 'info' //日志级别。可以是'信息'，'警告'，'错误'或'沉默'。
-        }),
+        //  new BundleAnalyzerPlugin({
+        //     // concatenateModules: false,
+        //     //  可以是`server`，`static`或`disabled`。
+        //     //  在`server`模式下，分析器将启动HTTP服务器来显示软件包报告。
+        //     //  在“静态”模式下，会生成带有报告的单个HTML文件。
+        //     //  在`disabled`模式下，你可以使用这个插件来将`generateStatsFile`设置为`true`来生成Webpack Stats JSON文件。
+        //     analyzerMode: 'server',
+        //     //  将在“服务器”模式下使用的主机启动HTTP服务器。
+        //     analyzerHost: '127.0.0.1',
+        //     //  将在“服务器”模式下使用的端口启动HTTP服务器。
+        //     analyzerPort: 9119,
+        //     //  路径捆绑，将在`static`模式下生成的报告文件。
+        //     //  相对于捆绑输出目录。
+        //     // reportFilename: 'report.html',
+        //     //  模块大小默认显示在报告中。
+        //     //  应该是`stat`，`parsed`或者`gzip`中的一个。
+        //     //  有关更多信息，请参见“定义”一节。
+        //     defaultSizes: 'parsed',
+        //     //  在默认浏览器中自动打开报告
+        //     openAnalyzer: true,
+        //     //  如果为true，则Webpack Stats JSON文件将在bundle输出目录中生成
+        //     generateStatsFile: false,
+        //     //  如果`generateStatsFile`为`true`，将会生成Webpack Stats JSON文件的名字。
+        //     //  相对于捆绑输出目录。
+        //     statsFilename: 'stats.json',
+        //     //  stats.toJson（）方法的选项。
+        //     //  例如，您可以使用`source：false`选项排除统计文件中模块的来源。
+        //     //  在这里查看更多选项：https：//github.com/webpack/webpack/blob/webpack-1/lib/Stats.js#L21
+        //     statsOptions: null,
+        //     logLevel: 'info' //日志级别。可以是'信息'，'警告'，'错误'或'沉默'。
+        // }),
 
         new HtmlWebpackPlugin({
             title: '',
@@ -338,10 +337,10 @@ const commonConfig = {
     resolve: {
         // 目录开头为 @ 符号，文件开头为 $ 符号
         alias: {
-            '@commenApi': path.resolve(config.appSrc, 'public/data-commen/api'),
+            '@commenApi': path.resolve(config.appSrc, 'commen/data-commen/api'),
             '@commenModel': path.resolve(
                 config.appSrc,
-                'public/data-commen/model'
+                'commen/data-commen/model'
             ),
             '@useHooks': path.resolve(config.appSrc, 'useHooks'),
             '@reducers': path.resolve(config.appSrc, 'redux/reducers'),
@@ -350,7 +349,8 @@ const commonConfig = {
             '@layout': path.resolve(config.appSrc, 'layout'),
             '@router': path.resolve(config.appSrc, 'router'),
             '@pages': path.resolve(config.appSrc, 'pages'),
-            '@public': path.resolve(config.appSrc, 'public'),
+            '@commen': path.resolve(config.appSrc, 'commen'),
+            '@src': path.resolve(config.appSrc),
             '@components': path.resolve(config.appSrc, 'components'),
             '@utils': path.resolve(config.appSrc, 'utils'),
             $utils: path.resolve(config.appSrc, 'utils/utils'),
@@ -361,7 +361,7 @@ const commonConfig = {
     module: {
         rules: [
             {
-                enforce: 'pre',
+                enforce: 'pre', //强制去前面执行 因为loader是从下向上 从右向左执行的
                 test: /\.js?$/,
                 use: [
                     {

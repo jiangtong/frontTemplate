@@ -14,7 +14,7 @@ class NoDataCom extends Component {
                 style={{ height: document.body.clientHeight - 64 }}
             >
                 <div>
-                    <img src={require('@public/img/wushuju.png')} alt="" />
+                    <img src={require('@src/commen/img/wushuju.png')} alt="" />
                     无关联信息，无查看权限
                 </div>
             </div>

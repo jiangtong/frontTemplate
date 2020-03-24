@@ -24,7 +24,7 @@ class TestEchart extends Component {
     render() {
         return (
             <div>
-                <div className={'color'}>less 11</div>
+                <div className={'color'}>less x</div>
                 <div className={lessModule.color1}>lessModle</div>
                 <div className={cssModule.color}>cssModule</div>
                 <div className={'csscolor'}>css</div>

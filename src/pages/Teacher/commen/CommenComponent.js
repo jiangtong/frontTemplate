@@ -56,7 +56,7 @@ class CommenComponent extends Component {
                             <Col className="main_content_title">
                                 <span>
                                     <img
-                                        src={require('@public/img/ico1.png')}
+                                        src={require('@src/commen/img/ico1.png')}
                                     />
                                     {item.link ? (
                                         <Link to={item.link}>

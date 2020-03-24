@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import hoistNonReactStatics from 'hoist-non-react-statics';
-import Request from '@commenApi/teacher';
+import Request from '@src/commen/data-commen/api/teacher';
 import NoDataComponent from '@components/beijing/NoDataCom';
 import { Spin } from 'antd';
 

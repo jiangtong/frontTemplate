@@ -7,7 +7,7 @@ import { Row, Col } from 'antd';
 import Echart from '@components/beijing/Echarts';
 // const HighFunUse = highComponentFuc('enterprisePracticeInfoList')(TestEchart);
 let color = ['#1890ff', '#2FC25B', '#D6C11A', '#CC5C2A', '#872ACC', '#D6C11A'];
-import Request from '@commenApi/teacher/index';
+import Request from '@src/commen/data-commen/api/teacher/index';
 
 class TeacherNumbers extends Component {
     constructor(props) {

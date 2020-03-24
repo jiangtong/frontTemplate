@@ -116,7 +116,10 @@ class BaseComponents extends React.Component {
               onClick={this.toggleCollapsed}
               style={{ marginBottom: 16 }}
             ></Button>
-            <img style={{ height: 50 }} src={require('@public/img/xtzy.png')} />
+            <img
+              style={{ height: 50 }}
+              src={require('@src/commen/img/xtzy.png')}
+            />
             {/*< img style={{*/}
             {/*height: 30,*/}
             {/*marginLeft: 15*/}

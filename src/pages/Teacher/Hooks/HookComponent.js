@@ -6,11 +6,64 @@ import HookReducer from './HookReducer';
 import HookTest from './HookTest';
 import { TeacherTeachingList, EnterprisePracticeInfoList } from './HookDemo';
 
+// eslint-disable-next-line react/no-multi-comp
+function Foo({ bar, baz }) {
+    console.log('-----------------------------');
+    React.useEffect(() => {
+        const options = { bar, baz };
+    }, [bar, baz]);
+    return <div>foobar</div>;
+}
+
+// eslint-disable-next-line react/no-multi-comp
+function Blub() {
+    console.log('+++++++++++++++++++++');
+    const bar = React.useCallback(() => {}, []);
+    const baz = React.useMemo(() => [1, 2, 3], []);
+    return <Foo bar={bar} baz={baz} />;
+}
+
+// eslint-disable-next-line react/no-multi-comp
+const CountButton = React.memo(function CountButton({ onClick, count }) {
+    console.log(count);
+    return <button onClick={onClick}>{count}</button>;
+});
+
+// eslint-disable-next-line react/no-multi-comp
 const A = React.memo(({ data }) => {
     console.log('AAAAAAAAAAAAAAAAAAAAA');
     console.log(data);
     return <div>A</div>;
 });
+
+// eslint-disable-next-line react/no-multi-comp
+function DualCounter() {
+    const [data, setData] = useState(0);
+
+    const [count1, setCount1] = React.useState(0);
+    const increment1 = React.useCallback(() => setCount1(c => c + 1), []);
+    const getData = useMemo(() => {
+        return { data: 1 };
+    }, [data]);
+
+    const [count2, setCount2] = React.useState(0);
+    const increment2 = React.useCallback(() => setCount2(c => c + 1), []);
+
+    return (
+        <>
+            <button
+                onClick={() => {
+                    setData(c => c + 1);
+                }}
+            >
+                changeA
+            </button>
+            <A data={getData}></A>
+            <CountButton count={count1} onClick={increment1} />
+            <CountButton count={count2} onClick={increment2} />
+        </>
+    );
+}
 
 // eslint-disable-next-line no-unused-vars
 // eslint-disable-next-line react/no-multi-comp
@@ -28,11 +81,13 @@ export default props => {
     const HookTestCom = useMemo(() => <HookTest></HookTest>, []);
 
     const getData = useMemo(() => {
-        return { data: 11 };
+        return { a: 1 };
     }, [data]);
 
     return (
         <React.Fragment>
+            <DualCounter></DualCounter>
+            <Blub></Blub>
             <A data={getData}></A>
             <button
                 onClick={() => {

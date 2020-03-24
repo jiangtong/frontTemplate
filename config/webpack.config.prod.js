@@ -7,8 +7,6 @@ const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const config = require('./config');
-const seen = new Set();
-const nameLength = 4;
 const path = require('path');
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
@@ -91,33 +89,12 @@ const publicConfig = {
         //     }]
         // ),
 
-        new webpack.HashedModuleIdsPlugin(),
-
         // 预编译所有模块到一个闭包中，提升代码在浏览器中的执行速度
         new webpack.optimize.ModuleConcatenationPlugin(),
 
         // 在编译出现错误时，使用 NoEmitOnErrorsPlugin 来跳过输出阶段。
         // 这样可以确保输出资源不会包含错误
         new webpack.NoEmitOnErrorsPlugin(),
-
-        new webpack.NamedChunksPlugin(chunk => {
-            if (chunk.name) {
-                return chunk.name;
-            }
-            const modules = Array.from(chunk.modulesIterable);
-            if (modules.length > 1) {
-                const hash = require('hash-sum');
-                const joinedHash = hash(modules.map(m => m.id).join('_'));
-                let len = nameLength;
-                while (seen.has(joinedHash.substr(0, len))) {
-                    len++;
-                }
-                seen.add(joinedHash.substr(0, len));
-                return `chunk-${joinedHash.substr(0, len)}`;
-            } else {
-                return modules[0].id;
-            }
-        }),
 
         // 配和MiniCssExtractPlugin.loader, 提取css到特定的目录下
         new MiniCssExtractPlugin({
@@ -134,6 +111,22 @@ const publicConfig = {
             },
             canPrint: true //是否将插件信息打印到控制台
         }),
+
+        // 不知道哪个老不跳出得自己跳出
+        function() {
+            this.hooks.done.tap('done', stats => {
+                if (
+                    stats.compilation.errors &&
+                    stats.compilation.errors.length &&
+                    process.argv.indexOf('--watch') == -1
+                ) {
+                    console.log('build error');
+                    process.exit(1);
+                } else {
+                    process.exit(0);
+                }
+            });
+        },
 
         new HardSourceWebpackPlugin({
             // configHash在启动webpack实例时转换webpack配置，并用于cacheDirectory为不同的webpack配置构建不同的缓存

@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Table } from 'antd';
 import { withRouter } from 'react-router-dom';
-import Request from '@commenApi/teacher/index';
+import Request from '@src/commen/data-commen/api/teacher/index';
 
 const useRenderPage = requestUrl => {
     const [list, setList] = useState([]);

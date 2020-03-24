@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Col, message } from 'antd';
 import '@pages/Login/commen/assets/styles/login.less';
-import Request from '@commenApi/Login';
+import Request from '@src/commen/data-commen/api/Login';
 import { setSession } from '@utils/utils';
 import img from '@pages/Login/commen/assets/img/xtzy.png';
 import md5 from 'md5';

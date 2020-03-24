@@ -5,8 +5,9 @@
         "allowSyntheticDefaultImports": false,
         "baseUrl": "./",
         "paths": {
-            "@commenApi/*": ["src/public/data-commen/api/*"],
-            "@commenModel/*": ["src/public/data-commen/model/*"],
+            "@src/*": ["src/*"],
+            "@commenApi/*": ["src/commen/data-commen/api/*"],
+            "@commenModel/*": ["src/commen/data-commen/model/*"],
             "@reducers/*": ["src/redux/reducers/*"],
             "@actions/*": ["src/redux/actions/*"],
             "@useHooks/*": ["src/useHooks/*"],
@@ -14,7 +15,7 @@
             "@layout/*": ["src/layout/*"],
             "@router/*": ["src/router/*"],
             "@pages/*": ["src/pages/*"],
-            "@public/*": ["src/public/*"],
+            "@public/*": ["src/commen/*"],
             "@components/*": ["src/components/*"],
             "@utils/*": ["src/utils/*"],
             "$utils": ["src/utils/utils"]

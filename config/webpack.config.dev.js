@@ -23,10 +23,7 @@ proxyArr.forEach(item => {
 
 const devConfig = merge.smart(commonConfig, {
     devtool: 'source-map',
-    mode:
-        (process.env.NODE_ENV === 'mock' ||
-            process.env.NODE_ENV === 'development') &&
-        'development',
+    mode: process.env.NODE_ENV === 'development' && 'development',
     entry: {
         app: config.appIndexJs
     },
@@ -85,6 +82,7 @@ const devConfig = merge.smart(commonConfig, {
         host: config.host || config.baseHost,
         port: config.port,
         historyApiFallback: true,
+        overlay: true,
         compress: true,
         contentBase: '/',
         hot: true,
@@ -93,7 +91,7 @@ const devConfig = merge.smart(commonConfig, {
         open: true,
         disableHostCheck: true,
         before(app) {
-            if (process.env.NODE_ENV === 'mock') {
+            if (process.env.IS_Mock) {
                 //进入mock
                 Mock(app);
             }

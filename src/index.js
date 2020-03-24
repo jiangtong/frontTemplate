@@ -8,7 +8,7 @@ import { HashRouter as Router } from 'react-router-dom';
 import zh_CN from 'antd/lib/locale-provider/zh_CN';
 import echartsConfig from '@utils/echartsConfig';
 import echarts from 'echarts/lib/echarts';
-import '@public/styles/index.less';
+import '@src/commen/styles/index.less';
 // import chinaMap from 'echarts/map/json/china.json';
 // 配置echarts常用主题
 echarts.registerTheme('echartsConfig', echartsConfig);
