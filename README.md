@@ -1,4 +1,4 @@
-![image-20200324153615720](https://www.travis-ci.org/jiangtong/frontTemplate.svg?branch=master)
+[![Build Status](https://www.travis-ci.org/jiangtong/frontTemplate.svg?branch=master)](https://www.travis-ci.org/jiangtong/frontTemplate)
 
 # 前端标准化
 
