@@ -36,3 +36,4 @@ npm run test 测试库
         "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
         }
     }
+https://www.travis-ci.org/jiangtong/frontTemplate.svg?branch=master
