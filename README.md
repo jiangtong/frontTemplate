@@ -1,3 +1,5 @@
+![image-20200324153615720](https://www.travis-ci.org/jiangtong/frontTemplate.svg?branch=master)
+
 # 前端标准化
 
 husky 必须用 npm 进行更新 提交前代码格式化
@@ -36,4 +38,5 @@ npm run test 测试库
         "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
         }
     }
-https://www.travis-ci.org/jiangtong/frontTemplate.svg?branch=master
+    
+    
