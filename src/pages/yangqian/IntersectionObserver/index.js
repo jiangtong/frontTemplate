@@ -9,7 +9,7 @@ class Intersection extends Component {
     }
 
     componentDidMount() {
-        let io = new IntersectionObserver(entries => {
+        const io = new IntersectionObserver(entries => {
             console.log(entries);
         });
 
@@ -20,9 +20,9 @@ class Intersection extends Component {
     render() {
         return (
             <div className="container">
-                <div id={'long'}></div>
+                <div id="long"></div>
 
-                <div id={'green'}></div>
+                <div id="green"></div>
             </div>
         );
     }

@@ -32,14 +32,14 @@ const renderTabel = (ListDom, requestUrl) => {
     const [list, page, total, pageChange] = useRenderPage(requestUrl);
 
     return (
-        <React.Fragment>
+        <>
             <ListDom
                 list={list}
                 onChange={pageChange}
-                pagination={{ total: total, current: page }}
-            ></ListDom>
-            {/*可以在此处抽象分页搜索等等，所以在此多抽象了一层*/}
-        </React.Fragment>
+                pagination={{ total, current: page }}
+            />
+            {/* 可以在此处抽象分页搜索等等，所以在此多抽象了一层 */}
+        </>
     );
 };
 
@@ -105,7 +105,7 @@ const EnterprisePracticeInfoList = () => {
                 ]}
                 dataSource={list}
                 pagination={pagination}
-            ></Table>
+            />
         );
     };
 
@@ -153,7 +153,8 @@ const TeacherTeachingList = withRouter(props => {
                         title: 'Action',
                         key: 'action',
                         render: () => (
-                            <span
+                            <button
+                                type="button"
                                 style={{ color: '#1890ff' }}
                                 onClick={async () => {
                                     props.history.push(
@@ -164,14 +165,14 @@ const TeacherTeachingList = withRouter(props => {
                                 }}
                             >
                                 详情
-                            </span>
+                            </button>
                         )
                     }
                 ]}
                 onChange={onChange}
                 pagination={pagination}
                 dataSource={list}
-            ></Table>
+            />
         );
     };
 

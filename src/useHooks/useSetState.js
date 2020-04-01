@@ -3,13 +3,13 @@ import React, { useState, useEffect, useRef } from 'react';
 
 // 让useState可以按照setState的方法使用
 export default ({ initState }) => {
-    let [state, setState] = useState(initState);
-    let isUpdate = useRef();
+    const [state, setState] = useState(initState);
+    const isUpdate = useRef();
 
-    const setStateFun = (state, cb) => {
+    const setStateFun = (newState, cb) => {
         setState(prev => {
             isUpdate.current = cb;
-            return typeof state === 'function' ? state(prev) : state;
+            return typeof newState === 'function' ? newState(prev) : newState;
         });
     };
 

@@ -8,6 +8,7 @@ const Child = _props => {
     return (
         <div>
             <button
+                type="button"
                 onClick={() => {
                     context.onChangeValueAct('222');
                 }}
@@ -22,17 +23,17 @@ const Child = _props => {
 export default _props => {
     const [name, setName] = useState('111');
     return (
-        <React.Fragment>
+        <>
             <Context.Provider
                 value={{
-                    name: name,
-                    onChangeValueAct: name => {
-                        setName(name);
+                    name,
+                    onChangeValueAct: usename => {
+                        setName(usename);
                     }
                 }}
             >
                 <Child></Child>
             </Context.Provider>
-        </React.Fragment>
+        </>
     );
 };

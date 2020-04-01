@@ -26,7 +26,11 @@ function Blub() {
 // eslint-disable-next-line react/no-multi-comp
 const CountButton = React.memo(function CountButton({ onClick, count }) {
     console.log(count);
-    return <button onClick={onClick}>{count}</button>;
+    return (
+        <button type="button" onClick={onClick}>
+            {count}
+        </button>
+    );
 });
 
 // eslint-disable-next-line react/no-multi-comp
@@ -52,6 +56,7 @@ function DualCounter() {
     return (
         <>
             <button
+                type="button"
                 onClick={() => {
                     setData(c => c + 1);
                 }}
@@ -74,7 +79,7 @@ export default props => {
         // 延迟初始化 可以
         // const initialState = someExpensiveComputation(props);
 
-        let initialState = 1;
+        const initialState = 1;
         return initialState;
     });
 
@@ -85,11 +90,12 @@ export default props => {
     }, [data]);
 
     return (
-        <React.Fragment>
+        <>
             <DualCounter></DualCounter>
             <Blub></Blub>
             <A data={getData}></A>
             <button
+                type="button"
                 onClick={() => {
                     setData(c => c + 1);
                 }}
@@ -117,6 +123,6 @@ export default props => {
             <HookReducer></HookReducer> */}
 
             {/* <HookEchart></HookEchart> */}
-        </React.Fragment>
+        </>
     );
 };

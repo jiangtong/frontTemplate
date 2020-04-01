@@ -32,9 +32,9 @@ class Echart extends React.Component {
                 notMerge
                 onEvents={this.onEvents}
                 style={style}
-                theme={'echartsConfig'}
+                theme="echartsConfig"
                 ref={this.echartRef}
-            ></EchartsForReact>
+            />
         );
     }
 }

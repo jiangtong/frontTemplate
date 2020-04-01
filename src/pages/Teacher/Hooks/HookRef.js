@@ -2,10 +2,6 @@
 import React, { useRef, useImperativeHandle } from 'react';
 
 class Child extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     getState = () => {
         return 123123;
     };
@@ -49,7 +45,7 @@ const UseFancyInput = React.forwardRef(FancyInput);
 export default () => {
     const inputRef = useRef(111);
     const fancyInputRef = useRef();
-    let childRef = useRef(null);
+    const childRef = useRef(null);
 
     const onButtonClick = () => {
         inputRef.current.focus();
@@ -58,9 +54,11 @@ export default () => {
     };
 
     return (
-        <React.Fragment>
+        <>
             <input ref={inputRef} type="text" />
-            <button onClick={onButtonClick}>Focus the input</button>
+            <button type="button" onClick={onButtonClick}>
+                Focus the input
+            </button>
             <Child ref={childRef}></Child>
             <ReactComponent ref={childRef}></ReactComponent>
 
@@ -70,6 +68,6 @@ export default () => {
                     fancyInputRef.current.focus();
                 }}
             />
-        </React.Fragment>
+        </>
     );
 };

@@ -21,13 +21,11 @@ class BaseRequest {
                         'application/x-www-form-urlencoded'
                     ) {
                         return qs.stringify(data);
-                    } else if (
-                        headers['Content-Type'] === 'multipart/form-data'
-                    ) {
-                        return data;
-                    } else {
-                        return JSON.stringify(data);
                     }
+                    if (headers['Content-Type'] === 'multipart/form-data') {
+                        return data;
+                    }
+                    return JSON.stringify(data);
                 }
             ]
         };
@@ -57,11 +55,11 @@ class BaseRequest {
                 // 对响应数据做点什么
                 return new Promise(resolve => {
                     const useResponse = response.data;
-                    if (parseInt(useResponse.errorCode) === 401) {
+                    if (parseInt(useResponse.errorCode, 10) === 401) {
                         resolve(useResponse);
                         // 清楚缓存 这里先注释了吧
                         clearLocal();
-                        let pathname = history.location.pathname;
+                        const { pathname } = history.location;
                         history.replace({
                             pathname: '/login',
                             query: {
@@ -159,18 +157,17 @@ class BaseRequest {
                     return new Promise(resolve => {
                         resolve({ success: false, msg: '文件下载失败' });
                     });
-                } else {
-                    let url = window.URL.createObjectURL(new Blob([useData]));
-                    let link = document.createElement('a');
-                    link.style.display = 'none';
-                    link.href = url;
-                    link.setAttribute('download', data.fileName);
-                    document.body.appendChild(link);
-                    link.click();
-                    return new Promise(resolve => {
-                        resolve({ success: true, msg: '文件下载成功' });
-                    });
                 }
+                const downUrl = window.URL.createObjectURL(new Blob([useData]));
+                const link = document.createElement('a');
+                link.style.display = 'none';
+                link.href = downUrl;
+                link.setAttribute('download', data.fileName);
+                document.body.appendChild(link);
+                link.click();
+                return new Promise(resolve => {
+                    resolve({ success: true, msg: '文件下载成功' });
+                });
             });
     }
 }

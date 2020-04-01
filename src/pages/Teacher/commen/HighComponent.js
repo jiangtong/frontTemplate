@@ -22,10 +22,6 @@ const highComponentFuc = (url, params = {}) => WrappComponent => {
     }
 
     class EnhanceComponent extends Component {
-        static displayName = `highComponentFuc(${getDisplayName(
-            WrappComponent
-        )})`;
-
         constructor(props) {
             super(props);
             this.state = {
@@ -58,7 +54,7 @@ const highComponentFuc = (url, params = {}) => WrappComponent => {
 
             this.setState({
                 loading: false,
-                noData: res.length > 0 ? false : true
+                noData: !(res.length > 0)
             });
 
             if (res.length > 0) {
@@ -75,7 +71,7 @@ const highComponentFuc = (url, params = {}) => WrappComponent => {
                         <WrappComponent
                             {...this.props}
                             data={this.state.data}
-                        ></WrappComponent>
+                        />
                     </Spin>
                     {this.state.noData && <NoDataComponent></NoDataComponent>}
                 </div>
@@ -84,6 +80,10 @@ const highComponentFuc = (url, params = {}) => WrappComponent => {
     }
 
     hoistNonReactStatics(EnhanceComponent, WrappComponent);
+
+    EnhanceComponent.displayName = `highComponentFuc(${getDisplayName(
+        WrappComponent
+    )})`;
 
     return EnhanceComponent;
 };

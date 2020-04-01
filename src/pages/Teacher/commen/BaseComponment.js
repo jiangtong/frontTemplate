@@ -22,16 +22,12 @@ import { compose } from 'redux';
 import { menuWarnList } from '@actions/menuWarnList';
 
 class BaseComponment extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     componentDidMount() {
         // this.props.menuWarnListAction({menuUrl: this.props.location.pathname});
     }
 
     render() {
-        return <React.Fragment>{this.props.children}</React.Fragment>;
+        return <>{this.props.children}</>;
     }
 }
 

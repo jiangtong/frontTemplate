@@ -22,11 +22,8 @@ proxyArr.forEach(item => {
 });
 
 const devConfig = merge.smart(commonConfig, {
-    devtool: 'source-map',
-    mode: process.env.NODE_ENV === 'development' && 'development',
-    entry: {
-        app: config.appIndexJs
-    },
+    devtool: 'cheap-module-eval-source-map',
+    mode: 'development',
 
     plugins: [
         // 设置缓存
@@ -82,10 +79,13 @@ const devConfig = merge.smart(commonConfig, {
         host: config.host || config.baseHost,
         port: config.port,
         historyApiFallback: true,
-        overlay: true,
+        overlay: false,
         compress: true,
-        contentBase: '/',
+        // publicPath: '/dist/', //可以不写，写的话最好和output.publicPath一致
+        contentBase: 'dist',
+        clientLogLevel: 'silent',
         hot: true,
+        quiet: false,
         inline: true,
         // 默认浏览器
         open: true,
@@ -97,36 +97,7 @@ const devConfig = merge.smart(commonConfig, {
             }
         },
         proxy: newProxyObj,
-        stats: {
-            // 添加缓存（但未构建）模块的信息
-            cached: true,
-            // 显示缓存的资源（将其设置为 `false` 则仅显示输出的文件）
-            cachedAssets: true,
-            // 添加 children 信息
-            children: true,
-            // 添加 chunk 信息（设置为 `false` 能允许较少的冗长输出）
-            chunks: true,
-            // 将构建模块信息添加到 chunk 信息
-            chunkModules: true,
-            // `webpack --colors` 等同于
-            colors: true,
-            // 添加 --env information
-            env: false,
-            // 添加错误信息
-            errors: true,
-            // 添加错误的详细信息（就像解析日志一样）
-            errorDetails: true,
-            // 添加 compilation 的哈希值
-            hash: false,
-            // 添加构建模块信息
-            modules: true,
-            // 当文件大小超过 `performance.maxAssetSize` 时显示性能提示
-            performance: true,
-            // 添加时间信息
-            timings: true,
-            // 添加警告
-            warnings: true
-        }
+        stats: 'errors-only'
     }
 });
 

@@ -23,33 +23,6 @@ const threadLoader = require('thread-loader');
 // 判断环境
 const isDev = process.env.NODE_ENV === 'development';
 
-const cssWorkerPool = {
-    // 一个 worker 进程中并行执行工作的数量
-    // 默认为 20
-    workerParallelJobs: 20,
-    poolTimeout: 2000
-};
-
-const jsWorkerPool = {
-    // options
-    // 产生的 worker 的数量，默认是 (cpu 核心数 - 1)
-    // 当 require('os').cpus() 是 undefined 时，则为 1
-    workers: 2,
-    // 闲置时定时删除 worker 进程
-    // 默认为 500ms
-    // 可以设置为无穷大， 这样在监视模式(--watch)下可以保持 worker 持续存在
-    poolTimeout: 2000
-};
-
-threadLoader.warmup(cssWorkerPool, [
-    'css-loader',
-    'postcss-loader',
-    'sass-loader',
-    'less-loader',
-    'sass-resources-loader'
-]);
-threadLoader.warmup(jsWorkerPool, ['babel-loader', 'eslint-loader']);
-
 const cssReg = /\.css$/;
 const cssModuleReg = /\.module\.css$/;
 const sassModuleReg = /\.module\.(scss|sass)$/;
@@ -74,13 +47,9 @@ const styleLoader = (options = {}) => {
               }
           };
 
-    const threeLoaderStatus = isDev && {
-        loader: 'thread-loader',
-        options: cssWorkerPool
-    };
     return [
         styleInner,
-        threeLoaderStatus,
+        // 'thread-loader',
         {
             loader: 'css-loader',
             options
@@ -123,6 +92,10 @@ const lessLoader = (options = {}) => {
 };
 
 const commonConfig = {
+    entry: {
+        app: config.appIndexJs
+    },
+
     performance: {
         hints: false
     },
@@ -141,12 +114,12 @@ const commonConfig = {
     //     }
     // ],
 
-    optimization: {
-        minimize: !isDev,
+    plugins: [
+        new webpack.optimize.RuntimeChunkPlugin({
+            name: entrypoint => `runtime-${entrypoint.name}`
+        }),
 
-        // 修改文件的ids的形成方式，避免单文件修改，会导致其他文件的hash值变化，影响缓存
-        moduleIds: 'hashed',
-        splitChunks: {
+        new webpack.optimize.SplitChunksPlugin({
             chunks: 'all',
             minSize: 30000,
             maxAsyncRequests: 5,
@@ -182,6 +155,7 @@ const commonConfig = {
                     priority: 10,
                     test: module =>
                         /axios/.test(module.context) ||
+                        /qs/.test(module.context) ||
                         /classnames/.test(module.context) ||
                         /prop-types/.test(module.context),
                     reuseExistingChunk: true
@@ -199,13 +173,8 @@ const commonConfig = {
                     reuseExistingChunk: true
                 }
             }
-        },
-        runtimeChunk: {
-            name: entrypoint => `runtime-${entrypoint.name}`
-        }
-    },
+        }),
 
-    plugins: [
         // 用Day.js替换moment
         new AntdDayjsWebpackPlugin(),
         // 只加载 `moment/locale/ja.js` 和 `moment/locale/it.js` 优化moment体积
@@ -364,8 +333,7 @@ const commonConfig = {
                 test: /\.js?$/,
                 use: [
                     {
-                        loader: 'thread-loader',
-                        options: jsWorkerPool
+                        loader: 'thread-loader'
                     },
                     {
                         loader: 'eslint-loader',
@@ -385,8 +353,7 @@ const commonConfig = {
                 test: /\.js?$/,
                 use: [
                     {
-                        loader: 'thread-loader',
-                        options: jsWorkerPool
+                        loader: 'thread-loader'
                     },
                     {
                         loader: 'babel-loader',
@@ -417,10 +384,32 @@ const commonConfig = {
                 test: /\.(png|jpg|jpeg|gif|svg)$/,
                 use: [
                     {
+                        loader: 'image-webpack-loader',
+                        options: {
+                            mozjpeg: {
+                                progressive: true,
+                                quality: 65
+                            },
+                            optipng: {
+                                enabled: true
+                            },
+                            pngquant: {
+                                quality: [0.65, 0.9],
+                                speed: 4
+                            },
+                            gifsicle: {
+                                interlaced: false
+                            },
+                            webp: {
+                                quality: 75
+                            }
+                        }
+                    },
+                    {
                         loader: 'url-loader',
                         options: {
                             esModule: false,
-                            limit: 15000,
+                            limit: 0,
                             name: 'app/images/[name]_[hash:7].[ext]'
                         }
                     }
@@ -433,7 +422,6 @@ const commonConfig = {
                         loader: 'file-loader',
                         options: {
                             esModule: false,
-                            limit: 15000,
                             name: 'app/files/[name]_[hash:7].[ext]'
                         }
                     }

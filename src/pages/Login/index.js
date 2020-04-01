@@ -6,6 +6,10 @@ import Request from '@src/commen/data-commen/api/Login';
 import { setSession } from '@utils/utils';
 import img from '@pages/Login/commen/assets/img/xtzy.png';
 import md5 from 'md5';
+import img1 from '@pages/Login/commen/assets/img/background1.png';
+import img2 from '@pages/Login/commen/assets/img/map.png';
+import img3 from '@pages/Login/commen/assets/img/dengluyeyonghuming1.png';
+import img4 from '@pages/Login/commen/assets/img/dengluyemima1.png';
 
 class LoginComponent extends Component {
     state = {
@@ -17,8 +21,8 @@ class LoginComponent extends Component {
      * 处理输入
      */
     handelChange(event) {
-        let name = event.target.name;
-        let value = event.target.value;
+        const { name } = event.target;
+        const { value } = event.target;
         this.setState({
             [name]: value
         });
@@ -135,8 +139,8 @@ class LoginComponent extends Component {
      * 登录
      */
     async goLogin() {
-        let query = this.props.location?.query; //获取到传递过来的query对象也就是登录失败的时候存的url地址
-        let redirect = query?.redirect;
+        const query = this.props.location?.query; // 获取到传递过来的query对象也就是登录失败的时候存的url地址
+        const redirect = query?.redirect;
 
         if (!this.state.userName) {
             message.error('请输入账号！');
@@ -146,7 +150,7 @@ class LoginComponent extends Component {
             message.error('密码不能为空！');
             return;
         }
-        let params = {
+        const params = {
             username: this.state.userName,
             password: md5(this.state.pwd)
         };
@@ -157,9 +161,9 @@ class LoginComponent extends Component {
         if (res.success) {
             setSession('auth', res.obj);
             if (res.obj.menuInfo) {
-                let { menuList } = res.obj.menuInfo;
+                const { menuList } = res.obj.menuInfo;
                 if (menuList.length > 0) {
-                    let menuItem = menuList[0];
+                    const menuItem = menuList[0];
                     if (menuItem.menuList.length > 0) {
                         this.props.history.replace(
                             redirect || menuItem.menuList[0].menuUrl
@@ -184,26 +188,15 @@ class LoginComponent extends Component {
                 <div className="main_container">
                     <div className="main_title">
                         <img alt="" src={img} style={{ width: '196px' }} />
-                        {/*<span>校园大数据应用平台</span>*/}
+                        {/* <span>校园大数据应用平台</span> */}
                     </div>
                     <div className="main_content">
-                        <img
-                            alt=""
-                            className="banner"
-                            src={require('@pages/Login/commen/assets/img/background1.png')}
-                        />
-                        <img
-                            alt=""
-                            className="bannericon"
-                            src={require('@pages/Login/commen/assets/img/map.png')}
-                        />
+                        <img alt="" className="banner" src={img1} />
+                        <img alt="" className="bannericon" src={img2} />
                         <div className="main_login">
                             <h2>教学诊改五横画像平台</h2>
                             <div className="login_user">
-                                <img
-                                    alt=""
-                                    src={require('@pages/Login/commen/assets/img/dengluyeyonghuming1.png')}
-                                />
+                                <img alt="" src={img3} />
                                 <input
                                     name="userName"
                                     onChange={this.handelChange.bind(this)}
@@ -214,10 +207,7 @@ class LoginComponent extends Component {
                             </div>
 
                             <div className="login_pwd">
-                                <img
-                                    alt=""
-                                    src={require('@pages/Login/commen/assets/img/dengluyemima1.png')}
-                                />
+                                <img alt="" src={img4} />
                                 <input
                                     maxLength="12"
                                     name="pwd"
@@ -229,6 +219,7 @@ class LoginComponent extends Component {
                             <span className="error_info"></span>
 
                             <button
+                                type="button"
                                 className="login_btn"
                                 onClick={this.goLogin.bind(this)}
                             >

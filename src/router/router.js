@@ -2,11 +2,10 @@ import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import BaseComponents from '@layout';
 import { getSession, asyncComponent } from '@utils/utils';
-// 登陆
-const Login = asyncComponent(React.lazy(() => import('@pages/Login')));
-
 // 师资管理
 import teachermanager from './teacher';
+// 登陆
+const Login = asyncComponent(React.lazy(() => import('@pages/Login')));
 
 const Root = () => {
     // const [teachermanager, setTeachermanager] = useState([]);
@@ -75,7 +74,7 @@ const Root = () => {
                                                 //     )
                                                 // )
                                             }
-                                        ></Route>
+                                        />
                                     );
                                 })}
                             </Switch>

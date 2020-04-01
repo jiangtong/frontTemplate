@@ -10,13 +10,20 @@ import useRequest from '@useHooks/useRequest';
 
 class UseTableInitState {
     current = 1; // 当前页码
+
     pageSize = 10; // 分页大小
+
     total = 0; // 总页数
+
     data = []; // 列表数据,
-    count = 0; //计数器主要是为了刷新
-    formData = {}; //搜搜的数据,
-    sorter = null; //排序,
-    filters = null; //筛选
+
+    count = 0; // 计数器主要是为了刷新
+
+    formData = {}; // 搜搜的数据,
+
+    sorter = null; // 排序,
+
+    filters = null; // 筛选
 }
 
 const reducer = (state, action) => {
@@ -43,7 +50,7 @@ export default ({
     initRequest = false
 }) => {
     const initState = useMemo(() => new UseTableInitState(), []);
-    let requestRef = useRef(initRequest);
+    const requestRef = useRef(initRequest);
 
     const [state, dispatch] = useReducer(reducer, {
         ...initState,
@@ -54,7 +61,7 @@ export default ({
     const { loading, requestAction } = useRequest({
         fun,
         deps: [...deps],
-        initRequest: initRequest
+        initRequest
     });
 
     // 执行的事件
@@ -73,7 +80,7 @@ export default ({
         }
         console.log(params);
         requestAction(params).then(res => {
-            let payload = { data: [], totals: 0 };
+            const payload = { data: [], totals: 0 };
             if (res.success) {
                 payload.data = res?.obj?.rows ?? [];
                 payload.total = res?.obj?.total ?? 0;
@@ -106,8 +113,8 @@ export default ({
                     current: pagination.current,
                     pageSize: pagination.pageSize,
                     count: state.count + 1,
-                    sorter: sorter,
-                    filters: filters
+                    sorter,
+                    filters
                 }
             });
         },
@@ -132,7 +139,7 @@ export default ({
         });
     }, [state.count]);
 
-    //deps 变化后，重置表格
+    // deps 变化后，重置表格
     useEffect(() => {
         reload();
     }, deps);
@@ -167,7 +174,7 @@ export default ({
         tableProps: {
             dataSource: state?.data ?? [],
             loading,
-            onChange: onChange,
+            onChange,
             pagination: {
                 current: state.current,
                 pageSize: state.pageSize,
@@ -177,7 +184,7 @@ export default ({
         sorter: state.sorter,
         filters: state.filters,
         // 刷新当前页面
-        refresh: refresh,
+        refresh,
         // 搜索
         search: {
             submit: searchSubmit

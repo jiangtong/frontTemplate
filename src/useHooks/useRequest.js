@@ -9,9 +9,9 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
  * @returns {data, loading, requestAction} data=>数据，loading=>加载状态，requestAction=>可以再次请求
  */
 export default ({ fun, deps = [], initRequest = true }) => {
-    let requestRef = useRef(initRequest);
-    let [data, setData] = useState(null);
-    let [loading, setLoading] = useState(true);
+    const requestRef = useRef(initRequest);
+    const [data, setData] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     const requestAction = useCallback(
         useData => {

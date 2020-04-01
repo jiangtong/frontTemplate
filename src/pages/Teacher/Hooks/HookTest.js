@@ -26,14 +26,17 @@ export default () => {
 
     return (
         <div>
-            {count}: {count1}
+            {count}
+            {':'}
+            {count1}
             <button
+                type="button"
                 onClick={() => {
                     setCount(c => c + 1);
                 }}
             >
                 加加加
-            </button>{' '}
+            </button>
             <ComplexButton onClick={handleIncr}></ComplexButton>
         </div>
     );

@@ -32,14 +32,14 @@ function useInterval(callback, delay) {
             savedCallback.current();
         }
 
-        let id = setInterval(tick, delay);
+        const id = setInterval(tick, delay);
         return () => clearInterval(id);
     }, [delay]);
 }
 
 function Example(props) {
     // 把最新的 props 保存在一个 ref 中
-    let latestProps = useRef(props);
+    const latestProps = useRef(props);
     useEffect(() => {
         latestProps.current = props;
     });
@@ -66,8 +66,8 @@ function useEventCallback(fn, dependencies) {
     }, [fn, ...dependencies]);
 
     return useCallback(() => {
-        const fn = ref.current;
-        return fn();
+        const newFun = ref.current;
+        return newFun();
     }, [ref]);
 }
 
@@ -146,7 +146,7 @@ export default props => {
             setState({
                 loading: false,
                 data: res.length > 0 ? res : [],
-                noData: res.length > 0 ? false : true
+                noData: !(res.length > 0)
             });
         }
 
@@ -155,13 +155,13 @@ export default props => {
     }, [JSON.stringify(state.data)]);
 
     return (
-        <React.Fragment>
+        <>
             <div onClick={handleSubmit}>饿3213123</div>
             {state.data.length > 0 && !state.loading && !state.noData && (
                 <TestEchart {...props} data={state.data}></TestEchart>
             )}
             {state.loading && <Load></Load>}
             {state.noData && <NoDataComponent></NoDataComponent>}
-        </React.Fragment>
+        </>
     );
 };

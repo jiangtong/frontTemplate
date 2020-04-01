@@ -1,8 +1,8 @@
 import BaseSubFormRequest from '@utils/request/BaseSubFormRequest';
 
 class Request extends BaseSubFormRequest {
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
     }
 
     //  师资概况——专业

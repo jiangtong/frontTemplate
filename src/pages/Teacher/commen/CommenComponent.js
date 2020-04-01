@@ -22,16 +22,13 @@ import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import img from '@src/commen/img/ico1.png';
 
 class CommenComponent extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     componentDidMount() {}
 
     render() {
-        let { children } = this.props;
+        const { children } = this.props;
         return (
             <Col
                 span={24}
@@ -55,15 +52,11 @@ class CommenComponent extends Component {
                         >
                             <Col className="main_content_title">
                                 <span>
-                                    <img
-                                        src={require('@src/commen/img/ico1.png')}
-                                    />
-                                    {item.link ? (
+                                    <img alt="图片" src={img} />
+                                    {item.link && (
                                         <Link to={item.link}>
                                             {item.linkTitle}
                                         </Link>
-                                    ) : (
-                                        ''
                                     )}
                                     {item.title}
                                 </span>

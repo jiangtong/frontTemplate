@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './index.scss';
+import img from '@src/commen/img/wushuju.png';
 
 class NoDataCom extends Component {
     constructor(props) {
@@ -10,11 +11,11 @@ class NoDataCom extends Component {
     render() {
         return (
             <div
-                className={'no_block'}
+                className="no_block"
                 style={{ height: document.body.clientHeight - 64 }}
             >
                 <div>
-                    <img src={require('@src/commen/img/wushuju.png')} alt="" />
+                    <img src={img} alt="" />
                     无关联信息，无查看权限
                 </div>
             </div>

@@ -32,7 +32,9 @@ export default () => {
 
     return (
         <div>
-            {id} {pathname} {history}
+            {id}
+            {pathname}
+            {history}
             <div className="App">
                 <Router>
                     {/* <Header /> */}

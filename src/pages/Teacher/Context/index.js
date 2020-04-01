@@ -1,18 +1,16 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-
 import Request from '@src/commen/data-commen/api/teacher/index';
+import Context from './context';
+
+const { Provider } = Context;
 
 export default class Index extends Component {
     state = {};
 
     async componentDidMount() {
-        let res = await Request.enterprisePracticeInfoList();
-
+        const res = await Request.enterprisePracticeInfoList();
         console.log(res);
-    }
-    constructor(props) {
-        super(props);
     }
 
     onClick = params => {
@@ -25,28 +23,12 @@ export default class Index extends Component {
         const { number = 0 } = this.state;
         return (
             <div>
+                <Provider value={{ onClick: this.onClick, number }}>
+                    <Link to="/teachermanager/growth/12">下钻</Link>
+                </Provider>
                 <h1>首页</h1>
-                <Link to={'/teachermanager/growth/12'}>下钻_jiangtong</Link>
+                <Link to="/teachermanager/growth/12">下钻_jiangtong</Link>
             </div>
         );
     }
-}
-
-{
-    /*<Provider value={{onClick: this.onClick, number}}>*/
-}
-{
-    /*<Link to={"/teachermanager/growth/12"}>下钻</Link>*/
-}
-{
-    /*<ChildrenA/>*/
-}
-{
-    /**/
-}
-{
-    /*<ChildrenB/>*/
-}
-{
-    /*</Provider>*/
 }

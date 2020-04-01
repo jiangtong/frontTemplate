@@ -11,12 +11,10 @@ const path = require('path');
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const glob = require('glob');
+const PurgecssPlugin = require('purgecss-webpack-plugin');
 
 const publicConfig = {
-    entry: {
-        app: config.appIndexJs
-    },
-
     output: {
         path: config.appbuild,
         filename: 'app/js/[name].[chunkhash:8].js',
@@ -28,33 +26,27 @@ const publicConfig = {
     devtool: 'none',
     mode: 'production',
 
-    optimization: {
-        minimizer: [
-            // 开启多线程压缩代码
-            new TerserPlugin({
-                cache: true,
-                extractComments: false,
-                parallel: true,
-                terserOptions: {
-                    ecma: undefined,
-                    warnings: false,
-                    parse: {},
-                    compress: {},
-                    mangle: false, // Note `mangle.properties` is `false` by default.
-                    module: false,
-                    output: null,
-                    toplevel: false,
-                    nameCache: null,
-                    ie8: false,
-                    keep_classnames: undefined,
-                    keep_fnames: false,
-                    safari10: false
-                }
-            })
-        ]
-    },
-
     plugins: [
+        new TerserPlugin({
+            cache: true,
+            extractComments: false,
+            parallel: true, //并行压缩
+            terserOptions: {
+                ecma: undefined,
+                warnings: false,
+                parse: {},
+                compress: {},
+                mangle: false, // Note `mangle.properties` is `false` by default.
+                module: false,
+                output: null,
+                toplevel: false,
+                nameCache: null,
+                ie8: false,
+                keep_classnames: undefined,
+                keep_fnames: false,
+                safari10: false
+            }
+        }),
         // brotli-webpack-plugin br压缩方式 待实践
         // new BrotliPlugin({
         // 	asset: '[path].br[query]',
@@ -102,6 +94,10 @@ const publicConfig = {
             chunkFilename: 'app/css/[name].[contenthash:8].css',
             ignoreOrder: true
         }),
+        // 必须和MiniCssExtractPlugin配合，删除没用的css
+        new PurgecssPlugin({
+            paths: glob.sync(`${config.appSrc}/**/*`, { nodir: true })
+        }),
 
         // 压缩css
         new OptimizeCssAssetsPlugin({
@@ -113,20 +109,20 @@ const publicConfig = {
         }),
 
         // 不知道哪个老不跳出得自己跳出
-        function() {
-            this.hooks.done.tap('done', stats => {
-                if (
-                    stats.compilation.errors &&
-                    stats.compilation.errors.length &&
-                    process.argv.indexOf('--watch') == -1
-                ) {
-                    console.log('build error');
-                    process.exit(1);
-                } else {
-                    process.exit(0);
-                }
-            });
-        },
+        // function() {
+        //     this.hooks.done.tap('done', stats => {
+        //         if (
+        //             stats.compilation.errors &&
+        //             stats.compilation.errors.length &&
+        //             process.argv.indexOf('--watch') == -1
+        //         ) {
+        //             console.log('build error');
+        //             process.exit(1);
+        //         } else {
+        //             process.exit(0);
+        //         }
+        //     });
+        // },
 
         new HardSourceWebpackPlugin({
             // configHash在启动webpack实例时转换webpack配置，并用于cacheDirectory为不同的webpack配置构建不同的缓存

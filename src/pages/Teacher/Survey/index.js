@@ -6,10 +6,6 @@ import TeacherNumbers from '@pages/Teacher/Survey/TeacherNumbers';
 import TestEchart from '@pages/Teacher/Survey/TestEchart';
 
 class OurfacultyComp extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     componentDidMount() {}
 
     render() {
@@ -28,7 +24,7 @@ class OurfacultyComp extends Component {
                                         <TestEchart></TestEchart>
                                         <TeacherNumbers
                                             style={{ height: 300 }}
-                                        ></TeacherNumbers>
+                                        />
                                     </>
                                 );
                             }

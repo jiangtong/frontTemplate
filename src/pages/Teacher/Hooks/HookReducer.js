@@ -31,11 +31,23 @@ const reducer = (state, action) => {
 export default () => {
     const [state, dispatch] = useReducer(reducer, initState);
     return (
-        <React.Fragment>
+        <>
             Count: {state.count}
-            <button onClick={() => dispatch({ type: 'reset' })}>Reset</button>
-            <button onClick={() => dispatch({ type: 'increment' })}>+</button>
-            <button onClick={() => dispatch({ type: 'decrement' })}>-</button>
-        </React.Fragment>
+            <button type="button" onClick={() => dispatch({ type: 'reset' })}>
+                Reset
+            </button>
+            <button
+                type="button"
+                onClick={() => dispatch({ type: 'increment' })}
+            >
+                +
+            </button>
+            <button
+                type="button"
+                onClick={() => dispatch({ type: 'decrement' })}
+            >
+                -
+            </button>
+        </>
     );
 };

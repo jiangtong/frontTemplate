@@ -6,10 +6,10 @@ const initState = {
 
 export default function reducer(state = initState, action) {
     switch (action.type) {
-        case SUCCESS:
-            let data = action.obj;
+        case SUCCESS: {
+            const data = action.obj;
 
-            let useObj = {};
+            const useObj = {};
             data.forEach(item => {
                 useObj[item.name] = item.value;
             });
@@ -17,10 +17,14 @@ export default function reducer(state = initState, action) {
             return {
                 menuDic: useObj
             };
-        case FAIL:
+        }
+
+        case FAIL: {
             return {
                 menuDic: {}
             };
+        }
+
         default:
             return state;
     }

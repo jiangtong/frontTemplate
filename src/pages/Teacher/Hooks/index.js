@@ -21,7 +21,7 @@ class OurfacultyComp extends Component {
                     {[
                         {
                             title: 'HOOKS',
-                            linkAction: e => {
+                            linkAction: () => {
                                 // self.props.history.push('/teachermanager/survey/list');
                             },
                             component() {

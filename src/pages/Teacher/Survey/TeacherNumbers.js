@@ -5,30 +5,42 @@ import { withRouter } from 'react-router';
 import '@pages/Teacher/commen/assets/styles/index.less';
 import { Row, Col } from 'antd';
 import Echart from '@components/beijing/Echarts';
-// const HighFunUse = highComponentFuc('enterprisePracticeInfoList')(TestEchart);
-let color = ['#1890ff', '#2FC25B', '#D6C11A', '#CC5C2A', '#872ACC', '#D6C11A'];
 import Request from '@src/commen/data-commen/api/teacher/index';
+// const HighFunUse = highComponentFuc('enterprisePracticeInfoList')(TestEchart);
+const color = [
+    '#1890ff',
+    '#2FC25B',
+    '#D6C11A',
+    '#CC5C2A',
+    '#872ACC',
+    '#D6C11A'
+];
 
 class TeacherNumbers extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            res1: []
+        };
     }
 
     async pageAlarmStrategy() {
-        let res1 = await Request.pageAlarmStrategy();
-        console.log(res1);
+        const res1 = await Request.pageAlarmStrategy();
+        this.setState({
+            res1
+        });
     }
 
     async componentDidMount() {
         this.pageAlarmStrategy();
-        let res = await Request.enterprisePracticeInfoList();
+        const res = await Request.enterprisePracticeInfoList();
 
         console.log(res);
     }
 
     render() {
-        let data = [
+        console.log(this.state.res1);
+        const data = [
             {
                 name: '优',
                 value: 204800
@@ -54,11 +66,11 @@ class TeacherNumbers extends Component {
             }
         ];
 
-        let data1 = [
+        const data1 = [
             { name: '男', value: '86.24' },
             { name: '女', value: '13.75' }
         ];
-        let data2 = [
+        const data2 = [
             {
                 name: '医疗支出',
                 value: [
@@ -380,8 +392,8 @@ class TeacherNumbers extends Component {
                                         boundaryGap: true,
                                         data:
                                             (data2[0] &&
-                                                data2[0]['value'] &&
-                                                data2[0]['value'].map(item => {
+                                                data2[0].value &&
+                                                data2[0].value.map(item => {
                                                     return item.name;
                                                 })) ||
                                             []
@@ -418,7 +430,7 @@ class TeacherNumbers extends Component {
                                         };
                                     })
                                 }}
-                            ></Echart>
+                            />
 
                             <Echart
                                 style={{ height: 520 }}
@@ -497,7 +509,7 @@ class TeacherNumbers extends Component {
                                         }
                                     ]
                                 }}
-                            ></Echart>
+                            />
 
                             <Echart
                                 style={{ height: 520 }}
@@ -573,7 +585,7 @@ class TeacherNumbers extends Component {
                                         }
                                     ]
                                 }}
-                            ></Echart>
+                            />
 
                             <Echart
                                 style={{ height: 420, padding: '40px 0' }}
@@ -643,8 +655,8 @@ class TeacherNumbers extends Component {
                                         }
                                     ]
                                 }}
-                            ></Echart>
-                            {/*<HighFunUse style={this.props.style} {...this.props}></HighFunUse>*/}
+                            />
+                            {/* <HighFunUse style={this.props.style} {...this.props}></HighFunUse> */}
                         </Col>
                     </div>
                 </Row>
