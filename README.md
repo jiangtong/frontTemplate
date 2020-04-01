@@ -1,3 +1,5 @@
+[![Build Status](https://www.travis-ci.org/jiangtong/frontTemplate.svg?branch=master)](https://www.travis-ci.org/jiangtong/frontTemplate)
+
 # 前端标准化
 
 husky 必须用 npm 进行更新 提交前代码格式化
