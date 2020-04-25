@@ -1,7 +1,7 @@
 /** @format */
 
 import React, { Component } from 'react';
-// import Echart from '@components/Echarts';
+import Echart from '@components/Echarts';
 import { withRouter } from 'react-router-dom';
 // import lottie from 'lottie-web';
 // import highComponentFuc from '@pages/Teacher/commen/HighComponent';
@@ -35,14 +35,14 @@ class TestEchart extends Component {
         return (
             <div>
                 <div style={{ height: 50 }} id="name"></div>
-                <div className="color">less </div>
+                <div className="color">less</div>
                 <div className={lessModule.color1}>lessModle</div>
                 <div className={cssModule.color}>cssModule</div>
                 <div className="csscolor">css</div>
 
                 <div className={scssModule.color}>scssModule</div>
                 <div className="scsscolor">scss</div>
-                {/* <Echart
+                <Echart
                     onClickAction={params => {
                         if (this.props.onClickAction)
                             this.props.onClickAction(params);
@@ -71,7 +71,6 @@ class TestEchart extends Component {
                         },
                         series: [
                             {
-                                name: '',
                                 type: 'pie',
                                 radius: '55%',
                                 center: ['50%', '50%'],
@@ -86,7 +85,8 @@ class TestEchart extends Component {
                             }
                         ]
                     }}
-                ></Echart> */}
+                    // eslint-disable-next-line react/jsx-closing-tag-location
+                ></Echart>
             </div>
         );
     }

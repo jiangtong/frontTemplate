@@ -20,7 +20,7 @@ class OurfacultyComp extends Component {
                             component() {
                                 return (
                                     <>
-                                        <TestEchart></TestEchart>
+                                        {/* <TestEchart></TestEchart> */}
                                         <TeacherNumbers
                                             style={{ height: 300 }}
                                         />

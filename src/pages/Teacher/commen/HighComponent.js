@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { Component } from 'react';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import Request from '@src/commen/data-commen/api/teacher';

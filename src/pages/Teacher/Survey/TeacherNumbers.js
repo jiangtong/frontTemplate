@@ -9,7 +9,6 @@ import { Row, Col } from 'antd';
 import Echart from '@components/Echarts';
 import Request from '@src/commen/data-commen/api/teacher/index';
 // const HighFunUse = highComponentFuc('enterprisePracticeInfoList')(TestEchart);
-
 const color = [
     '#1890ff',
     '#2FC25B',
@@ -19,313 +18,320 @@ const color = [
     '#D6C11A'
 ];
 
-// const color = [
-//     'rgba(36, 56, 94, 1)',
-//     'rgba(42, 160, 207, 1)',
-//     'rgba(137, 125, 119, 1)'
-// ];
-
-class Teachervaluebers extends Component {
+class TeacherNumbers extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            // res1: []
-        };
+        this.state = {};
     }
 
     async pageAlarmStrategy() {
-        // const res1 = await Request.studentNetAddress();
-        // this.setState({
-        //     res1: res1.obj
-        // });
+        const res1 = await Request.pageAlarmStrategy();
+        console.log(res1);
     }
 
     async componentDidMount() {
-        // this.consumeStruct();
-        // this.moreData();
-        // this.pageAlarmStrategy();
-        // const res = await Request.enterprisePracticeInfoList();
-        // console.log(res);
+        this.pageAlarmStrategy();
+        const res = await Request.enterprisePracticeInfoList();
+
+        console.log(res);
     }
 
     render() {
         const data = [
             {
-                name: '1-3元',
-                value: 36
+                name: '优',
+                value: 204800
             },
             {
-                name: '3-5元',
-                value: 63
+                name: '良',
+                value: 490663
             },
+
             {
-                name: '5-7元',
-                value: 91
+                name: '中',
+                value: 477524
             },
+
             {
-                name: '7-9元',
-                value: 141
+                name: '及格',
+                value: 289894
             },
+
             {
-                name: '9-10.42元',
-                value: 74
-            }
-        ];
-        const radarData = [
-            {
-                name: '2016',
-                value: [
-                    {
-                        name: '餐饮',
-                        value: '18131306.55'
-                    },
-                    {
-                        name: '购物',
-                        value: '1758304.40'
-                    },
-                    {
-                        name: '淋浴',
-                        value: '652190.05'
-                    },
-                    {
-                        name: '热水',
-                        value: '167983.83'
-                    },
-                    {
-                        name: '医疗',
-                        value: '7627.51'
-                    },
-                    {
-                        name: '网络',
-                        value: '4728.00'
-                    },
-                    {
-                        name: '用电',
-                        value: '172.00'
-                    },
-                    {
-                        name: '其他',
-                        value: '1504583.36'
-                    }
-                ]
-            },
-            {
-                name: '2017',
-                value: [
-                    {
-                        name: '餐饮',
-                        value: '14565602.41'
-                    },
-                    {
-                        name: '购物',
-                        value: '1152830.36'
-                    },
-                    {
-                        name: '淋浴',
-                        value: '593851.73'
-                    },
-                    {
-                        name: '热水',
-                        value: '193906.35'
-                    },
-                    {
-                        name: '医疗',
-                        value: '5384.67'
-                    },
-                    {
-                        name: '网络',
-                        value: '5084.00'
-                    },
-                    {
-                        name: '用电',
-                        value: '171.00'
-                    },
-                    {
-                        name: '其他',
-                        value: '12528487.97'
-                    }
-                ]
-            },
-            {
-                name: '2018',
-                value: [
-                    {
-                        name: '餐饮',
-                        value: '2707181.54'
-                    },
-                    {
-                        name: '购物',
-                        value: '1515242.84'
-                    },
-                    {
-                        name: '淋浴',
-                        value: '554498.77'
-                    },
-                    {
-                        name: '热水',
-                        value: '159096.52'
-                    },
-                    {
-                        name: '医疗',
-                        value: '2865.29'
-                    },
-                    {
-                        name: '网络',
-                        value: '6759.00'
-                    },
-                    {
-                        name: '用电',
-                        value: '293.00'
-                    },
-                    {
-                        name: '其他',
-                        value: '13019281.49'
-                    }
-                ]
-            },
-            {
-                name: '2019',
-                value: [
-                    {
-                        name: '餐饮',
-                        value: '7169017.30'
-                    },
-                    {
-                        name: '购物',
-                        value: '2306910.36'
-                    },
-                    {
-                        name: '淋浴',
-                        value: '213932.50'
-                    },
-                    {
-                        name: '热水',
-                        value: '49818.39'
-                    },
-                    {
-                        name: '医疗',
-                        value: '20043.90'
-                    },
-                    {
-                        name: '网络',
-                        value: '156.00'
-                    },
-                    {
-                        name: '用电',
-                        value: '126.00'
-                    },
-                    {
-                        name: '其他',
-                        value: '777363.43'
-                    }
-                ]
+                name: '不及格',
+                value: 156721
             }
         ];
 
+        const data1 = [
+            { name: '男', value: '86.24' },
+            { name: '女', value: '13.75' }
+        ];
         const data2 = [
             {
-                name: '学生人数',
+                name: '医疗支出',
                 value: [
                     {
-                        name: 1,
-                        value: 2536
+                        name: '及格',
+                        value: 66
                     },
                     {
-                        name: 2,
-                        value: 572
+                        name: '良',
+                        value: 44
                     },
                     {
-                        name: 3,
-                        value: 5235
+                        name: '不及格',
+                        value: 43
                     },
                     {
-                        name: 4,
-                        value: 3788
+                        name: '中',
+                        value: 0.35
                     },
                     {
-                        name: 5,
-                        value: 3917
-                    },
-                    {
-                        name: 6,
-                        value: 4111
-                    },
-                    {
-                        name: 7,
-                        value: 1580
-                    },
-                    {
-                        name: 8,
-                        value: 75
-                    },
-                    {
-                        name: 9,
-                        value: 3266
-                    },
-                    {
-                        name: 10,
-                        value: 3012
-                    },
-                    {
-                        name: '11',
-                        value: 14998
-                    },
-                    {
-                        name: '12',
-                        value: 14111
+                        name: '优',
+                        value: 37
                     }
                 ]
             },
             {
-                name: '教工人数',
+                name: '商场购物',
                 value: [
                     {
-                        name: 1,
-                        value: 2098
+                        name: '及格',
+                        value: 0
                     },
                     {
-                        name: 2,
-                        value: 620
+                        name: '良',
+                        value: 5
                     },
                     {
-                        name: 3,
-                        value: 3984
+                        name: '不及格',
+                        value: 94
                     },
                     {
-                        name: 4,
-                        value: 4119
+                        name: '中',
+                        value: 48
                     },
                     {
-                        name: 5,
-                        value: 3715
+                        name: '优',
+                        value: 7
+                    }
+                ]
+            },
+            {
+                name: '学生上网缴费',
+                value: [
+                    {
+                        name: '及格',
+                        value: 51
                     },
                     {
-                        name: 6,
-                        value: 3412
+                        name: '良',
+                        value: 10
                     },
                     {
-                        name: 7,
-                        value: 1997
+                        name: '不及格',
+                        value: 84
                     },
                     {
-                        name: 8,
-                        value: 163
+                        name: '中',
+                        value: 114
                     },
                     {
-                        name: 9,
-                        value: 5241
+                        name: '优',
+                        value: 21
+                    }
+                ]
+            },
+            {
+                name: '教材费支出',
+                value: [
+                    {
+                        name: '及格',
+                        value: 2
                     },
                     {
-                        name: 10,
-                        value: 4278
+                        name: '良',
+                        value: 4
                     },
                     {
-                        name: '11',
-                        value: 4552
+                        name: '不及格',
+                        value: 7
                     },
                     {
-                        name: 4113,
-                        value: '0'
+                        name: '中',
+                        value: 35
+                    },
+                    {
+                        name: '优',
+                        value: 15
+                    }
+                ]
+            },
+            {
+                name: '校医院体检费',
+                value: [
+                    {
+                        name: '不及格',
+                        value: 165.0
+                    },
+                    {
+                        name: '中',
+                        value: 220.0
+                    },
+                    {
+                        name: '优',
+                        value: 110.0
+                    }
+                ]
+            },
+            {
+                name: '淋浴支出',
+                value: [
+                    {
+                        name: '及格',
+                        value: 9
+                    },
+                    {
+                        name: '良',
+                        value: 5
+                    },
+                    {
+                        name: '不及格',
+                        value: 34
+                    },
+                    {
+                        name: '中',
+                        value: 123
+                    },
+                    {
+                        name: '优',
+                        value: 95
+                    }
+                ]
+            },
+            {
+                name: '用电支出',
+                value: [
+                    {
+                        name: '及格',
+                        value: 80.0
+                    },
+                    {
+                        name: '优',
+                        value: 15.0
+                    },
+                    {
+                        name: '良',
+                        value: 10.0
+                    },
+                    {
+                        name: '不及格',
+                        value: 42.0
+                    },
+                    {
+                        name: '中',
+                        value: 47.0
+                    }
+                ]
+            },
+            {
+                name: '补卡支出',
+                value: [
+                    {
+                        name: '及格',
+                        value: 54
+                    },
+                    {
+                        name: '良',
+                        value: 0.0
+                    },
+                    {
+                        name: '不及格',
+                        value: 42
+                    },
+                    {
+                        name: '中',
+                        value: 33
+                    },
+                    {
+                        name: '优',
+                        value: 60.0
+                    }
+                ]
+            },
+            {
+                name: '购热水支出',
+                value: [
+                    {
+                        name: '及格',
+                        value: 312
+                    },
+                    {
+                        name: '良',
+                        value: 11
+                    },
+                    {
+                        name: '不及格',
+                        value: 123
+                    },
+                    {
+                        name: '中',
+                        value: 11
+                    },
+                    {
+                        name: '优',
+                        value: 12
+                    }
+                ]
+            },
+            {
+                name: '还款类',
+                value: [
+                    {
+                        name: '及格',
+                        value: 2
+                    },
+                    {
+                        name: '良',
+                        value: 312
+                    },
+                    {
+                        name: '不及格',
+                        value: 111
+                    },
+                    {
+                        name: '中',
+                        value: 1
+                    },
+                    {
+                        name: '优',
+                        value: 12
+                    }
+                ]
+            },
+            {
+                name: '餐费支出',
+                value: [
+                    {
+                        name: '及格',
+                        value: 213
+                    },
+                    {
+                        name: '良',
+                        value: 123
+                    },
+                    {
+                        name: '不及格',
+                        value: 312
+                    },
+                    {
+                        name: '中',
+                        value: 11
+                    },
+                    {
+                        name: '优',
+                        value: 312
                     }
                 ]
             }
@@ -334,8 +340,6 @@ class Teachervaluebers extends Component {
             <Col span={24} className="enrolment-container">
                 <Row className="bg-white chart-content">
                     <div className="clearfix">
-                        {/* <Five></Five> */}
-
                         <Col span={24}>
                             <Echart
                                 style={{ height: 540 }}
@@ -353,24 +357,18 @@ class Teachervaluebers extends Component {
                                         }
                                     },
                                     color: [
-                                        // 'red',
-                                        'rgba(36, 56, 94, 1)',
-                                        'rgba(42, 160, 207, 1)',
-                                        'rgba(208, 93, 175, 1)'
+                                        '#1890ff',
+                                        '#2FC25B',
+                                        '#13C2C2',
+                                        '#D6C11A',
+                                        '#CC5C2A',
+                                        '#872ACC',
+                                        '#5C9CF8',
+                                        '#5059CA',
+                                        '#EC7C72',
+                                        '#2a99c9',
+                                        '#61CAB2'
                                     ],
-                                    // color: [
-                                    //     '#1890ff',
-                                    //     '#2FC25B',
-                                    //     '#13C2C2',
-                                    //     '#D6C11A',
-                                    //     '#CC5C2A',
-                                    //     '#872ACC',
-                                    //     '#5C9CF8',
-                                    //     '#5059CA',
-                                    //     '#EC7C72',
-                                    //     '#2a99c9',
-                                    //     '#61CAB2'
-                                    // ],
                                     legend: {
                                         icon: 'rect',
                                         itemWidth: 12,
@@ -382,100 +380,68 @@ class Teachervaluebers extends Component {
                                     },
                                     grid: {
                                         left: '4%',
-                                        right: '10%',
+                                        right: '7%',
                                         containLabel: true
                                     },
                                     xAxis: {
-                                        // name: '就餐人数',
+                                        name: '',
                                         type: 'category',
                                         boundaryGap: true,
                                         data:
                                             (data2[0] &&
                                                 data2[0].value &&
                                                 data2[0].value.map(item => {
-                                                    return `${item.name}月`;
+                                                    return item.name;
                                                 })) ||
                                             []
                                         // axisLabel: {
                                         //     rotate: 30
                                         // }
                                     },
-                                    yAxis: [
-                                        {
-                                            type: 'value',
-                                            name: '就餐人数'
-                                            // name: '时长(万小时)'
-                                            // name: '流量(万GB)'
-                                        }
-                                        // {
-                                        //     type: 'value',
-                                        //     name: '时长(万小时)'
-                                        // }
-                                    ],
-                                    // yAxis: {
-                                    //     // name: '流量(万GB)',
-                                    //     // name: '每小时内人数',
-
-                                    //     type: 'value'
-                                    // },
+                                    yAxis: {
+                                        // name: '流量(万GB)',
+                                        name: '',
+                                        type: 'value'
+                                    },
                                     // , {
                                     //     min: 0,
                                     //     type: 'value',
-                                    // name: '时长(万小时)',
+                                    //     name: '时长(万小时)',
                                     //     boundaryGap: [0.2, 0.2]
                                     // }
                                     series: data2.map(item => {
                                         return {
                                             label: {
                                                 normal: {
-                                                    // formatter(value) {
-                                                    //     return value.data.value
-                                                    //         .split('.')
-                                                    //         .join(':');
-                                                    // },
                                                     show: true,
                                                     position: 'top'
                                                 }
                                             },
-                                            // step: 'start',
-
                                             name: item.name,
-                                            // type:
-                                            //     item.name === '上网流量'
-                                            //         ? 'bar'
-                                            //         : 'line',
-
                                             type: 'bar',
                                             // stack: '总数',
                                             // barWidth: '30%',
-                                            // yAxisIndex:
-                                            //     item.name === '上网流量'
-                                            //         ? 0
-                                            //         : 1,
-                                            // type: item.name === 'accuvalue' ? 'line' : 'bar',
+                                            // yAxisIndex: item.name === 'accutime' ? 1 : 0,
+                                            // type: item.name === 'accutime' ? 'line' : 'bar',
                                             data: item.value
                                         };
                                     })
                                 }}
-                            />
+                            ></Echart>
+
                             <Echart
                                 style={{ height: 520 }}
                                 data={{
                                     color: [
-                                        'rgba(36, 56, 94, 1)',
-                                        'rgba(42, 160, 207, 1)',
-                                        'rgba(208, 93, 175, 1)'
+                                        '#1890ff',
+                                        '#2FC25B',
+                                        '#1890FF',
+                                        '#13C2C2',
+                                        '#D6C11A',
+                                        '#CC5C2A',
+                                        '#872ACC',
+                                        '#D6C11A'
                                     ],
-                                    // color: [
-                                    //     '#1890ff',
-                                    //     '#2FC25B',
-                                    //     '#1890FF',
-                                    //     '#13C2C2',
-                                    //     '#D6C11A',
-                                    //     '#CC5C2A',
-                                    //     '#872ACC',
-                                    //     '#D6C11A'
-                                    // ],
                                     tooltip: {
                                         axisPointer: {
                                             lineStyle: {
@@ -493,39 +459,29 @@ class Teachervaluebers extends Component {
                                     },
                                     xAxis: [
                                         {
-                                            // name: '就医次数',
-
                                             type: 'category',
                                             data: data.map(item => {
                                                 return item.name;
-                                            }),
-                                            axisLabel: {
-                                                rotate: 40
-                                            }
-                                            // name: '早餐缺失率'
-
-                                            // name: '学生'
+                                            })
+                                            // ,
+                                            // axisLabel: {
+                                            //     rotate: 40
+                                            // },
+                                            // name: ''
                                         }
                                     ],
                                     yAxis: [
                                         {
-                                            name: '人数',
-
-                                            // min: 0.35,
-                                            // max: 0.4,
-
+                                            // name: '流量(GB)',
+                                            name: '',
                                             type: 'value'
-
-                                            // axisLabel: {
-                                            //     formatter: '{value} '
-                                            // }
                                         }
                                     ],
                                     series: [
                                         {
                                             name: '',
                                             type: 'bar',
-                                            // barWidth: '25%',
+                                            barWidth: '25%',
                                             data: data.map(item => {
                                                 return {
                                                     name: item.name,
@@ -535,26 +491,8 @@ class Teachervaluebers extends Component {
                                                     // }
                                                 };
                                             }),
-                                            // markLine: {
-                                            //     show: true,
-                                            //     lineStyle: {
-                                            //         color: 'red'
-                                            //     },
-                                            //     data: [
-                                            //         {
-                                            //             type: 'average',
-                                            //             name: '平均值'
-                                            //         }
-                                            //     ]
-                                            // },
                                             label: {
                                                 normal: {
-                                                    // formatter(value) {
-                                                    //     return value.data.value
-                                                    //         .split('.')
-                                                    //         .join(':')
-                                                    //         .padEnd(4, '0');
-                                                    // },
                                                     show: true,
                                                     position: 'top'
                                                 }
@@ -568,30 +506,25 @@ class Teachervaluebers extends Component {
                                         }
                                     ]
                                 }}
-                            />
+                            ></Echart>
 
                             <Echart
                                 style={{ height: 520 }}
                                 data={{
                                     color: [
-                                        'rgba(36, 56, 94, 1)',
-                                        'rgba(42, 160, 207, 1)',
-                                        'rgba(208, 93, 175, 1)'
+                                        '#1890ff',
+                                        '#2FC25B',
+                                        '#1890FF',
+                                        '#13C2C2',
+                                        '#D6C11A',
+                                        '#CC5C2A',
+                                        '#872ACC',
+                                        '#D6C11A'
                                     ],
-                                    // color: [
-                                    //     '#1890ff',
-                                    //     '#2FC25B',
-                                    //     '#1890FF',
-                                    //     '#13C2C2',
-                                    //     '#D6C11A',
-                                    //     '#CC5C2A',
-                                    //     '#872ACC',
-                                    //     '#D6C11A'
-                                    // ],
                                     tooltip: {
                                         axisPointer: {
                                             lineStyle: {
-                                                color: '#000'
+                                                color: '#00FFC8'
                                             }
                                         },
                                         textStyle: {
@@ -617,7 +550,7 @@ class Teachervaluebers extends Component {
                                     ],
                                     yAxis: [
                                         {
-                                            name: '消费金额(元)',
+                                            name: '就医次数',
                                             type: 'value'
                                         }
                                     ],
@@ -649,9 +582,8 @@ class Teachervaluebers extends Component {
                                         }
                                     ]
                                 }}
-                            />
+                            ></Echart>
 
-                            {/* 饼图 */}
                             <Echart
                                 style={{ height: 420, padding: '40px 0' }}
                                 data={{
@@ -668,28 +600,21 @@ class Teachervaluebers extends Component {
                                         formatter: '{a}<br/>{b} : {c} ({d}%)'
                                     },
                                     color: [
-                                        'rgba(36, 56, 94, 1)',
-                                        'rgba(42, 160, 207, 1)',
-                                        'rgba(208, 93, 175, 1)',
-                                        'rgba(85, 125, 185, 1)',
-                                        'rgba(87, 175, 188, 1)'
+                                        '#1890ff',
+                                        '#2FC25B',
+                                        '#1890FF',
+                                        '#13C2C2',
+                                        '#D6C11A',
+                                        '#CC5C2A',
+                                        '#872ACC',
+                                        '#D6C11A'
                                     ],
-                                    // color: [
-                                    //     '#1890ff',
-                                    //     '#2FC25B',
-                                    //     '#1890FF',
-                                    //     '#13C2C2',
-                                    //     '#D6C11A',
-                                    //     '#CC5C2A',
-                                    //     '#872ACC',
-                                    //     '#D6C11A'
-                                    // ],
                                     legend: {
                                         bottom: 0,
                                         left: 'center',
                                         data:
-                                            data &&
-                                            data.map(item => {
+                                            data1 &&
+                                            data1.map(item => {
                                                 return item.name;
                                             })
                                     },
@@ -700,30 +625,22 @@ class Teachervaluebers extends Component {
                                             radius: '50%',
                                             avoidLabelOverlap: true,
                                             center: ['50%', '50%'],
-                                            data: data || [],
+                                            data: data1 || [],
 
-                                            label: {
-                                                normal: {
-                                                    // formatter: value => {
-                                                    //     return (
-                                                    //         `${value.data.name}   ${value.data.value}%` +
-                                                    //         `   ${value.data.count}元`
-                                                    //     );
-                                                    // }
-                                                    // position: 'inner',
-                                                    formatter: '{b}  {c}人'
-                                                    // formatter:
-                                                    //     '{b}  {d}%  {c}万元'
-                                                }
-                                            },
+                                            // label: {
+                                            //     normal: {
+                                            //         position: 'inner',
+                                            //         formatter: '{b}  \n {d}%  \n {c}万小时'
+                                            //     }
+                                            // },
                                             labelLine: {
                                                 normal: {
                                                     show: true
                                                 }
                                             },
-                                            // label: {
-                                            //     formatter: '{b} {d}%'
-                                            // },
+                                            label: {
+                                                formatter: '{b} {d}%'
+                                            },
                                             itemStyle: {
                                                 emphasis: {
                                                     shadowBlur: 10,
@@ -735,88 +652,7 @@ class Teachervaluebers extends Component {
                                         }
                                     ]
                                 }}
-                            />
-
-                            <Echart
-                                style={{ height: 540 }}
-                                data={{
-                                    tooltip: {},
-                                    legend: {
-                                        data: radarData.map(item => {
-                                            return item.name;
-                                        })
-                                    },
-                                    color: [
-                                        'rgba(36, 56, 94, 1)',
-                                        'rgba(42, 160, 207, 1)',
-                                        'rgba(208, 93, 175, 1)'
-                                    ],
-                                    // color: [
-                                    //     '#1890ff',
-                                    //     '#2FC25B',
-                                    //     '#13C2C2',
-                                    //     '#D6C11A',
-                                    //     '#CC5C2A',
-                                    //     '#872ACC',
-                                    //     '#5C9CF8',
-                                    //     '#5059CA',
-                                    //     '#EC7C72',
-                                    //     '#2a99c9',
-                                    //     '#61CAB2'
-                                    // ],
-                                    radar: {
-                                        // shape: 'circle',
-                                        name: {
-                                            textStyle: {
-                                                color: '#000'
-                                            }
-                                        },
-                                        indicator:
-                                            (radarData[0] &&
-                                                radarData[0].value &&
-                                                radarData[0].value.map(item => {
-                                                    return {
-                                                        name: item.name
-                                                    };
-                                                })) ||
-                                            []
-                                    },
-                                    series: [
-                                        {
-                                            name: '',
-                                            type: 'radar',
-                                            // areaStyle: {normal: {}},
-                                            data: radarData.map(item => {
-                                                return {
-                                                    // label: {
-                                                    //     normal: {
-                                                    //         // formatter(value) {
-                                                    //         //     return value.data.value
-                                                    //         //         .split('.')
-                                                    //         //         .join(':');
-                                                    //         // },
-                                                    //         show: true,
-                                                    //         position: 'inside'
-                                                    //     }
-                                                    // },
-                                                    name: item.name,
-                                                    // type: 'bar',
-                                                    // stack: '总数',
-                                                    // barWidth: '30%',
-                                                    // yAxisIndex: item.name === 'accuvalue' ? 1 : 0,
-                                                    // type: item.name === 'accuvalue' ? 'line' : 'bar',
-                                                    value: item.value.map(
-                                                        subItem => {
-                                                            return subItem.value;
-                                                        }
-                                                    )
-                                                };
-                                            })
-                                        }
-                                    ]
-                                }}
-                            />
-
+                            ></Echart>
                             {/* <HighFunUse style={this.props.style} {...this.props}></HighFunUse> */}
                         </Col>
                     </div>
@@ -826,4 +662,4 @@ class Teachervaluebers extends Component {
     }
 }
 
-export default withRouter(Teachervaluebers);
+export default withRouter(TeacherNumbers);
