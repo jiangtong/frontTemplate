@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import './index.scss';
@@ -19,7 +21,7 @@ class Grid extends Component {
                     <div className="tab1">tab1</div>
                     <div className="tab2">tab2</div>
                     <div className="tab3">tab3</div>
-                    <div className="tab4">tab4</div>
+                    <div1 className="tab4">tab4</div1>
 
                     <div className="long1"></div>
 

@@ -1,6 +1,10 @@
-/*eslint-disable*/
+/**
+ * /*eslint-disable
+ *
+ * @format
+ */
+
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const config = require('./config');
 // 终端输出进度条
 const WebpackBar = require('webpackbar');
 // 显示编译时间
@@ -12,6 +16,7 @@ const AntdDayjsWebpackPlugin = require('antd-dayjs-webpack-plugin');
 const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 const os = require('os');
 const SpeedMeasurePlugin = require('speed-measure-webpack-plugin');
+
 const smp = new SpeedMeasurePlugin();
 const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 // SpeedMeasurePlugin有冲突目前不能一起用
@@ -22,6 +27,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
 const threadLoader = require('thread-loader');
 // 判断环境
 const isDev = process.env.NODE_ENV === 'development';
+const config = require('./config');
 
 const cssReg = /\.css$/;
 const cssModuleReg = /\.module\.css$/;
@@ -32,34 +38,38 @@ const lessReg = /\.less$/;
 
 const styleLoader = (options = {}) => {
     const styleInner = isDev
-        ? {
-              loader: 'style-loader',
-              options: {
-                  insert: 'head'
-              }
+        ? [{
+            loader: 'style-loader',
+            options: {
+                insert: 'head'
+            }
+        },{
+          loader: "thread-loader",
+          options: {
+              workers: 5,
+              inline: true,
+              poolTimeout: 2000,
+              workerParallelJobs: 200,
           }
-        : {
-              loader: MiniCssExtractPlugin.loader,
-              //如果提取到单独文件夹下，记得配置一下publicPath，为了正确的照片css中使用的图片资源
-              //个人习惯将css文件放在单独目录下
-              options: {
-                  publicPath: '../../'
-              }
-          };
+      }]
+        : [{
+            loader: MiniCssExtractPlugin.loader,
+            // 如果提取到单独文件夹下，记得配置一下publicPath，为了正确的照片css中使用的图片资源
+            // 个人习惯将css文件放在单独目录下
+            options: {
+                publicPath: '../../'
+            }
+        }]
 
-    return [
-        styleInner,
-        // 'thread-loader',
+    return [   
+        ...styleInner,
+        'cache-loader',
         {
             loader: 'css-loader',
             options
         },
         {
-            loader: 'postcss-loader',
-            options: {
-                ident: 'postcss',
-                plugins: () => [postcssPresetEnv({})]
-            }
+            loader: 'postcss-loader'
         }
     ].filter(Boolean);
 };
@@ -180,37 +190,37 @@ const commonConfig = {
         // 只加载 `moment/locale/ja.js` 和 `moment/locale/it.js` 优化moment体积
         // new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /ja|it/),
 
-        //  new BundleAnalyzerPlugin({
-        //     // concatenateModules: false,
-        //     //  可以是`server`，`static`或`disabled`。
-        //     //  在`server`模式下，分析器将启动HTTP服务器来显示软件包报告。
-        //     //  在“静态”模式下，会生成带有报告的单个HTML文件。
-        //     //  在`disabled`模式下，你可以使用这个插件来将`generateStatsFile`设置为`true`来生成Webpack Stats JSON文件。
-        //     analyzerMode: 'server',
-        //     //  将在“服务器”模式下使用的主机启动HTTP服务器。
-        //     analyzerHost: '127.0.0.1',
-        //     //  将在“服务器”模式下使用的端口启动HTTP服务器。
-        //     analyzerPort: 9119,
-        //     //  路径捆绑，将在`static`模式下生成的报告文件。
-        //     //  相对于捆绑输出目录。
-        //     // reportFilename: 'report.html',
-        //     //  模块大小默认显示在报告中。
-        //     //  应该是`stat`，`parsed`或者`gzip`中的一个。
-        //     //  有关更多信息，请参见“定义”一节。
-        //     defaultSizes: 'parsed',
-        //     //  在默认浏览器中自动打开报告
-        //     openAnalyzer: true,
-        //     //  如果为true，则Webpack Stats JSON文件将在bundle输出目录中生成
-        //     generateStatsFile: false,
-        //     //  如果`generateStatsFile`为`true`，将会生成Webpack Stats JSON文件的名字。
-        //     //  相对于捆绑输出目录。
-        //     statsFilename: 'stats.json',
-        //     //  stats.toJson（）方法的选项。
-        //     //  例如，您可以使用`source：false`选项排除统计文件中模块的来源。
-        //     //  在这里查看更多选项：https：//github.com/webpack/webpack/blob/webpack-1/lib/Stats.js#L21
-        //     statsOptions: null,
-        //     logLevel: 'info' //日志级别。可以是'信息'，'警告'，'错误'或'沉默'。
-        // }),
+        new BundleAnalyzerPlugin({
+            // concatenateModules: false,
+            //  可以是`server`，`static`或`disabled`。
+            //  在`server`模式下，分析器将启动HTTP服务器来显示软件包报告。
+            //  在“静态”模式下，会生成带有报告的单个HTML文件。
+            //  在`disabled`模式下，你可以使用这个插件来将`generateStatsFile`设置为`true`来生成Webpack Stats JSON文件。
+            analyzerMode: 'server',
+            //  将在“服务器”模式下使用的主机启动HTTP服务器。
+            analyzerHost: '127.0.0.1',
+            //  将在“服务器”模式下使用的端口启动HTTP服务器。
+            analyzerPort: 1331,
+            //  路径捆绑，将在`static`模式下生成的报告文件。
+            //  相对于捆绑输出目录。
+            // reportFilename: 'report.html',
+            //  模块大小默认显示在报告中。
+            //  应该是`stat`，`parsed`或者`gzip`中的一个。
+            //  有关更多信息，请参见“定义”一节。
+            defaultSizes: 'parsed',
+            //  在默认浏览器中自动打开报告
+            openAnalyzer: true,
+            //  如果为true，则Webpack Stats JSON文件将在bundle输出目录中生成
+            generateStatsFile: false,
+            //  如果`generateStatsFile`为`true`，将会生成Webpack Stats JSON文件的名字。
+            //  相对于捆绑输出目录。
+            statsFilename: 'stats.json',
+            //  stats.toJson（）方法的选项。
+            //  例如，您可以使用`source：false`选项排除统计文件中模块的来源。
+            //  在这里查看更多选项：https：//github.com/webpack/webpack/blob/webpack-1/lib/Stats.js#L21
+            statsOptions: null,
+            logLevel: 'info' // 日志级别。可以是'信息'，'警告'，'错误'或'沉默'。
+        }),
 
         new HtmlWebpackPlugin({
             title: '',
@@ -218,10 +228,11 @@ const commonConfig = {
             template: config.appHtml,
             favicon: config.favicon,
             inject: true,
+            cache: true,
             minify: {
                 removeComments: true,
-                collapseWhitespace: true, //折叠空行
-                removeAttributeQuotes: true //删除双引号
+                collapseWhitespace: true, // 折叠空行
+                removeAttributeQuotes: true // 删除双引号
             },
             chunksSortMode: 'dependency'
         }),
@@ -237,10 +248,9 @@ const commonConfig = {
 
         // 显示打包时间
         new ProgressBarPlugin({
-            format:
-                '  build [:bar] ' +
-                chalk.green.bold(':percent') +
-                ' (:elapsed seconds)'
+            format: `build [:bar]  ${chalk.green.bold(
+                ':percent'
+            )}   (:elapsed seconds)`
         })
 
         // new HtmlWebpackTagsPlugin({
@@ -266,39 +276,6 @@ const commonConfig = {
         //         }
         //     ],
         //     append: false
-        // })
-
-        // new HardSourceWebpackPlugin({
-        //     // configHash在启动webpack实例时转换webpack配置，并用于cacheDirectory为不同的webpack配置构建不同的缓存
-        //     configHash: function(webpackConfig) {
-        //         return require('node-object-hash')({ sort: false }).hash(
-        //             webpackConfig
-        //         );
-        //     },
-
-        //     info: {
-        //         // 'none' or 'test'.
-        //         mode: 'none',
-        //         // 'debug', 'log', 'info', 'warn', or 'error'.
-        //         level: 'debug'
-        //     },
-        //     cachePrune: {
-        //         // Caches younger than `maxAge` are not considered for deletion. They must
-        //         // be at least this (default: 2 days) old in milliseconds.
-        //         maxAge: 2 * 24 * 60 * 60 * 1000,
-        //         // caches will be deleted. Together they must be at least this
-        //         // (default: 50 MB) big in bytes.
-        //         sizeThreshold: 50 * 1024 * 1024
-        //     },
-
-        //     cacheDirectory: 'node_modules/.cache/hard-source/[confighash]',
-
-        //     // 当加载器，插件，其他构建时脚本或其他动态依赖项发生更改时，hard-source需要替换缓存以确保输出正确。environmentHash被用来确定这一点。如果散列与先前的构建不同，则将使用新的缓存
-        //     environmentHash: {
-        //         root: process.cwd(),
-        //         directories: [],
-        //         files: ['package-lock.json', 'yarn.lock']
-        //     }
         // })
     ],
 
@@ -329,21 +306,22 @@ const commonConfig = {
     module: {
         rules: [
             {
-                enforce: 'pre', //强制去前面执行 因为loader是从下向上 从右向左执行的
+                enforce: 'pre', // 强制去前面执行 因为loader是从下向上 从右向左执行的
                 test: /\.js?$/,
                 use: [
-                    {
-                        loader: 'thread-loader'
-                    },
+                    // 'cache-loader',
+                    // {
+                    //     loader: 'thread-loader'
+                    // },
                     {
                         loader: 'eslint-loader',
                         options: {
                             // emitWarning: true,  //如果需要可以打开，在测试环境把所有 Error 都当做 Warn，这样避免了修改 ESLint 规则
                             failOnError: false,
-                            failOnWarning: true, //警告不显示
+                            failOnWarning: true, // 警告不显示
                             quiet: true,
                             cache: true,
-                            fix: false // 是否自动修复
+                            fix: true // 是否自动修复
                         }
                     }
                 ],
@@ -353,9 +331,10 @@ const commonConfig = {
             {
                 test: /\.js?$/,
                 use: [
-                    {
-                        loader: 'thread-loader'
-                    },
+                    // 'cache-loader',
+                    // {
+                    //     loader: 'thread-loader'
+                    // },
                     {
                         loader: 'babel-loader',
                         options: {

@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import CommenComponent from '@pages/Teacher/commen/CommenComponent';
@@ -15,9 +17,6 @@ class OurfacultyComp extends Component {
                     {[
                         {
                             title: '师资概况',
-                            linkAction: e => {
-                                // self.props.history.push('/teachermanager/survey/list');
-                            },
                             component() {
                                 return (
                                     <>

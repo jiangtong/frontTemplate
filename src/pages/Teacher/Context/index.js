@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Request from '@src/commen/data-commen/api/teacher/index';
@@ -9,6 +11,8 @@ export default class Index extends Component {
     state = {};
 
     async componentDidMount() {
+        console.log(this.props);
+
         const res = await Request.enterprisePracticeInfoList();
         console.log(res);
     }

@@ -1,18 +1,23 @@
-/*eslint-disable*/
-const commonConfig = require('./webpack.config.common.js');
+/**
+ * /*eslint-disable
+ *
+ * @format
+ */
+// eslint-disable-next-line import/no-extraneous-dependencies
+const glob = require('glob');
 const merge = require('webpack-merge');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const config = require('./config');
 const path = require('path');
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-const glob = require('glob');
 const PurgecssPlugin = require('purgecss-webpack-plugin');
+const config = require('./config');
+const commonConfig = require('./webpack.config.common.js');
 
 const publicConfig = {
     output: {
@@ -47,6 +52,7 @@ const publicConfig = {
                 safari10: false
             }
         }),
+        
         // brotli-webpack-plugin br压缩方式 待实践
         // new BrotliPlugin({
         // 	asset: '[path].br[query]',
@@ -54,6 +60,7 @@ const publicConfig = {
         // 	threshold: 10240,
         // 	minRatio: 0.8
         // })
+
         new CompressionWebpackPlugin({
             filename: '[path].gz[query]',
             // 压缩后缀
@@ -123,40 +130,6 @@ const publicConfig = {
         //         }
         //     });
         // },
-
-        new HardSourceWebpackPlugin({
-            // configHash在启动webpack实例时转换webpack配置，并用于cacheDirectory为不同的webpack配置构建不同的缓存
-            configHash: function(webpackConfig) {
-                return require('node-object-hash')({ sort: false }).hash(
-                    webpackConfig
-                );
-            },
-
-            info: {
-                // 'none' or 'test'.
-                mode: 'none',
-                // 'debug', 'log', 'info', 'warn', or 'error'.
-                level: 'debug'
-            },
-            cachePrune: {
-                // Caches younger than `maxAge` are not considered for deletion. They must
-                // be at least this (default: 2 days) old in milliseconds.
-                maxAge: 2 * 24 * 60 * 60 * 1000,
-                // All caches together must be larger than `sizeThreshold` before any
-                // caches will be deleted. Together they must be at least this
-                // (default: 50 MB) big in bytes.
-                sizeThreshold: 50 * 1024 * 1024
-            },
-
-            // cacheDirectory: 'node_modules/.cache/hard-source/[confighash]',
-
-            // 当加载器，插件，其他构建时脚本或其他动态依赖项发生更改时，hard-source需要替换缓存以确保输出正确。environmentHash被用来确定这一点。如果散列与先前的构建不同，则将使用新的缓存
-            environmentHash: {
-                root: process.cwd(),
-                directories: [],
-                files: ['package-lock.json', 'yarn.lock']
-            }
-        })
     ]
 };
 

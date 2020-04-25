@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import Request from '@src/commen/data-commen/api/teacher';
-import NoDataComponent from '@components/beijing/NoDataCom';
+import NoDataComponent from '@components/NoDataCom';
 import { Spin } from 'antd';
 
 const getDisplayName = component => {

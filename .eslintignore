@@ -1,5 +1,5 @@
 node-modules/**/*
-dev/**/*
 dist/**/*
+config/**/*
 /src/__tests__/**
 jestconfig.js

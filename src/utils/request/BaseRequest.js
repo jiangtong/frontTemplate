@@ -1,9 +1,11 @@
+/** @format */
+
 import axios from 'axios';
 import qs from 'qs';
-import { createBrowserHistory } from 'history';
+import { createHashHistory } from 'history';
 import { clearLocal } from '@utils/utils';
 
-const history = createBrowserHistory();
+const history = createHashHistory();
 
 class BaseRequest {
     constructor(options) {

@@ -1,3 +1,5 @@
+/** @format */
+
 module.exports = {
     plugins: ['react', 'jsdoc', 'react-hooks', 'prettier'],
     parser: 'babel-eslint',

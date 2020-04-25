@@ -1,8 +1,10 @@
+/** @format */
+
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import Request from '@src/commen/data-commen/api/teacher';
 import TestEchart from '@pages/Teacher/Survey/TestEchart';
-import Load from '@components/beijing/Loading';
-import NoDataComponent from '@components/beijing/NoDataCom';
+import Load from '@components/Loading';
+import NoDataComponent from '@components/NoDataCom';
 
 function Timer() {
     const intervalRef = useRef();

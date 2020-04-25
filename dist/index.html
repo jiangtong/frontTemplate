@@ -1,1 +1,42 @@
-<!DOCTYPE html><html lang=en><head><meta charset=UTF-8><link rel="shortcut icon" href=ico.ico><link href=app/css/views.0bbd05b8.css rel=stylesheet><link href=app/css/app.71a362a9.css rel=stylesheet></head><body><div id=app></div><script type=text/javascript src=app/js/runtime-app.03d289af.js></script><script type=text/javascript src=app/js/views.dae22775.bundle.js></script><script type=text/javascript src=app/js/reactVendor.2be9b353.bundle.js></script><script type=text/javascript src=app/js/utils.fefd4bdb.bundle.js></script><script type=text/javascript src=app/js/vendor.b119f2cd.bundle.js></script><script type=text/javascript src=app/js/app.f3dcb12c.bundle.js></script></body></html>
+<!DOCTYPE html><html lang=en><head><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"><meta name=format-detection content="telephone=no"><meta charset=UTF-8><link rel="shortcut icon" href=ico.ico><link href=app/css/views.c9aecb96.css rel=stylesheet><link href=app/css/app.71a362a9.css rel=stylesheet></head><body><div id=app></div><script type=text/javascript src=app/js/runtime-app.db8028a0.js></script><script type=text/javascript src=app/js/views.8182034e.bundle.js></script><script type=text/javascript src=app/js/reactVendor.a5c8e65d.bundle.js></script><script type=text/javascript src=app/js/utils.fb050f2b.bundle.js></script><script type=text/javascript src=app/js/vendor.61d7c826.bundle.js></script><script type=text/javascript src=app/js/app.bde1f263.bundle.js></script></body><script>(function (designWidth, maxWidth) {
+        var doc = document,
+            win = window;
+        var docEl = doc.documentElement;
+        var remStyle = document.createElement('style');
+
+        //获取基准字体大小
+        function refreshRem() {
+            var width = docEl.getBoundingClientRect().width;
+            if (!maxWidth) {
+                maxWidth = 750;
+            }
+
+            if (width > maxWidth) {
+                width = maxWidth;
+            }
+            var rem = width / designWidth * 100;
+            //得到的rem基准字体大小，这里乘以100是为了适配有的浏览器不识别小数，会导致设置字体无效。
+            //设置根元素html的字体大小为基准字体大小，在css中每rem就是这个值的大小。
+            remStyle.innerHTML = 'html{font-size:' + rem + 'px;} ';
+        }
+
+        refreshRem();
+        if (docEl.firstElementChild) {
+            docEl.firstElementChild.appendChild(remStyle);
+        } else {
+            var wrap = doc.createElement('div');
+            wrap.appendChild(remStyle);
+            doc.write(wrap.innerHTML);
+            wrap = null;
+        }
+        /* 以下为在不同的时机重新计算rem*/
+        win.addEventListener('resize', function () {
+            refreshRem();
+        }, false);
+
+        win.addEventListener('pageshow', function (e) {
+            if (e.persisted) { // 浏览器后退的时候重新计算
+                refreshRem();
+            }
+        }, false);
+    })(750, 750);</script></html>

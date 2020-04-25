@@ -1,4 +1,7 @@
+/** @format */
+
 import React, { useState, useMemo } from 'react';
+import { withRouter } from 'react-router-dom';
 import HookEchart from './HookEchart';
 import HookContext from './HookContext';
 import HookRef from './HookRef';
@@ -72,7 +75,7 @@ function DualCounter() {
 
 // eslint-disable-next-line no-unused-vars
 // eslint-disable-next-line react/no-multi-comp
-export default props => {
+export default withRouter(props => {
     const [state, setState] = useState(0);
     const [data, setData] = useState(0);
     const [state1, setState1] = useState(() => {
@@ -125,4 +128,4 @@ export default props => {
             {/* <HookEchart></HookEchart> */}
         </>
     );
-};
+});

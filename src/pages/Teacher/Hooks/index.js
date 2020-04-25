@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import '@pages/Teacher/commen/assets/styles/index.less';

@@ -1,13 +1,15 @@
+/** @format */
+
 import React, { Component } from 'react';
-// import Echart from '@components/beijing/Echarts';
+// import Echart from '@components/Echarts';
 import { withRouter } from 'react-router-dom';
-import lottie from 'lottie-web';
+// import lottie from 'lottie-web';
 // import highComponentFuc from '@pages/Teacher/commen/HighComponent';
 import '../commen/assets/styles/index.less';
 import lessModule from '../commen/assets/styles/index.module.less';
 import cssModule from '../commen/assets/styles/index.module.css';
 import '../commen/assets/styles/index.css';
-import animation from './pencil.json';
+// import animation from './pencil.json';
 import scssModule from '../commen/assets/styles/index.module.scss';
 import '../commen/assets/styles/index.scss';
 
@@ -16,17 +18,16 @@ import '../commen/assets/styles/index.scss';
 class TestEchart extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
     }
 
     async componentDidMount() {
-        lottie.loadAnimation({
-            container: document.getElementById('name'),
-            renderer: 'svg',
-            loop: true,
-            autoplay: true,
-            animationData: animation
-        });
+        // lottie.loadAnimation({
+        //     container: document.getElementById('name'),
+        //     renderer: 'svg',
+        //     loop: true,
+        //     autoplay: true,
+        //     animationData: animation
+        // });
         // let res1 = await Request.pageAlarmStrategy();
     }
 
@@ -34,7 +35,7 @@ class TestEchart extends Component {
         return (
             <div>
                 <div style={{ height: 50 }} id="name"></div>
-                <div className="color">less x</div>
+                <div className="color">less </div>
                 <div className={lessModule.color1}>lessModle</div>
                 <div className={cssModule.color}>cssModule</div>
                 <div className="csscolor">css</div>
