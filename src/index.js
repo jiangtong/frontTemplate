@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import store from '@useRedux/store';
 import { Provider } from 'react-redux';
 import { ConfigProvider } from 'antd';
-import { HashRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import zh_CN from 'antd/lib/locale-provider/zh_CN';
 import echartsConfig from '@utils/echartsConfig';
 import echarts from 'echarts/lib/echarts';
