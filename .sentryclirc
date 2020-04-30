@@ -1,0 +1,7 @@
+[defaults]
+url = https://sentry.io/
+org = react_test
+project = 679356f3c926
+
+[auth]
+token =d7b776a5d21c456dbeb976a8b4a44ce9a80dd141b5a64bb1868063bec977f94f

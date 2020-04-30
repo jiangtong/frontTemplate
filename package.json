@@ -27,6 +27,7 @@
     },
     "author": "",
     "dependencies": {
+        "@sentry/browser": "^5.15.5",
         "antd": "^4.0.2",
         "axios": "^0.19.2",
         "classnames": "^2.2.6",
@@ -52,6 +53,7 @@
         "redux-thunk": "^2.3.0"
     },
     "devDependencies": {
+        "@sentry/webpack-plugin": "^1.11.1",
         "@babel/cli": "^7.8.4",
         "@babel/core": "^7.8.7",
         "@babel/plugin-proposal-class-properties": "^7.8.3",

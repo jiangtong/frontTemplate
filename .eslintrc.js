@@ -51,6 +51,7 @@ module.exports = {
         'react/jsx-curly-newline': 0,
         'react/destructuring-assignment': 0, // 需要使用结构变量
         'react/jsx-indent': 0,
+        'react/no-unused-state': 0,
         'react/jsx-key': 2, //在数组或迭代器中验证JSX具有key属性
         // "react/jsx-max-props-per-line": [1, {"maximum": 1}], // 限制JSX中单行上的props的最大数量
         'react/jsx-no-bind': 0, //JSX中不允许使用箭头函数和bind
@@ -83,6 +84,7 @@ module.exports = {
         'jsx-a11y/jsx-one-expression-per-line': 0, //必须分开
         'react/jsx-one-expression-per-line': 0, //必须分开
         'react/state-in-constructor': 0, //state是否必须在constructor里
+        'react/button-has-type': 0, // button必须要类型
         'import/no-unresolved': 0,
         'no-plusplus': [2, { allowForLoopAfterthoughts: true }], // 允许一元运算符++和循环--的后缀（最终表达式）for
         'prefer-destructuring': 0, //必须使用结构赋值
@@ -90,6 +92,7 @@ module.exports = {
         quotes: [2, 'single'], //单引号
         'no-console': 0, //不禁用console
         'no-debugger': 2, //禁用debugger
+        'no-new': 0,
         'no-var': 0, //对var警告
         semi: 0, //不强制使用分号
         'no-irregular-whitespace': 0, //不规则的空白不允许

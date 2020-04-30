@@ -76,8 +76,8 @@ const publicConfig = {
         }),
 
         new CleanWebpackPlugin({
-            verbose: false,
-            dry: false
+            cleanAfterEveryBuildPatterns: ['!public*.*'],
+            // cleanOnceBeforeBuildPatterns: ['!public*'],
         }),
 
         //  copy 在dev模式下不好使

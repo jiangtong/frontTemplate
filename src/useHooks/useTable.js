@@ -1,4 +1,9 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+/**
+ * /* eslint-disable react-hooks/exhaustive-deps
+ *
+ * @format
+ */
+
 import React, {
     useCallback,
     useEffect,
@@ -61,7 +66,7 @@ export default ({
     const { loading, requestAction } = useRequest({
         fun,
         deps: [...deps],
-        initRequest
+        initRequest: false
     });
 
     // 执行的事件

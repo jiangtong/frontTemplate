@@ -35,6 +35,7 @@ const sassModuleReg = /\.module\.(scss|sass)$/;
 const sassReg = /\.scss|.sass$/;
 const lessModuleReg = /\.module\.less/;
 const lessReg = /\.less$/;
+const SentryPlugin = require('@sentry/webpack-plugin');
 
 const styleLoader = (options = {}) => {
     const styleInner = isDev
@@ -125,6 +126,13 @@ const commonConfig = {
     // ],
 
     plugins: [
+        // new SentryPlugin({
+        //     release: 'baili_003',
+        //     include: './dist',
+        //     urlPrefix: '~/',
+        //     ignore: ['node_modules'],
+        // }),
+        
         new webpack.optimize.RuntimeChunkPlugin({
             name: entrypoint => `runtime-${entrypoint.name}`
         }),

@@ -6,6 +6,7 @@ import CommenComponent from '@pages/Teacher/commen/CommenComponent';
 import BaseComponment from '@pages/Teacher/commen/BaseComponment';
 import TeacherNumbers from '@pages/Teacher/Survey/TeacherNumbers';
 import TestEchart from '@pages/Teacher/Survey/TestEchart';
+// import Error from '@pages/Teacher/Survey/Error';
 
 class OurfacultyComp extends Component {
     componentDidMount() {}
@@ -20,6 +21,7 @@ class OurfacultyComp extends Component {
                             component() {
                                 return (
                                     <>
+                                        {/* <Error></Error> */}
                                         {/* <TestEchart></TestEchart> */}
                                         <TeacherNumbers
                                             style={{ height: 300 }}

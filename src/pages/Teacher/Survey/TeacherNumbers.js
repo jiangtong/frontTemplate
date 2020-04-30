@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
+import * as Sentry from '@sentry/browser';
 // import highComponentFuc from '@pages/Teacher/commen/HighComponent';
 // import TestEchart from '@pages/Teacher/Survey/TestEchart';
 import '@pages/Teacher/commen/assets/styles/index.less';
@@ -21,7 +22,9 @@ const color = [
 class TeacherNumbers extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            eventId: ''
+        };
     }
 
     async pageAlarmStrategy() {
@@ -337,7 +340,7 @@ class TeacherNumbers extends Component {
             }
         ];
         return (
-            <Col span={24} className="enrolment-container">
+            <Col span={24}>
                 <Row className="bg-white chart-content">
                     <div className="clearfix">
                         <Col span={24}>

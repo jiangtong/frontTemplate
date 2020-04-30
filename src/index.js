@@ -2,19 +2,20 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+// import * as Sentry from '@sentry/browser';
 import store from '@useRedux/store';
 import { Provider } from 'react-redux';
 import { ConfigProvider } from 'antd';
 import { HashRouter as Router } from 'react-router-dom';
 import zh_CN from 'antd/lib/locale-provider/zh_CN';
-import echartsConfig from '@utils/echartsConfig';
-import echarts from 'echarts/lib/echarts';
 import Root from './router/router';
 import '@src/commen/styles/index.less';
-// import chinaMap from 'echarts/map/json/china.json';
-// 配置echarts常用主题
-echarts.registerTheme('echartsConfig', echartsConfig);
-// echarts.registerMap('china', chinaMap);
+
+// Sentry.init({
+//     release: 'baili_003',
+//     dsn:
+//         'https://f9cacce74225410ea3bdcdabbdeb525e@o383900.ingest.sentry.io/5214399'
+// });
 
 const App = () => {
     return (
