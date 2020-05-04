@@ -1,8 +1,8 @@
 /**
- * /*eslint-disable
  *
  * @format
  */
+
 // eslint-disable-next-line import/no-extraneous-dependencies
 const glob = require('glob');
 const merge = require('webpack-merge');
