@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { Suspense } from 'react';
 
 // 设置本地临时存储

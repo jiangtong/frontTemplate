@@ -1,3 +1,5 @@
+/** @format */
+
 import BaseSubFormRequest from '@utils/request/BaseSubFormRequest';
 
 class Request extends BaseSubFormRequest {

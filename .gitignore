@@ -10,7 +10,7 @@
 /coverage
 
 # production
-*.zip
+# *.zip
 
 # misc
 .DS_Store
@@ -32,3 +32,6 @@ yarn-error.log*
 .idea/workspace.xml
 .cache
 /coverage
+
+package-lock.json
+yarn.lock

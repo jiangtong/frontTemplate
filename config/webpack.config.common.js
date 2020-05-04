@@ -1,12 +1,8 @@
 /**
- * /*eslint-disable
  *
  * @format
  */
-
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-// 终端输出进度条
-const WebpackBar = require('webpackbar');
 // 显示编译时间
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const chalk = require('chalk');
@@ -14,17 +10,15 @@ const path = require('path');
 const webpack = require('webpack');
 const AntdDayjsWebpackPlugin = require('antd-dayjs-webpack-plugin');
 const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
-const os = require('os');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+    .BundleAnalyzerPlugin;
+const SentryPlugin = require('@sentry/webpack-plugin');
+// const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
+// SpeedMeasurePlugin有冲突目前不能一起用
 const SpeedMeasurePlugin = require('speed-measure-webpack-plugin');
 
 const smp = new SpeedMeasurePlugin();
-const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
-// SpeedMeasurePlugin有冲突目前不能一起用
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const postcssPresetEnv = require('postcss-preset-env');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
-    .BundleAnalyzerPlugin;
-const threadLoader = require('thread-loader');
 // 判断环境
 const isDev = process.env.NODE_ENV === 'development';
 const config = require('./config');
@@ -35,36 +29,28 @@ const sassModuleReg = /\.module\.(scss|sass)$/;
 const sassReg = /\.scss|.sass$/;
 const lessModuleReg = /\.module\.less/;
 const lessReg = /\.less$/;
-const SentryPlugin = require('@sentry/webpack-plugin');
 
 const styleLoader = (options = {}) => {
     const styleInner = isDev
-        ? [{
-            loader: 'style-loader',
-            options: {
-                insert: 'head'
-            }
-        },{
-          loader: "thread-loader",
-          options: {
-              workers: 5,
-              inline: true,
-              poolTimeout: 2000,
-              workerParallelJobs: 200,
+        ? {
+              loader: 'style-loader',
+              options: {
+                  insert: 'head'
+              }
           }
-      }]
-        : [{
-            loader: MiniCssExtractPlugin.loader,
-            // 如果提取到单独文件夹下，记得配置一下publicPath，为了正确的照片css中使用的图片资源
-            // 个人习惯将css文件放在单独目录下
-            options: {
-                publicPath: '../../'
-            }
-        }]
+        : {
+              loader: MiniCssExtractPlugin.loader,
+              // 如果提取到单独文件夹下，记得配置一下publicPath，为了正确的照片css中使用的图片资源
+              // 个人习惯将css文件放在单独目录下
+              options: {
+                  publicPath: '../../'
+              }
+          };
 
-    return [   
-        ...styleInner,
-        'cache-loader',
+    return [
+        styleInner,
+        // antd的less主题更改用cache-loader总有问题
+        // 'cache-loader',
         {
             loader: 'css-loader',
             options
@@ -132,7 +118,7 @@ const commonConfig = {
         //     urlPrefix: '~/',
         //     ignore: ['node_modules'],
         // }),
-        
+
         new webpack.optimize.RuntimeChunkPlugin({
             name: entrypoint => `runtime-${entrypoint.name}`
         }),
@@ -184,6 +170,15 @@ const commonConfig = {
                     test: /[\\/]node_modules[\\/]/,
                     name: 'vendor'
                 },
+
+                // 自定义组件
+                // commons: {
+                //     name: 'chunk-commons',
+                //     test: path.resolve(config.appSrc, 'components'),
+                //     minChunks: 3, //  minimum common number
+                //     priority: 5,
+                //     reuseExistingChunk: true
+                // },
 
                 default: {
                     minChunks: 2,
@@ -251,14 +246,11 @@ const commonConfig = {
             }
         }),
 
-        // 进度条
-        new WebpackBar(),
-
         // 显示打包时间
         new ProgressBarPlugin({
-            format: `build [:bar]  ${chalk.green.bold(
+            format: `${chalk.green('Progressing')} [:bar] ${chalk.green.bold(
                 ':percent'
-            )}   (:elapsed seconds)`
+            )} (:elapsed seconds)`
         })
 
         // new HtmlWebpackTagsPlugin({
@@ -329,6 +321,7 @@ const commonConfig = {
                             failOnWarning: true, // 警告不显示
                             quiet: true,
                             cache: true,
+                            // emitWarning: true, // 是否所有的error都当做warning
                             fix: false // 是否自动修复
                         }
                     }
@@ -430,11 +423,12 @@ const commonConfig = {
             {
                 oneOf: [
                     {
+                        // sassmodule
                         test: sassModuleReg,
                         use: [
                             ...styleLoader({
                                 modules: {
-                                    localIdentName: 'local]--[hash:base64:5]'
+                                    localIdentName: '[local]--[hash:base64:5]'
                                 }
                             }),
                             ...sassLoader()
@@ -442,6 +436,7 @@ const commonConfig = {
                         include: config.appSrc
                     },
                     {
+                        // lessmodule
                         test: lessModuleReg,
                         use: [
                             ...styleLoader({
@@ -450,27 +445,34 @@ const commonConfig = {
                                 }
                             }),
                             ...lessLoader({
-                                javascriptEnabled: true
+                                lessOptions: {
+                                    javascriptEnabled: true
+                                }
                             })
                         ],
                         include: config.appSrc
                     },
                     {
+                        // sass
                         test: sassReg,
                         use: [...styleLoader(), ...sassLoader()],
                         include: config.appSrc
                     },
                     {
+                        // less
                         test: lessReg,
                         use: [
                             ...styleLoader(),
                             ...lessLoader({
-                                javascriptEnabled: true
+                                lessOptions: {
+                                    javascriptEnabled: true
+                                }
                             })
                         ],
                         include: config.appSrc
                     },
                     {
+                        // cssmodule
                         test: cssModuleReg,
                         use: [
                             ...styleLoader({
@@ -482,18 +484,22 @@ const commonConfig = {
                         include: config.appSrc
                     },
                     {
+                        // css
                         test: cssReg,
                         use: [...styleLoader()],
                         include: config.appSrc
                     },
                     {
+                        // antd等第三方less
                         test: lessReg,
                         use: [
                             ...styleLoader(),
                             ...lessLoader({
-                                // 使用less默认运行时替换配置的@color样式
-                                modifyVars: config.color,
-                                javascriptEnabled: true
+                                lessOptions: {
+                                    // 使用less默认运行时替换配置的@color样式
+                                    modifyVars: config.styles,
+                                    javascriptEnabled: true
+                                }
                             })
                         ],
                         include: /node_modules/
@@ -501,6 +507,37 @@ const commonConfig = {
                 ]
             }
         ]
+    },
+
+    stats: {
+        // 添加缓存（但未构建）模块的信息
+        cached: false,
+        // 显示缓存的资源（将其设置为 `false` 则仅显示输出的文件）
+        cachedAssets: false,
+        // 添加 children 信息
+        children: false,
+        // 添加 chunk 信息（设置为 `false` 能允许较少的冗长输出）
+        chunks: false,
+        // 将构建模块信息添加到 chunk 信息
+        chunkModules: false,
+        // `webpack --colors` 等同于
+        colors: true,
+        // 添加 --env information
+        env: false,
+        // 添加错误信息
+        errors: true,
+        // 添加错误的详细信息（就像解析日志一样）
+        errorDetails: true,
+        // 添加 compilation 的哈希值
+        hash: false,
+        // 添加构建模块信息
+        modules: false,
+        // 当文件大小超过 `performance.maxAssetSize` 时显示性能提示
+        performance: false,
+        // 添加时间信息
+        timings: true,
+        // 添加警告
+        warnings: true
     }
 };
 

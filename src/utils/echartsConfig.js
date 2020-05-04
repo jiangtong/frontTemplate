@@ -1,3 +1,5 @@
+/** @format */
+
 export default {
     seriesCnt: '3',
     backgroundColor: 'rgba(252,252,252,0)',

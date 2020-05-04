@@ -6,6 +6,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 const glob = require('glob');
 const merge = require('webpack-merge');
+const cssnano = require('cssnano');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const webpack = require('webpack');
@@ -35,7 +36,7 @@ const publicConfig = {
         new TerserPlugin({
             cache: true,
             extractComments: false,
-            parallel: true, //并行压缩
+            parallel: true, // 并行压缩
             terserOptions: {
                 ecma: undefined,
                 warnings: false,
@@ -52,7 +53,7 @@ const publicConfig = {
                 safari10: false
             }
         }),
-        
+
         // brotli-webpack-plugin br压缩方式 待实践
         // new BrotliPlugin({
         // 	asset: '[path].br[query]',
@@ -75,10 +76,7 @@ const publicConfig = {
             deleteOriginalAssets: false
         }),
 
-        new CleanWebpackPlugin({
-            cleanAfterEveryBuildPatterns: ['!public*.*'],
-            // cleanOnceBeforeBuildPatterns: ['!public*'],
-        }),
+        new CleanWebpackPlugin(),
 
         //  copy 在dev模式下不好使
         // new CopyWebpackPlugin([
@@ -101,6 +99,7 @@ const publicConfig = {
             chunkFilename: 'app/css/[name].[contenthash:8].css',
             ignoreOrder: true
         }),
+
         // 必须和MiniCssExtractPlugin配合，删除没用的css
         new PurgecssPlugin({
             paths: glob.sync(`${config.appSrc}/**/*`, { nodir: true })
@@ -108,28 +107,12 @@ const publicConfig = {
 
         // 压缩css
         new OptimizeCssAssetsPlugin({
-            cssProcessor: require('cssnano'),
+            cssProcessor: cssnano,
             cssProcessorPluginOptions: {
                 preset: ['default', { discardComments: { removeAll: true } }]
             },
-            canPrint: true //是否将插件信息打印到控制台
-        }),
-
-        // 不知道哪个老不跳出得自己跳出
-        // function() {
-        //     this.hooks.done.tap('done', stats => {
-        //         if (
-        //             stats.compilation.errors &&
-        //             stats.compilation.errors.length &&
-        //             process.argv.indexOf('--watch') == -1
-        //         ) {
-        //             console.log('build error');
-        //             process.exit(1);
-        //         } else {
-        //             process.exit(0);
-        //         }
-        //     });
-        // },
+            canPrint: true // 是否将插件信息打印到控制台
+        })
     ]
 };
 

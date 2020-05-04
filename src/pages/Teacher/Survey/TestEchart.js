@@ -36,12 +36,13 @@ class TestEchart extends Component {
             <div>
                 <div style={{ height: 50 }} id="name"></div>
                 <div className="color">less</div>
-                <div className={lessModule.color1}>lessModle</div>
-                <div className={cssModule.color}>cssModule</div>
+                <div className={lessModule.color_ccc}>lessModle</div>
                 <div className="csscolor">css</div>
+                <div className={cssModule.color_name}>cssModule</div>
 
-                <div className={scssModule.color}>scssModule</div>
                 <div className="scsscolor">scss</div>
+                <div className={scssModule.color}>scssModule</div>
+
                 <Echart
                     onClickAction={params => {
                         if (this.props.onClickAction)

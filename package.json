@@ -6,8 +6,8 @@
     "homepage": "https://jiangtong.github.io/",
     "husky": {
         "hooks": {
-            "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-            "pre-commit": "lint-staged"
+            "pre-commit": "lint-staged",
+            "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
         }
     },
     "lint-staged": {
@@ -21,9 +21,9 @@
         "fix": "eslint --ext .js,.ts src --fix",
         "test": "jest --config jestconfig.js",
         "test:coverage": "npm run test --coverage",
-        "start": "cross-env NODE_ENV=development webpack-dev-server --config config/webpack.config.dev.js  --inline --color --progress --hot",
-        "build": "cross-env NODE_ENV=production webpack  --config config/webpack.config.prod.js  --progress --color",
-        "mock": "cross-env NODE_ENV=development IS_Mock=true webpack-dev-server --config config/webpack.config.dev.js  --inline --color --progress --hot"
+        "start": "cross-env NODE_ENV=development webpack-dev-server --config config/webpack.config.dev.js --colors",
+        "build": "cross-env NODE_ENV=production webpack  --config config/webpack.config.prod.js",
+        "mock": "cross-env NODE_ENV=development IS_Mock=true webpack-dev-server --config config/webpack.config.dev.js"
     },
     "author": "",
     "dependencies": {
@@ -53,7 +53,6 @@
         "redux-thunk": "^2.3.0"
     },
     "devDependencies": {
-        "@sentry/webpack-plugin": "^1.11.1",
         "@babel/cli": "^7.8.4",
         "@babel/core": "^7.8.7",
         "@babel/plugin-proposal-class-properties": "^7.8.3",
@@ -83,6 +82,7 @@
         "@commitlint/cli": "^8.3.5",
         "@commitlint/config-conventional": "^8.3.4",
         "@hot-loader/react-dom": "^16.12.0",
+        "@sentry/webpack-plugin": "^1.11.1",
         "@svgr/webpack": "^5.2.0",
         "antd-dayjs-webpack-plugin": "^0.0.8",
         "autoprefixer": "^9.7.4",
@@ -123,7 +123,7 @@
         "image-webpack-loader": "^6.0.0",
         "jest": "^25.1.0",
         "less": "^3.11.1",
-        "less-loader": "^5.0.0",
+        "less-loader": "^6.0.0",
         "lint-staged": "^10.0.8",
         "mini-css-extract-plugin": "^0.9.0",
         "optimize-css-assets-webpack-plugin": "^5.0.3",
@@ -150,8 +150,7 @@
         "webpack-bundle-analyzer": "^3.6.1",
         "webpack-cli": "^3.3.11",
         "webpack-dev-server": "^3.10.3",
-        "webpack-merge": "^4.2.2",
-        "webpackbar": "^4.0.0"
+        "webpack-merge": "^4.2.2"
     },
     "license": "ISC",
     "config": {

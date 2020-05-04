@@ -1,3 +1,5 @@
+/** @format */
+
 export default class TeacherModel {
     constructor(obj = {}) {
         this.id = obj?.id;

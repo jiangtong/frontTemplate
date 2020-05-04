@@ -1,3 +1,5 @@
+/** @format */
+
 const Mock = require('mockjs');
 
 function MockApi(app) {

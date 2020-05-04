@@ -1,13 +1,18 @@
+/** @format */
+
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import BaseComponents from '@layout';
-import { getSession, asyncComponent } from '@utils/utils';
+import useSuspense from '@useHooks/useSuspense';
+import { getSession } from '@utils/utils';
 // 师资管理
 import teachermanager from './teacher';
 // 登陆
-const Login = asyncComponent(React.lazy(() => import('@pages/Login')));
+const Model = () => import('@pages/Login');
 
 const Root = () => {
+    const Login = useSuspense(Model);
+
     // const [teachermanager, setTeachermanager] = useState([]);
 
     // useEffect(() => {

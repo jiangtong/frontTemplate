@@ -1,7 +1,9 @@
+/** @format */
+
 // 防抖
 import React, { useRef, useCallback, useEffect } from 'react';
 
-const useDebounce = (fn, delay) => {
+export default (fn, delay) => {
     const timeoutRef = useRef();
 
     const cancel = useCallback(() => {

@@ -1,11 +1,8 @@
 /** @format */
-// eslint-disable-next-line import/no-extraneous-dependencies
-const nodeobjecthash = require('node-object-hash');
 const merge = require('webpack-merge');
-const path = require('path');
-const webpack = require('webpack');
+const chalk = require('chalk');
+const os = require('os');
 const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
-const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const portfinder = require('portfinder');
 const Mock = require('../src/mock/mockApi');
 const config = require('./config');
@@ -14,7 +11,7 @@ const commonConfig = require('./webpack.config.common.js');
 // 需要转发的接口拼接
 const { proxyArr = [] } = config;
 
-let newProxyObj = {};
+const newProxyObj = {};
 
 proxyArr.forEach(item => {
     newProxyObj[item.name] = {
@@ -23,6 +20,14 @@ proxyArr.forEach(item => {
         secure: false
     };
 });
+
+// 获取本机ip地址
+const getLocalHostnameAndIp = () => {
+    const networks = os.networkInterfaces().en0;
+    const localNetwork = networks.find(item => item.family === 'IPv4');
+    const localIpAddress = localNetwork.address;
+    return localIpAddress;
+};
 
 const devConfig = merge.smart(commonConfig, {
     devtool: 'cheap-module-eval-source-map',
@@ -50,7 +55,6 @@ const devConfig = merge.smart(commonConfig, {
         //         files: ['package-lock.json', 'yarn.lock']
         //     }
         // }),
-
         // new HardSourceWebpackPlugin.ExcludeModulePlugin([
         //     {
         //         test: /.*\.DS_Store/
@@ -65,6 +69,7 @@ const devConfig = merge.smart(commonConfig, {
         publicPath: '/'
     },
     devServer: {
+        host: config.host,
         port: config.port,
         historyApiFallback: true,
         compress: true,
@@ -76,36 +81,12 @@ const devConfig = merge.smart(commonConfig, {
         // contentBase: 'dist',
         disableHostCheck: true,
         proxy: newProxyObj,
-        stats: {
-            // 添加缓存（但未构建）模块的信息
-            cached: true,
-            // 显示缓存的资源（将其设置为 `false` 则仅显示输出的文件）
-            cachedAssets: true,
-            // 添加 children 信息
-            children: true,
-            // 添加 chunk 信息（设置为 `false` 能允许较少的冗长输出）
-            chunks: true,
-            // 将构建模块信息添加到 chunk 信息
-            chunkModules: true,
-            // `webpack --colors` 等同于
-            colors: true,
-            // 添加 --env information
-            env: false,
-            // 添加错误信息
-            errors: true,
-            // 添加错误的详细信息（就像解析日志一样）
-            errorDetails: true,
-            // 添加 compilation 的哈希值
-            hash: false,
-            // 添加构建模块信息
-            modules: true,
-            // 当文件大小超过 `performance.maxAssetSize` 时显示性能提示
-            performance: true,
-            // 添加时间信息
-            timings: true,
-            // 添加警告
-            warnings: true
-        }
+        before(app) {
+            if (process.env.IS_Mock) {
+                Mock(app);
+            }
+        },
+        stats: 'errors-only'
     }
 });
 
@@ -117,6 +98,46 @@ module.exports = new Promise((resolve, reject) => {
         if (err) reject(err);
         else {
             devConfig.devServer.port = port;
+            devConfig.plugins = [
+                ...devConfig.plugins,
+                // 显示那个小文字
+                function() {
+                    this.hooks.done.tap('done', stats => {
+                        if (
+                            stats.compilation.errors &&
+                            stats.compilation.errors.length &&
+                            process.argv.indexOf('--watch') === -1
+                        ) {
+                            console.log(chalk.red.bold('build error'));
+                            process.exit(1);
+                        } else {
+                            console.log(chalk('   App running at:'));
+                            console.log(
+                                `   - Local:    ${chalk.cyan(
+                                    `http://127.0.0.1:${chalk.cyan.bold(port)}`
+                                )}`
+                            );
+                            console.log(
+                                `   - Network:  ${chalk.cyan(
+                                    `http://${getLocalHostnameAndIp()}:${chalk.cyan.bold(
+                                        port
+                                    )}`
+                                )}`
+                            );
+
+                            console.log(chalk('\n'));
+
+                            console.log(
+                                chalk.red(
+                                    '   如果需要提供一个与你处于同一局域网内的可访问地址，请使用Network'
+                                )
+                            );
+                            console.log(chalk('\n\n'));
+                            // process.exit(0);
+                        }
+                    });
+                }
+            ];
         }
         resolve(devConfig);
     });
