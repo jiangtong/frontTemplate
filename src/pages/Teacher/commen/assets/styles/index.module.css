@@ -1,4 +1,17 @@
+.className {
+    background-color: rebeccapurple;
+}
+
 .color_name {
+    composes: className;
     color: green;
     font-size: 24px;
+}
+
+:global(.color_name) {
+    color: yellow;
+}
+
+:local(.color_name) {
+    color: red;
 }

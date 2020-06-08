@@ -1,15 +1,10 @@
 /**
+ * /* eslint-disable react-hooks/exhaustive-deps
  *
  * @format
  */
 
-import React, {
-    useCallback,
-    useEffect,
-    useRef,
-    useReducer,
-    useMemo
-} from 'react';
+import { useCallback, useEffect, useRef, useReducer, useMemo } from 'react';
 import useRequest from '@useHooks/useRequest';
 
 class UseTableInitState {
@@ -43,19 +38,20 @@ const reducer = (state, action) => {
  * 请求
  * @param fun 地址
  * @param deps 依赖参数，改变时重新请求
- * @param options 请求配置项
+ * @param options 请求配置项  defaultPageSize默认请求条数
  * @param initRequest=true 默认进来就请求,如果希望等数据进来在请求可以使用requestAction
+ * @param needPage=true 默认进来就请求,需要分页吗
  * @returns {data, loading, requestAction} data=>数据，loading=>加载状态，requestAction=>可以再次请求
  */
 export default ({
     fun,
     deps = [],
+    needPage = true,
     options = { defaultPageSize: 10 },
     initRequest = false
 }) => {
     const initState = useMemo(() => new UseTableInitState(), []);
     const requestRef = useRef(initRequest);
-
     const [state, dispatch] = useReducer(reducer, {
         ...initState,
         pageSize: options.defaultPageSize
@@ -71,10 +67,13 @@ export default ({
     // 执行的事件
     const run = useCallback(() => {
         const params = {
-            current: state.current,
-            pageSize: state.pageSize,
             ...state.formData
         };
+
+        if (needPage) {
+            params.pageNum = state.current;
+            params.pageSize = state.pageSize;
+        }
 
         if (state.filters) {
             params.filters = state.filters;
@@ -82,12 +81,16 @@ export default ({
         if (state.sorter) {
             params.sorter = state.sorter;
         }
-        console.log(params);
         requestAction(params).then(res => {
             const payload = { data: [], totals: 0 };
             if (res.success) {
-                payload.data = res?.obj?.rows ?? [];
-                payload.total = res?.obj?.total ?? 0;
+                if (needPage) {
+                    payload.data = res?.obj?.rows ?? [];
+                    payload.total = res?.obj?.total ?? 0;
+                } else {
+                    payload.data = res?.obj ?? [];
+                    payload.total = 0;
+                }
             } else {
                 payload.data = [];
                 payload.total = 0;
@@ -104,9 +107,10 @@ export default ({
     useEffect(() => {
         if (requestRef.current) {
             run();
+
             requestRef.current = true;
         }
-    }, [state.current, state.count]);
+    }, [state.current, state.pageSize, state.count, ...deps]);
 
     // 分页
     const onChange = useCallback(
@@ -142,11 +146,6 @@ export default ({
             payload: { count: state.count + 1 }
         });
     }, [state.count]);
-
-    // deps 变化后，重置表格
-    useEffect(() => {
-        reload();
-    }, deps);
 
     // 主动搜索
     const searchSubmit = useCallback(

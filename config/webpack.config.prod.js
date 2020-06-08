@@ -11,12 +11,11 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const path = require('path');
+// const CopyWebpackPlugin = require('copy-webpack-plugin');
+// const path = require('path');
+const SentryPlugin = require('@sentry/webpack-plugin');
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
-const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-const PurgecssPlugin = require('purgecss-webpack-plugin');
 const config = require('./config');
 const commonConfig = require('./webpack.config.common.js');
 
@@ -29,10 +28,17 @@ const publicConfig = {
         // libraryTarget: 'umd' //打包文件加载方式
     },
 
-    devtool: 'none',
+    devtool: 'source-map',
     mode: 'production',
 
     plugins: [
+        new SentryPlugin({
+            release: 'baili_001',
+            include: './dist',
+            urlPrefix: '~/',
+            ignore: ['node_modules']
+        }),
+
         new TerserPlugin({
             cache: true,
             extractComments: false,
@@ -98,11 +104,6 @@ const publicConfig = {
             filename: 'app/css/[name].[contenthash:8].css',
             chunkFilename: 'app/css/[name].[contenthash:8].css',
             ignoreOrder: true
-        }),
-
-        // 必须和MiniCssExtractPlugin配合，删除没用的css
-        new PurgecssPlugin({
-            paths: glob.sync(`${config.appSrc}/**/*`, { nodir: true })
         }),
 
         // 压缩css

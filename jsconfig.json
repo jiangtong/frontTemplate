@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "allowSyntheticDefaultImports": false,
+    "baseUrl": "./",
+    "paths": {
+      "src/*": ["src/*"],
+      "redux/*": ["src/redux/*"],
+      "assets/*": ["src/assets/*"],
+      "BaseLayout/*": ["src/BaseLayout/*"],
+      "Components/*": ["src/Components/*"],
+      "Utilies/*": ["src/utils/*"]
+    }
+  },
+  "exclude": ["dist"],
+  "include": ["src"]
+}

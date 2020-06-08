@@ -1,7 +1,10 @@
 /** @format */
 
 module.exports = {
-    plugins: ['react', 'jsdoc', 'react-hooks', 'prettier'],
+    // 第三方插件
+    plugins: ['react', 'jsdoc', 'jsx-a11y', 'react-hooks', 'prettier'],
+
+    // 解析器用于解析代码
     parser: 'babel-eslint',
     parserOptions: {
         //对于新的ES6全局变量，请使用{ "env": { "es6": true } }（此设置会自动启用ES6语法）。解析器选项.eslintrc.*通过使用parserOptions属性在您的文件中设置。可用的选项是：
@@ -14,6 +17,12 @@ module.exports = {
         }
     },
 
+    // 可以全局使用变量
+    globals: {
+        React: true
+    },
+
+    // 环境，这里可以设置环来做区别判断
     env: {
         jest: true,
         browser: true,
@@ -28,7 +37,14 @@ module.exports = {
         'import/ignore': ['node_modules']
     },
 
-    extends: ['airbnb', 'plugin:prettier/recommended'],
+    // 使用的扩展库
+    extends: [
+        'airbnb',
+        'plugin:prettier/recommended',
+        'plugin:jsx-a11y/recommended'
+    ],
+
+    // 规则配置
     rules: {
         'prettier/prettier': [
             'error',
@@ -47,6 +63,7 @@ module.exports = {
         'react/jsx-boolean-value': 2, //在JSX中强制布尔属性符号
         'react/jsx-closing-tag-location': 0, //闭合括号
         // "react/jsx-closing-bracket-location": 1, //在JSX中验证右括号位置
+        'react/jsx-fragments': 0,
         'react/jsx-curly-spacing': [2, { when: 'never', children: true }], //在JSX属性和表达式中加强或禁止大括号内的空格。
         'react/jsx-indent-props': [2, 4], //验证JSX中的props缩进
         'react/jsx-curly-newline': 0,
@@ -61,7 +78,7 @@ module.exports = {
         'react/jsx-no-undef': 1, //在JSX中禁止未声明的变量
         'react/jsx-pascal-case': 0, //为用户定义的JSX组件强制使用PascalCase
         'react/jsx-sort-props': 0, //强化props按字母排序
-        'react/jsx-uses-react': 1, //防止反应被错误地标记为未使用
+        'react/jsx-uses-react': 2, //防止反应被错误地标记为未使用
         'react/jsx-uses-vars': 2, //防止在JSX中使用的变量被错误地标记为未使用
         'react/no-danger': 0, //防止使用危险的JSX属性
         'react/no-did-mount-set-state': 0, //防止在componentDidMount中使用setState
@@ -80,9 +97,9 @@ module.exports = {
         'react/no-array-index-key': 0, //防止在数组中遍历中使用数组key做索引
         'react/no-deprecated': 1, //不使用弃用的方法
         'react/prefer-stateless-function': 1, //没有state的用处的地方写成fun组件,
-        'jsx-a11y/click-events-have-key-events': 0,
-        'jsx-a11y/no-static-element-interactions': 0,
-        'jsx-a11y/jsx-one-expression-per-line': 0, //必须分开
+        // 'jsx-a11y/click-events-have-key-events': 0,
+        // 'jsx-a11y/no-static-element-interactions': 0,
+        // 'jsx-a11y/jsx-one-expression-per-line': 0, //必须分开
         'react/jsx-one-expression-per-line': 0, //必须分开
         'react/state-in-constructor': 0, //state是否必须在constructor里
         'react/button-has-type': 0, // button必须要类型
@@ -94,12 +111,13 @@ module.exports = {
         'no-console': 0, //不禁用console
         'no-debugger': 2, //禁用debugger
         'no-new': 0,
+        'no-restricted-syntax': 0,
         'no-var': 0, //对var警告
         semi: 0, //不强制使用分号
         'no-irregular-whitespace': 0, //不规则的空白不允许
         'no-trailing-spaces': 1, //一行结束后面有空格就发出警告
         'eol-last': 0, //文件以单一的换行符结束
-        'no-unused-vars': [1, { vars: 'all', args: 'after-used' }], //不能有声明后未被使用的变量或参数
+        'no-unused-vars': [2, { vars: 'all', args: 'after-used' }], //不能有声明后未被使用的变量或参数
         'no-underscore-dangle': 0, //标识符不能以_开头或结尾
         'no-alert': 2, //禁止使用alert confirm prompt
         'no-lone-blocks': 0, //禁止不必要的嵌套块

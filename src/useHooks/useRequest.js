@@ -1,10 +1,9 @@
 /**
- * /* eslint-disable react-hooks/exhaustive-deps
  *
  * @format
  */
 
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 
 /**
  * 请求

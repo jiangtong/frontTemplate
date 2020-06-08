@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const useUpdate = () => {
     const [, setFlag] = useState();

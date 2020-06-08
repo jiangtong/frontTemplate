@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 // 让useState可以按照setState的方法使用
 export default ({ initState }) => {
@@ -19,5 +19,6 @@ export default ({ initState }) => {
             isUpdate.current();
         }
     });
+
     return [state, setStateFun];
 };

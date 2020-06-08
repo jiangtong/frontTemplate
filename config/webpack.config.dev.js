@@ -2,7 +2,7 @@
 const merge = require('webpack-merge');
 const chalk = require('chalk');
 const os = require('os');
-const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
+// const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 const portfinder = require('portfinder');
 const Mock = require('../src/mock/mockApi');
 const config = require('./config');
@@ -68,6 +68,7 @@ const devConfig = merge.smart(commonConfig, {
         chunkFilename: 'app/[name].[chunkhash].bundle.js',
         publicPath: '/'
     },
+
     devServer: {
         host: config.host,
         port: config.port,
@@ -109,7 +110,7 @@ module.exports = new Promise((resolve, reject) => {
                             process.argv.indexOf('--watch') === -1
                         ) {
                             console.log(chalk.red.bold('build error'));
-                            process.exit(1);
+                            // process.exit(1);
                         } else {
                             console.log(chalk('   App running at:'));
                             console.log(

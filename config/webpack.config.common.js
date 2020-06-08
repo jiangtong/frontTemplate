@@ -9,11 +9,10 @@ const chalk = require('chalk');
 const path = require('path');
 const webpack = require('webpack');
 const AntdDayjsWebpackPlugin = require('antd-dayjs-webpack-plugin');
-const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
+// const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
     .BundleAnalyzerPlugin;
-const SentryPlugin = require('@sentry/webpack-plugin');
 // const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 // SpeedMeasurePlugin有冲突目前不能一起用
 const SpeedMeasurePlugin = require('speed-measure-webpack-plugin');
@@ -112,13 +111,6 @@ const commonConfig = {
     // ],
 
     plugins: [
-        // new SentryPlugin({
-        //     release: 'baili_003',
-        //     include: './dist',
-        //     urlPrefix: '~/',
-        //     ignore: ['node_modules'],
-        // }),
-
         new webpack.optimize.RuntimeChunkPlugin({
             name: entrypoint => `runtime-${entrypoint.name}`
         }),
@@ -126,66 +118,86 @@ const commonConfig = {
         new webpack.optimize.SplitChunksPlugin({
             chunks: 'all',
             minSize: 30000,
-            maxAsyncRequests: 5,
-            maxInitialRequests: 10,
-            name: true,
-            automaticNameDelimiter: '~',
+            minChunks: 1,
+            maxAsyncRequests: 3,
+            maxInitialRequests: 3,
+            // maxAsyncRequests: 10,
+            // maxInitialRequests: 10,
+            // name: true,
+            // automaticNameDelimiter: '~',
             cacheGroups: {
-                views: {
-                    test: module =>
-                        /ant/.test(module.context) ||
-                        /rc-/.test(module.context) ||
-                        /react-router-breadcrumbs-hoc/.test(module.context) ||
-                        /echarts/.test(module.context),
-                    name: 'views',
-                    priority: 10,
-                    reuseExistingChunk: true
-                },
-
-                reactVendor: {
-                    name: 'reactVendor',
-                    priority: 10,
-                    test: module =>
-                        /react/.test(module.context) ||
-                        /redux/.test(module.context) ||
-                        /react-dom/.test(module.context) ||
-                        /react-redux/.test(module.context) ||
-                        /react-thunk/.test(module.context),
-                    reuseExistingChunk: true
-                },
-
-                utils: {
-                    name: 'utils',
-                    priority: 10,
-                    test: module =>
-                        /axios/.test(module.context) ||
-                        /qs/.test(module.context) ||
-                        /classnames/.test(module.context) ||
-                        /prop-types/.test(module.context),
-                    reuseExistingChunk: true
-                },
-
-                vendor: {
-                    priority: -10,
+                vendors: {
+                    name: 'chunk-vendors',
                     test: /[\\/]node_modules[\\/]/,
-                    name: 'vendor'
+                    priority: -10,
+                    chunks: 'initial'
                 },
-
-                // 自定义组件
-                // commons: {
-                //     name: 'chunk-commons',
-                //     test: path.resolve(config.appSrc, 'components'),
-                //     minChunks: 3, //  minimum common number
-                //     priority: 5,
-                //     reuseExistingChunk: true
-                // },
-
-                default: {
+                common: {
+                    name: 'chunk-common',
                     minChunks: 2,
                     priority: -20,
+                    chunks: 'initial',
                     reuseExistingChunk: true
                 }
             }
+            // cacheGroups: {
+            //     views: {
+            //         test: module =>
+            //             /ant/.test(module.context) ||
+            //             /rc-/.test(module.context) ||
+            //             /react-router-breadcrumbs-hoc/.test(module.context) ||
+            //             /echarts/.test(module.context),
+            //         name: 'views',
+            //         priority: 10,
+            //         reuseExistingChunk: true
+            //     },
+
+            //     reactVendor: {
+            //         name: 'reactVendor',
+            //         priority: 10,
+            //         test: module =>
+            //             /react/.test(module.context) ||
+            //             /redux/.test(module.context) ||
+            //             /react-redux/.test(module.context) ||
+            //             /react-dom/.test(module.context) ||
+            //             /redux-saga/.test(module.context) ||
+            //             /rematch/.test(module.context) ||
+            //             /react-thunk/.test(module.context),
+            //         reuseExistingChunk: true
+            //     },
+
+            //     utils: {
+            //         name: 'utils',
+            //         priority: 10,
+            //         test: module =>
+            //             /axios/.test(module.context) ||
+            //             /qs/.test(module.context) ||
+            //             /classnames/.test(module.context) ||
+            //             /prop-types/.test(module.context),
+            //         // reuseExistingChunk: true
+            //     },
+
+            //     vendor: {
+            //         priority: -10,
+            //         test: /[\\/]node_modules[\\/]/,
+            //         name: 'vendor'
+            //     },
+
+            //     // 自定义组件
+            //     // commons: {
+            //     //     name: 'chunk-commons',
+            //     //     test: path.resolve(config.appSrc, 'components'),
+            //     //     minChunks: 3, //  minimum common number
+            //     //     priority: 5,
+            //     //     reuseExistingChunk: true
+            //     // },
+
+            //     default: {
+            //         minChunks: 2,
+            //         priority: -20,
+            //         reuseExistingChunk: true
+            //     }
+            // }
         }),
 
         // 用Day.js替换moment
@@ -193,6 +205,7 @@ const commonConfig = {
         // 只加载 `moment/locale/ja.js` 和 `moment/locale/it.js` 优化moment体积
         // new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /ja|it/),
 
+        // 分析包的大小的
         // new BundleAnalyzerPlugin({
         //     // concatenateModules: false,
         //     //  可以是`server`，`static`或`disabled`。
@@ -256,24 +269,11 @@ const commonConfig = {
         // new HtmlWebpackTagsPlugin({
         //     tags: [
         //         isDev ? './public/js/baiduMap.js' : 'public/js/baiduMap.js',
-        //         isDev ? './public/js/LuShu.js' : 'public/js/LuShu.js',
-        //         isDev ? './public/js/Heatmap.js' : 'public/js/Heatmap.js',
-
         //         {
         //             path:
         //                 'http://api.map.baidu.com/api?v=3.0&ak=moMIflSL2yGiq3VwQ3bynEKE7gl2cjQw',
         //             type: 'js'
         //         },
-        //         {
-        //             path:
-        //                 'http://api.map.baidu.com/library/LuShu/1.2/src/LuShu_min.js',
-        //             type: 'js'
-        //         },
-        //         {
-        //             path:
-        //                 'http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js',
-        //             type: 'js'
-        //         }
         //     ],
         //     append: false
         // })
@@ -290,7 +290,7 @@ const commonConfig = {
             '@useHooks': path.resolve(config.appSrc, 'useHooks'),
             '@reducers': path.resolve(config.appSrc, 'redux/reducers'),
             '@actions': path.resolve(config.appSrc, 'redux/actions'),
-            '@useRedux': path.resolve(config.appSrc, 'redux'),
+            '@redux': path.resolve(config.appSrc, 'redux'),
             '@layout': path.resolve(config.appSrc, 'layout'),
             '@router': path.resolve(config.appSrc, 'router'),
             '@pages': path.resolve(config.appSrc, 'pages'),
@@ -316,12 +316,11 @@ const commonConfig = {
                     {
                         loader: 'eslint-loader',
                         options: {
-                            // emitWarning: true,  //如果需要可以打开，在测试环境把所有 Error 都当做 Warn，这样避免了修改 ESLint 规则
+                            emitWarning: isDev, // 是否所有的error都当做warning。如果需要可以打开，在测试环境把所有 Error 都当做 Warn，这样避免了修改 ESLint 规则
                             failOnError: false,
                             failOnWarning: true, // 警告不显示
                             quiet: true,
                             cache: true,
-                            // emitWarning: true, // 是否所有的error都当做warning
                             fix: false // 是否自动修复
                         }
                     }

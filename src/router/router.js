@@ -1,10 +1,11 @@
 /** @format */
 
 import React from 'react';
+import { getSession } from '@utils/utils';
+
 import { Switch, Route, Redirect } from 'react-router-dom';
 import BaseComponents from '@layout';
 import useSuspense from '@useHooks/useSuspense';
-import { getSession } from '@utils/utils';
 // 师资管理
 import teachermanager from './teacher';
 // 登陆

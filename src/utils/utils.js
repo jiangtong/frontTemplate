@@ -2,17 +2,50 @@
 
 import React, { Suspense } from 'react';
 
-// 设置本地临时存储
-// export const setLocal = (key, value) => localStorage.setItem(key, value);
+/**
+ * 存储
+ * @param {*} key :键名
+ * @param {*} value ：所存入的值
+ */
+export const setLocal = (key, value) => {
+    localStorage.setItem(key, JSON.stringify(value));
+};
 
-// 读取本地临时存储
-// export const getLocal = (key) => localStorage.getItem(key);
+/**
+ * 读取
+ * @param {*} key ：键名
+ */
+export const getLocal = key => {
+    if (!key) {
+        return;
+    }
+    return localStorage.getItem(key);
+};
 
 // 删除本地临时存储
 export const removeLocal = key => localStorage.removeItem(key);
 
 // clear清除所有的key/value
 export const clearLocal = () => localStorage.clear();
+
+/**
+ * 存储
+ * @param {*} key :键名
+ * @param {*} value ：所存入的值
+ */
+export const setSession = (key, value) => {
+    sessionStorage.setItem(key, JSON.stringify(value));
+};
+/**
+ * 读取
+ * @param {*} key ：键名
+ */
+export const getSession = key => {
+    if (!key) {
+        return;
+    }
+    return sessionStorage.getItem(key);
+};
 
 // 去除字符串中所有的空格， 返回值：没有空格的字符串
 export const Trim = (str, is_global) => {
@@ -173,56 +206,6 @@ export const getHashParam = function() {
     return res;
 };
 
-// 按需异步加载组件
-export const asyncComponent = (Component, fallback = null) => {
-    return props => {
-        return (
-            <Suspense fallback={fallback}>
-                <Component {...props} />
-            </Suspense>
-        );
-    };
-};
-
-/**
- * 存储
- * @param {*} key :键名
- * @param {*} value ：所存入的值
- */
-export const setSession = (key, value) => {
-    sessionStorage.setItem(key, JSON.stringify(value));
-};
-/**
- * 读取
- * @param {*} key ：键名
- */
-export const getSession = key => {
-    if (!key) {
-        return;
-    }
-    return sessionStorage.getItem(key);
-};
-
-/**
- * 存储
- * @param {*} key :键名
- * @param {*} value ：所存入的值
- */
-export const setLocal = (key, value) => {
-    localStorage.setItem(key, JSON.stringify(value));
-};
-
-/**
- * 读取
- * @param {*} key ：键名
- */
-export const getLocal = key => {
-    if (!key) {
-        return;
-    }
-    return localStorage.getItem(key);
-};
-
 /**
  * 扁平化数据结构 => 树形结构数据结构
  * @param items 原始数据
@@ -237,3 +220,14 @@ export const nest = (items, id = -1, link = 'parentId') =>
             ...item,
             children: this.nest(items, item.id)
         }));
+
+// 按需异步加载组件
+export const asyncComponent = (Component, fallback = null) => {
+    return props => {
+        return (
+            <Suspense fallback={fallback}>
+                <Component {...props} />
+            </Suspense>
+        );
+    };
+};

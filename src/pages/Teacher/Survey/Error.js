@@ -8,21 +8,21 @@ class ErrorBoundary extends React.Component {
         this.state = { error: null, errorInfo: null };
     }
 
-    static getDerivedStateFromError() {
-        return { hasError: true };
-    }
+    // static getDerivedStateFromError() {
+    //     return { hasError: true };
+    // }
 
-    componentDidCatch(error, errorInfo) {
-        this.setState({
-            error,
-            errorInfo
-        });
+    // componentDidCatch(error, errorInfo) {
+    //     this.setState({
+    //         error,
+    //         errorInfo
+    //     });
 
-        Sentry.withScope(scope => {
-            scope.setExtras(errorInfo);
-            Sentry.captureException(error);
-        });
-    }
+    //     Sentry.withScope(scope => {
+    //         scope.setExtras(errorInfo);
+    //         Sentry.captureException(error);
+    //     });
+    // }
 
     render() {
         if (this.state.errorInfo) {
@@ -79,7 +79,7 @@ class BuggyCounter extends React.Component {
         if (this.state.counter === 5) {
             throw new Error('I crashed!');
         }
-        return <div onClick={this.handleClick}>{this.state.counter}</div>;
+        return <button onClick={this.handleClick}>{this.state.counter}</button>;
     }
 }
 
@@ -108,6 +108,13 @@ class BuggyCounterTWO extends React.Component {
         }
         return (
             <div>
+                <button
+                    onClick={() => {
+                        console.log(this.fffff.ffffff);
+                    }}
+                >
+                    test1wwww
+                </button>
                 <button onClick={this.handleClick.bind(this)}>jiangtong</button>
             </div>
         );

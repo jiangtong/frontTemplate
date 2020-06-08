@@ -108,9 +108,19 @@ class LoginComponent extends Component {
                                         },
                                         {
                                             menuNo: 'WHHXF1710S1712',
-                                            menuName: 'demo2-context',
+                                            menuName: 'demo2-saga',
                                             menuLevel: 'TWO',
-                                            menuUrl: '/teachermanager/growth',
+                                            menuUrl: '/teachermanager/saga',
+                                            parentMenuNo: 'WHHXF1710',
+                                            parentMenuLevel: 'ONE',
+                                            menuList: [],
+                                            moduleList: []
+                                        },
+                                        {
+                                            menuNo: 'WHHXF1710S1714',
+                                            menuName: 'demo2-rematch',
+                                            menuLevel: 'TWO',
+                                            menuUrl: '/teachermanager/rematch',
                                             parentMenuNo: 'WHHXF1710',
                                             parentMenuLevel: 'ONE',
                                             menuList: [],

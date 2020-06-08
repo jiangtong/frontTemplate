@@ -1,3 +1,5 @@
+/** @format */
+
 import { FAIL, SUCCESS } from '@actions/menuWarnList';
 
 const initState = {

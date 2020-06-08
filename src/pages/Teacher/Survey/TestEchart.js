@@ -1,7 +1,7 @@
 /** @format */
 
 import React, { Component } from 'react';
-import Echart from '@components/Echarts';
+// import Echart from '@components/Echarts';
 import { withRouter } from 'react-router-dom';
 // import lottie from 'lottie-web';
 // import highComponentFuc from '@pages/Teacher/commen/HighComponent';
@@ -12,6 +12,14 @@ import '../commen/assets/styles/index.css';
 // import animation from './pencil.json';
 import scssModule from '../commen/assets/styles/index.module.scss';
 import '../commen/assets/styles/index.scss';
+
+// const data = [
+//     'Racing car sprays burning fuel into crowd.',
+//     'Japanese princess to wed commoner.',
+//     'Australian walks 100km after outback crash.',
+//     'Man charged over missing wedding girl.',
+//     'Los Angeles battles huge wildfires.'
+// ];
 
 // 装饰器写法
 // @highComponentFuc('teacherType4College')
@@ -35,15 +43,17 @@ class TestEchart extends Component {
         return (
             <div>
                 <div style={{ height: 50 }} id="name"></div>
-                <div className="color">less</div>
-                <div className={lessModule.color_ccc}>lessModle</div>
+
                 <div className="csscolor">css</div>
                 <div className={cssModule.color_name}>cssModule</div>
+
+                <div className="color">less111</div>
+                <div className={lessModule.color_ccc}>lessModle</div>
 
                 <div className="scsscolor">scss</div>
                 <div className={scssModule.color}>scssModule</div>
 
-                <Echart
+                {/* <Echart
                     onClickAction={params => {
                         if (this.props.onClickAction)
                             this.props.onClickAction(params);
@@ -87,7 +97,7 @@ class TestEchart extends Component {
                         ]
                     }}
                     // eslint-disable-next-line react/jsx-closing-tag-location
-                ></Echart>
+                ></Echart> */}
             </div>
         );
     }

@@ -1,7 +1,7 @@
 /** @format */
 
 // 节流
-import React, { useRef, useCallback, useEffect } from 'react';
+import { useRef, useCallback, useEffect } from 'react';
 
 const useThrottle = (fn, delay) => {
     const timeoutRef = useRef(undefined);

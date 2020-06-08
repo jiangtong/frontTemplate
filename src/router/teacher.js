@@ -7,6 +7,14 @@ const Survey = asyncComponent(
     React.lazy(() => import('../pages/Teacher/Survey/index'))
 );
 
+const Saga = asyncComponent(
+    React.lazy(() => import('../pages/Teacher/Saga/index'))
+);
+
+const Rematch = asyncComponent(
+    React.lazy(() => import('../pages/Teacher/Rematch/index'))
+);
+
 export default [
     {
         path: '/',
@@ -20,5 +28,13 @@ export default [
         path: '/teachermanager/survey',
         component: Survey,
         breadcrumb: '教师管理/11'
+    },
+    {
+        path: '/teachermanager/saga',
+        component: Saga
+    },
+    {
+        path: '/teachermanager/rematch',
+        component: Rematch
     }
 ];

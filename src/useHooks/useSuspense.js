@@ -8,7 +8,7 @@ export default (factory, fallback = null) => {
     const [Component, setCompoent] = useState(null);
 
     useEffect(() => {
-        factory();
+        // factory();
         const Com = lazy(factory);
 
         setCompoent(
