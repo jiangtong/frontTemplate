@@ -2,7 +2,10 @@
 
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
+import { Card } from 'antd';
 import TeacherNumbers from '@pages/Teacher/Survey/TeacherNumbers';
+import Demo from './Demo';
+import Demo2 from './Demo2';
 // import TestEchart from '@pages/Teacher/Survey/TestEchart';
 // import Demo from '@pages/Teacher/Survey/Demo';
 // import Error from '@pages/Teacher/Survey/Error';
@@ -39,12 +42,14 @@ class OurfacultyComp extends Component {
     render() {
         return (
             <>
+                12311 aaa
+                <Demo2></Demo2>
+                <Demo></Demo>
+                <Card title="11">dsdasd</Card>
                 <button onClick={this.onClick}>点击</button>
-
                 {this.state.name.join('.')}
                 <TeacherNumbers style={{ height: 300 }} />
                 {/* <Error></Error> */}
-
                 {/* <TestEchart></TestEchart> */}
                 {/* <TestEchart></TestEchart>
                  */}

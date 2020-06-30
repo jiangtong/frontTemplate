@@ -316,8 +316,8 @@ const commonConfig = {
                     {
                         loader: 'eslint-loader',
                         options: {
-                            emitWarning: isDev, // 是否所有的error都当做warning。如果需要可以打开，在测试环境把所有 Error 都当做 Warn，这样避免了修改 ESLint 规则
-                            failOnError: false,
+                            emitWarning: true, // 是否所有的error都当做warning。如果需要可以打开，在测试环境把所有 Error 都当做 Warn，这样避免了修改 ESLint 规则
+                            failOnError: true,
                             failOnWarning: true, // 警告不显示
                             quiet: true,
                             cache: true,

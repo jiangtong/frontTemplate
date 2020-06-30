@@ -117,7 +117,7 @@ module.exports = {
         'no-irregular-whitespace': 0, //不规则的空白不允许
         'no-trailing-spaces': 1, //一行结束后面有空格就发出警告
         'eol-last': 0, //文件以单一的换行符结束
-        'no-unused-vars': [2, { vars: 'all', args: 'after-used' }], //不能有声明后未被使用的变量或参数
+        'no-unused-vars': 2, //不能有声明后未被使用的变量或参数
         'no-underscore-dangle': 0, //标识符不能以_开头或结尾
         'no-alert': 2, //禁止使用alert confirm prompt
         'no-lone-blocks': 0, //禁止不必要的嵌套块
