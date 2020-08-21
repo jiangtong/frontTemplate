@@ -12,14 +12,14 @@ export default (fn, delay) => {
         }
     }, []);
 
-    const run = useCallback(() => {
+    const run = useCallback(
         (...args) => {
-            cancel();
             timeoutRef.current = setTimeout(() => {
                 fn(...args);
             }, delay);
-        };
-    }, [delay, cancel]);
+        },
+        [delay, cancel]
+    );
 
     useEffect(() => cancel, []);
 

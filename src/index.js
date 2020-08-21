@@ -16,7 +16,7 @@ import dolphins from '@redux/originalRedux/dolphins';
 
 import Root from './router/router';
 
-import '@src/commen/styles/index.scss';
+import '@src/common/styles/index.scss';
 
 const store = init({
     name: 'rematch',
@@ -34,7 +34,7 @@ const store = init({
 
 process.env.NODE_ENV === 'production' &&
     Sentry.init({
-        release: 'baili_001',
+        release: 'baili_004',
         logErrors: true,
         dsn: 'http://58b585d90eb348b3ab5d4ab3d4f317ac@localhost:9000/2'
     });

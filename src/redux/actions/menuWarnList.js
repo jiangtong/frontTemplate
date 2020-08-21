@@ -1,4 +1,6 @@
-import BaseSubFormRequest from '@utils/request/BaseSubFormRequest';
+/** @format */
+
+import BaseSubFormRequest from 'src/common/data-commen/api/Login/@utils/request/BaseSubFormRequest';
 
 export const SUCCESS = 'menuWarnList/success';
 export const FAIL = 'menuWarnList/fail';

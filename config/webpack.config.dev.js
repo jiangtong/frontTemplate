@@ -1,9 +1,9 @@
 /** @format */
 const merge = require('webpack-merge');
-const chalk = require('chalk');
 const os = require('os');
-// const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 const portfinder = require('portfinder');
+const webpack = require('webpack');
+const chalk = require('chalk');
 const Mock = require('../src/mock/mockApi');
 const config = require('./config');
 const commonConfig = require('./webpack.config.common.js');
@@ -30,44 +30,18 @@ const getLocalHostnameAndIp = () => {
 };
 
 const devConfig = merge.smart(commonConfig, {
+    // devtool: 'eval-source-map',
     devtool: 'cheap-module-eval-source-map',
     mode: 'development',
 
-    plugins: [
-        // 设置缓存
-        // new HardSourceWebpackPlugin({
-        //     configHash(webpackConfig) {
-        //         return nodeobjecthash({ sort: false }).hash(webpackConfig);
-        //     },
-        //     info: {
-        //         mode: 'none',
-        //         level: 'debug'
-        //     },
-        //     cachePrune: {
-        //         maxAge: 2 * 24 * 60 * 60 * 1000,
-        //         sizeThreshold: 50 * 1024 * 1024
-        //     },
-        //     // cacheDirectory: 'node_modules/.cache/hard-source/[confighash]',
-        //     // 当加载器，插件，其他构建时脚本或其他动态依赖项发生更改时，hard-source需要替换缓存以确保输出正确。environmentHash被用来确定这一点。如果散列与先前的构建不同，则将使用新的缓存
-        //     environmentHash: {
-        //         root: process.cwd(),
-        //         directories: [],
-        //         files: ['package-lock.json', 'yarn.lock']
-        //     }
-        // }),
-        // new HardSourceWebpackPlugin.ExcludeModulePlugin([
-        //     {
-        //         test: /.*\.DS_Store/
-        //     }
-        // ])
-    ],
-
     output: {
         path: config.appbuild,
-        filename: 'app/[name].[hash].bundle.js',
-        chunkFilename: 'app/[name].[chunkhash].bundle.js',
+        filename: 'app/[name].bundle.js',
+        chunkFilename: 'app/[name].chunk.js',
         publicPath: '/'
     },
+
+    plugins: [new webpack.HotModuleReplacementPlugin({})],
 
     devServer: {
         host: config.host,
@@ -92,6 +66,8 @@ const devConfig = merge.smart(commonConfig, {
 });
 
 // 自动寻找空余端口
+
+// 自动寻找空余端口
 module.exports = new Promise((resolve, reject) => {
     // 搜寻可用的端口号
     portfinder.basePort = config.port;
@@ -102,7 +78,7 @@ module.exports = new Promise((resolve, reject) => {
             devConfig.plugins = [
                 ...devConfig.plugins,
                 // 显示那个小文字
-                function() {
+                function a() {
                     this.hooks.done.tap('done', stats => {
                         if (
                             stats.compilation.errors &&

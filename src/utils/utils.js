@@ -17,7 +17,7 @@ export const setLocal = (key, value) => {
  */
 export const getLocal = key => {
     if (!key) {
-        return;
+        return undefined;
     }
     return localStorage.getItem(key);
 };
@@ -42,7 +42,7 @@ export const setSession = (key, value) => {
  */
 export const getSession = key => {
     if (!key) {
-        return;
+        return undefined;
     }
     return sessionStorage.getItem(key);
 };
@@ -92,12 +92,12 @@ export const delCookie = name => {
 
 // 获取地址栏参数
 export const getParam = () => {
-    var res = {};
+    const res = {};
     window.location.search
         .substr(1)
         .split('&')
         .forEach(i => {
-            var j = i.split('=');
+            const j = i.split('=');
             res[j[0]] = j[1];
         });
     return res;
@@ -181,9 +181,9 @@ export const ArrayNumSortTure = (arr, order = false) => {
 export const GetStrActualLength = str => {
     // /<summary>获得字符串实际长度，中文2，英文1</summary>
     // /<param name="str">要获得长度的字符串</param>
-    var realLength = 0;
-    var len = str.length;
-    var charCode = -1;
+    let realLength = 0;
+    const len = str.length;
+    let charCode = -1;
     for (let i = 0; i < len; i += 1) {
         charCode = str.charCodeAt(i);
         if (charCode >= 0 && charCode <= 128) realLength += 1;
@@ -193,14 +193,14 @@ export const GetStrActualLength = str => {
 };
 
 // 解析hash地址栏
-export const getHashParam = function() {
-    var res = {};
-    var startIndex = window.location.hash.indexOf('?') + 1;
+export const getHashParam = () => {
+    const res = {};
+    const startIndex = window.location.hash.indexOf('?') + 1;
     window.location.hash
         .substr(startIndex)
         .split('&')
-        .forEach(function(i) {
-            var j = i.split('=');
+        .forEach(i => {
+            const j = i.split('=');
             res[j[0]] = j[1];
         });
     return res;

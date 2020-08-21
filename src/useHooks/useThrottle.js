@@ -13,7 +13,7 @@ const useThrottle = (fn, delay) => {
         timeoutRef.current = undefined;
     }, []);
 
-    const run = useCallback(() => {
+    const run = useCallback(
         (...args) => {
             if (!timeoutRef.current) {
                 timeoutRef.current = setTimeout(() => {
@@ -22,8 +22,9 @@ const useThrottle = (fn, delay) => {
                     timeoutRef.current = undefined;
                 }, delay);
             }
-        };
-    }, [delay, cancel]);
+        },
+        [delay, cancel]
+    );
 
     useEffect(() => cancel, []);
 

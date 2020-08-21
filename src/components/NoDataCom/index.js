@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import './index.scss';
-import img from '@src/commen/img/wushuju.png';
+import img from '@src/common/img/wushuju.png';
 
 class NoDataCom extends Component {
     constructor(props) {

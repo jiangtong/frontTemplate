@@ -5,13 +5,13 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 // import lottie from 'lottie-web';
 // import highComponentFuc from '@pages/Teacher/commen/HighComponent';
-import '../commen/assets/styles/index.less';
-import lessModule from '../commen/assets/styles/index.module.less';
-import cssModule from '../commen/assets/styles/index.module.css';
-import '../commen/assets/styles/index.css';
+import '../common/assets/styles/index.less';
+import lessModule from '../common/assets/styles/index.module.less';
+import cssModule from '../common/assets/styles/index.module.css';
+import '../common/assets/styles/index.css';
 // import animation from './pencil.json';
-import scssModule from '../commen/assets/styles/index.module.scss';
-import '../commen/assets/styles/index.scss';
+import scssModule from '../common/assets/styles/index.module.scss';
+import '../common/assets/styles/index.scss';
 
 // const data = [
 //     'Racing car sprays burning fuel into crowd.',
@@ -24,10 +24,6 @@ import '../commen/assets/styles/index.scss';
 // 装饰器写法
 // @highComponentFuc('teacherType4College')
 class TestEchart extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     async componentDidMount() {
         // lottie.loadAnimation({
         //     container: document.getElementById('name'),

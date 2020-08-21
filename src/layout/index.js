@@ -11,7 +11,7 @@ import { getSession } from '@utils/utils';
 import './assets/styles/index.less';
 import routes from '@router/teacher';
 import withBreadcrumbs from 'react-router-breadcrumbs-hoc';
-import img from '@src/commen/img/xtzy.png';
+import img from '@src/common/img/xtzy.png';
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -52,9 +52,9 @@ class BaseComponents extends React.Component {
     }
 
     // eslint-disable-next-line prettier/prettier
-  renderMenu(data, path) {
+    renderMenu(data, path) {
         const that = this;
-        return data.map(function(item) {
+        return data.map(item => {
             if (item.menuList && item.menuList.length > 0) {
                 const spanElement = (
                     <span>

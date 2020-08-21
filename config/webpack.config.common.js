@@ -13,7 +13,6 @@ const AntdDayjsWebpackPlugin = require('antd-dayjs-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
     .BundleAnalyzerPlugin;
-// const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 // SpeedMeasurePlugin有冲突目前不能一起用
 const SpeedMeasurePlugin = require('speed-measure-webpack-plugin');
 
@@ -66,7 +65,7 @@ const sassLoader = () => {
         {
             loader: 'sass-resources-loader',
             options: {
-                resources: `${config.appSrc}/commen/styles/variable.scss`
+                resources: `${config.appSrc}/common/styles/variable.scss`
             }
         }
     ].filter(Boolean);
@@ -81,7 +80,7 @@ const lessLoader = (options = {}) => {
         {
             loader: 'sass-resources-loader',
             options: {
-                resources: `${config.appSrc}/commen/styles/variable.less`
+                resources: `${config.appSrc}/common/styles/variable.less`
             }
         }
     ].filter(Boolean);
@@ -121,10 +120,6 @@ const commonConfig = {
             minChunks: 1,
             maxAsyncRequests: 3,
             maxInitialRequests: 3,
-            // maxAsyncRequests: 10,
-            // maxInitialRequests: 10,
-            // name: true,
-            // automaticNameDelimiter: '~',
             cacheGroups: {
                 vendors: {
                     name: 'chunk-vendors',
@@ -140,64 +135,6 @@ const commonConfig = {
                     reuseExistingChunk: true
                 }
             }
-            // cacheGroups: {
-            //     views: {
-            //         test: module =>
-            //             /ant/.test(module.context) ||
-            //             /rc-/.test(module.context) ||
-            //             /react-router-breadcrumbs-hoc/.test(module.context) ||
-            //             /echarts/.test(module.context),
-            //         name: 'views',
-            //         priority: 10,
-            //         reuseExistingChunk: true
-            //     },
-
-            //     reactVendor: {
-            //         name: 'reactVendor',
-            //         priority: 10,
-            //         test: module =>
-            //             /react/.test(module.context) ||
-            //             /redux/.test(module.context) ||
-            //             /react-redux/.test(module.context) ||
-            //             /react-dom/.test(module.context) ||
-            //             /redux-saga/.test(module.context) ||
-            //             /rematch/.test(module.context) ||
-            //             /react-thunk/.test(module.context),
-            //         reuseExistingChunk: true
-            //     },
-
-            //     utils: {
-            //         name: 'utils',
-            //         priority: 10,
-            //         test: module =>
-            //             /axios/.test(module.context) ||
-            //             /qs/.test(module.context) ||
-            //             /classnames/.test(module.context) ||
-            //             /prop-types/.test(module.context),
-            //         // reuseExistingChunk: true
-            //     },
-
-            //     vendor: {
-            //         priority: -10,
-            //         test: /[\\/]node_modules[\\/]/,
-            //         name: 'vendor'
-            //     },
-
-            //     // 自定义组件
-            //     // commons: {
-            //     //     name: 'chunk-commons',
-            //     //     test: path.resolve(config.appSrc, 'components'),
-            //     //     minChunks: 3, //  minimum common number
-            //     //     priority: 5,
-            //     //     reuseExistingChunk: true
-            //     // },
-
-            //     default: {
-            //         minChunks: 2,
-            //         priority: -20,
-            //         reuseExistingChunk: true
-            //     }
-            // }
         }),
 
         // 用Day.js替换moment
@@ -205,52 +142,17 @@ const commonConfig = {
         // 只加载 `moment/locale/ja.js` 和 `moment/locale/it.js` 优化moment体积
         // new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /ja|it/),
 
-        // 分析包的大小的
-        // new BundleAnalyzerPlugin({
-        //     // concatenateModules: false,
-        //     //  可以是`server`，`static`或`disabled`。
-        //     //  在`server`模式下，分析器将启动HTTP服务器来显示软件包报告。
-        //     //  在“静态”模式下，会生成带有报告的单个HTML文件。
-        //     //  在`disabled`模式下，你可以使用这个插件来将`generateStatsFile`设置为`true`来生成Webpack Stats JSON文件。
-        //     analyzerMode: 'server',
-        //     //  将在“服务器”模式下使用的主机启动HTTP服务器。
-        //     analyzerHost: '127.0.0.1',
-        //     //  将在“服务器”模式下使用的端口启动HTTP服务器。
-        //     analyzerPort: 1331,
-        //     //  路径捆绑，将在`static`模式下生成的报告文件。
-        //     //  相对于捆绑输出目录。
-        //     // reportFilename: 'report.html',
-        //     //  模块大小默认显示在报告中。
-        //     //  应该是`stat`，`parsed`或者`gzip`中的一个。
-        //     //  有关更多信息，请参见“定义”一节。
-        //     defaultSizes: 'parsed',
-        //     //  在默认浏览器中自动打开报告
-        //     openAnalyzer: true,
-        //     //  如果为true，则Webpack Stats JSON文件将在bundle输出目录中生成
-        //     generateStatsFile: false,
-        //     //  如果`generateStatsFile`为`true`，将会生成Webpack Stats JSON文件的名字。
-        //     //  相对于捆绑输出目录。
-        //     statsFilename: 'stats.json',
-        //     //  stats.toJson（）方法的选项。
-        //     //  例如，您可以使用`source：false`选项排除统计文件中模块的来源。
-        //     //  在这里查看更多选项：https：//github.com/webpack/webpack/blob/webpack-1/lib/Stats.js#L21
-        //     statsOptions: null,
-        //     logLevel: 'info' // 日志级别。可以是'信息'，'警告'，'错误'或'沉默'。
-        // }),
-
         new HtmlWebpackPlugin({
             title: '',
             filename: 'index.html',
             template: config.appHtml,
             favicon: config.favicon,
             inject: true,
-            cache: true,
             minify: {
                 removeComments: true,
                 collapseWhitespace: true, // 折叠空行
                 removeAttributeQuotes: true // 删除双引号
-            },
-            chunksSortMode: 'dependency'
+            }
         }),
 
         new webpack.DefinePlugin({
@@ -264,8 +166,40 @@ const commonConfig = {
             format: `${chalk.green('Progressing')} [:bar] ${chalk.green.bold(
                 ':percent'
             )} (:elapsed seconds)`
-        })
+        }),
 
+        process.env.Analyzer && // 分析包的大小的
+            new BundleAnalyzerPlugin({
+                // concatenateModules: false,
+                //  可以是`server`，`static`或`disabled`。
+                //  在`server`模式下，分析器将启动HTTP服务器来显示软件包报告。
+                //  在“静态”模式下，会生成带有报告的单个HTML文件。
+                //  在`disabled`模式下，你可以使用这个插件来将`generateStatsFile`设置为`true`来生成Webpack Stats JSON文件。
+                analyzerMode: 'server',
+                //  将在“服务器”模式下使用的主机启动HTTP服务器。
+                analyzerHost: '127.0.0.1',
+                //  将在“服务器”模式下使用的端口启动HTTP服务器。
+                analyzerPort: 1331,
+                //  路径捆绑，将在`static`模式下生成的报告文件。
+                //  相对于捆绑输出目录。
+                // reportFilename: 'report.html',
+                //  模块大小默认显示在报告中。
+                //  应该是`stat`，`parsed`或者`gzip`中的一个。
+                //  有关更多信息，请参见“定义”一节。
+                defaultSizes: 'parsed',
+                //  在默认浏览器中自动打开报告
+                openAnalyzer: true,
+                //  如果为true，则Webpack Stats JSON文件将在bundle输出目录中生成
+                generateStatsFile: false,
+                //  如果`generateStatsFile`为`true`，将会生成Webpack Stats JSON文件的名字。
+                //  相对于捆绑输出目录。
+                statsFilename: 'stats.json',
+                //  stats.toJson（）方法的选项。
+                //  例如，您可以使用`source：false`选项排除统计文件中模块的来源。
+                //  在这里查看更多选项：https：//github.com/webpack/webpack/blob/webpack-1/lib/Stats.js#L21
+                statsOptions: null,
+                logLevel: 'info' // 日志级别。可以是'信息'，'警告'，'错误'或'沉默'。
+            })
         // new HtmlWebpackTagsPlugin({
         //     tags: [
         //         isDev ? './public/js/baiduMap.js' : 'public/js/baiduMap.js',
@@ -277,24 +211,17 @@ const commonConfig = {
         //     ],
         //     append: false
         // })
-    ],
+    ].filter(Boolean),
 
     resolve: {
         // 目录开头为 @ 符号，文件开头为 $ 符号
         alias: {
-            '@commenApi': path.resolve(config.appSrc, 'commen/data-commen/api'),
-            '@commenModel': path.resolve(
-                config.appSrc,
-                'commen/data-commen/model'
-            ),
             '@useHooks': path.resolve(config.appSrc, 'useHooks'),
-            '@reducers': path.resolve(config.appSrc, 'redux/reducers'),
-            '@actions': path.resolve(config.appSrc, 'redux/actions'),
             '@redux': path.resolve(config.appSrc, 'redux'),
             '@layout': path.resolve(config.appSrc, 'layout'),
             '@router': path.resolve(config.appSrc, 'router'),
             '@pages': path.resolve(config.appSrc, 'pages'),
-            '@commen': path.resolve(config.appSrc, 'commen'),
+            '@common': path.resolve(config.appSrc, 'common'),
             '@src': path.resolve(config.appSrc),
             '@components': path.resolve(config.appSrc, 'components'),
             '@utils': path.resolve(config.appSrc, 'utils'),
@@ -309,16 +236,10 @@ const commonConfig = {
                 enforce: 'pre', // 强制去前面执行 因为loader是从下向上 从右向左执行的
                 test: /\.js?$/,
                 use: [
-                    'cache-loader',
-                    {
-                        loader: 'thread-loader'
-                    },
                     {
                         loader: 'eslint-loader',
                         options: {
-                            emitWarning: true, // 是否所有的error都当做warning。如果需要可以打开，在测试环境把所有 Error 都当做 Warn，这样避免了修改 ESLint 规则
-                            failOnError: true,
-                            failOnWarning: true, // 警告不显示
+                            emitWarning: isDev, // 是否所有的error都当做warning。如果需要可以打开，在测试环境把所有 Error 都当做 Warn，这样避免了修改 ESLint 规则
                             quiet: true,
                             cache: true,
                             fix: false // 是否自动修复

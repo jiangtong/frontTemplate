@@ -17,7 +17,7 @@ class BaseRequest {
             },
 
             transformRequest: [
-                function(data, headers) {
+                (data, headers) => {
                     if (
                         headers['Content-Type'] ===
                         'application/x-www-form-urlencoded'
@@ -53,7 +53,7 @@ class BaseRequest {
 
         // 请求响应拦截
         this.request.interceptors.response.use(
-            function(response) {
+            response => {
                 // 对响应数据做点什么
                 return new Promise(resolve => {
                     const useResponse = response.data;
@@ -73,7 +73,7 @@ class BaseRequest {
                     }
                 });
             },
-            function(error) {
+            error => {
                 // 对响应错误做点什么
                 let errMsg = '';
                 if (error && error.response) {

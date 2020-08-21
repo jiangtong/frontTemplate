@@ -107,8 +107,6 @@ export default ({
     useEffect(() => {
         if (requestRef.current) {
             run();
-
-            requestRef.current = true;
         }
     }, [state.current, state.pageSize, state.count, ...deps]);
 
@@ -150,7 +148,6 @@ export default ({
     // 主动搜索
     const searchSubmit = useCallback(
         async params => {
-            requestRef.current = true;
             // 主要是为了让dispactch或setstate可以实现异步就是可以一个一个更新数据
             await dispatch({
                 type: 'updateState',
@@ -158,6 +155,7 @@ export default ({
                     formData: params
                 }
             });
+            requestRef.current = true;
             await reload();
             // setTimeout(() => {
             //     dispatch({

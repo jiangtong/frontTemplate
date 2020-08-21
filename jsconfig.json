@@ -9,7 +9,6 @@
       "assets/*": ["src/assets/*"],
       "BaseLayout/*": ["src/BaseLayout/*"],
       "Components/*": ["src/Components/*"],
-      "Utilies/*": ["src/utils/*"]
     }
   },
   "exclude": ["dist"],

@@ -2,12 +2,12 @@
 
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
-// import highComponentFuc from '@pages/Teacher/commen/HighComponent';
+// import highComponentFuc from '@pages/Teacher/common/HighComponent';
 // import TestEchart from '@pages/Teacher/Survey/TestEchart';
-import '@pages/Teacher/commen/assets/styles/index.less';
+import '@pages/Teacher/common/assets/styles/index.less';
 import { Row, Col } from 'antd';
 import Echart from '@components/Echarts';
-// import Request from '@src/commen/data-commen/api/teacher/index';
+// import Request from '@src/common/data-commen/api/teacher/index';
 // const HighFunUse = highComponentFuc('enterprisePracticeInfoList')(TestEchart);
 const color = [
     '#1890ff',

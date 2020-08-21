@@ -19,6 +19,7 @@ export default ({ fun, deps = [], initRequest = true }) => {
 
     const requestAction = useCallback(
         useData => {
+            setLoading(true);
             requestRef.current = true;
             return fun(useData).then(res => {
                 setLoading(false);

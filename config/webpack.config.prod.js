@@ -4,7 +4,7 @@
  */
 
 // eslint-disable-next-line import/no-extraneous-dependencies
-const glob = require('glob');
+// const glob = require('glob');
 const merge = require('webpack-merge');
 const cssnano = require('cssnano');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
@@ -22,8 +22,8 @@ const commonConfig = require('./webpack.config.common.js');
 const publicConfig = {
     output: {
         path: config.appbuild,
-        filename: 'app/js/[name].[chunkhash:8].js',
-        chunkFilename: 'app/js/[name].[chunkhash:8].bundle.js'
+        filename: 'app/js/[name].[contenthash:8].js',
+        chunkFilename: 'app/js/[name].[contenthash:8].chunk.js'
         // library: 'result', // 函数或变量名字
         // libraryTarget: 'umd' //打包文件加载方式
     },
@@ -33,7 +33,7 @@ const publicConfig = {
 
     plugins: [
         new SentryPlugin({
-            release: 'baili_001',
+            release: 'baili_004',
             include: './dist',
             urlPrefix: '~/',
             ignore: ['node_modules']

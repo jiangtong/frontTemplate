@@ -1,6 +1,7 @@
 /** @format */
+// eslint-disable-next-line max-classes-per-file
 import React from 'react';
-import * as Sentry from '@sentry/browser';
+// import * as Sentry from '@sentry/browser';
 
 class ErrorBoundary extends React.Component {
     constructor(props) {
@@ -29,10 +30,11 @@ class ErrorBoundary extends React.Component {
             return (
                 <div>
                     <button
-                        onClick={() =>
-                            Sentry.showReportDialog({
-                                eventId: this.state.eventId
-                            })
+                        onClick={
+                            () => this.render()
+                            // Sentry.showReportDialog({
+                            //     eventId: this.state.eventId
+                            // })
                         }
                     >
                         Report feedback
@@ -110,7 +112,7 @@ class BuggyCounterTWO extends React.Component {
             <div>
                 <button
                     onClick={() => {
-                        console.log(this.fffff.ffffff);
+                        // console.log(this.fffff.ffffff);
                     }}
                 >
                     test1wwww

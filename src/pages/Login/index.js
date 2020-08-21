@@ -3,15 +3,15 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Col, message } from 'antd';
-import '@pages/Login/commen/assets/styles/login.less';
-import Request from '@src/commen/data-commen/api/Login';
+import '@pages/Login/common/assets/styles/login.less';
+import Request from '@src/common/data-commen/api/Login';
 import { setSession } from '@utils/utils';
-import img from '@pages/Login/commen/assets/img/xtzy.png';
+import img from '@pages/Login/common/assets/img/xtzy.png';
 import md5 from 'md5';
-import img1 from '@pages/Login/commen/assets/img/background1.png';
-import img2 from '@pages/Login/commen/assets/img/map.png';
-import img3 from '@pages/Login/commen/assets/img/dengluyeyonghuming1.png';
-import img4 from '@pages/Login/commen/assets/img/dengluyemima1.png';
+import img1 from '@pages/Login/common/assets/img/background1.png';
+import img2 from '@pages/Login/common/assets/img/map.png';
+import img3 from '@pages/Login/common/assets/img/dengluyeyonghuming1.png';
+import img4 from '@pages/Login/common/assets/img/dengluyemima1.png';
 
 class LoginComponent extends Component {
     state = {

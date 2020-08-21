@@ -1,0 +1,44 @@
+// @import url("./common.less");
+
+// .clearfix {
+//     width: 100%;
+// }
+
+// $colors-light: (fill-1: red,
+//     text: #3c3c3c,
+//     text-1: #757575,
+//     text-2: #222,
+// );
+
+// // 深色
+// $colors-dark: (fill-1: #222,
+//     text: #fff,
+//     text-1: rgba(255, 255, 255, 0.3),
+//     text-2: #ffcd32,
+// );
+
+// // 背景色
+// @mixin bg-color($key) {
+//     background-color: map-get($colors-light, $key);
+
+//     [data-theme="dark"] & {
+//         background-color: map-get($colors-dark, $key);
+//     }
+// }
+
+[data-theme="dark"] {
+    body {
+        background-color: yellow;
+    }
+}
+
+body,
+html {
+    line-height: 1;
+    font-family: "Helvetica Neue,Tahoma,Arial,PingFangSC-Regular,Hiragino Sans GB,Microsoft Yahei,sans-serif";
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    // background: $fill-1;
+    // @include bg-color(fill-1);
+    transition: all 0.3s linear;
+}
