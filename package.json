@@ -44,7 +44,7 @@
     "mockjs": "^1.1.0",
     "prop-types": "^15.7.2",
     "qs": "^6.9.3",
-    "react": "^0.0.0-experimental-33c3af284",
+    "react": "^16.13.1",
     "react-dom": "^0.0.0-experimental-33c3af284",
     "react-redux": "^7.2.0",
     "react-router": "^5.1.2",
